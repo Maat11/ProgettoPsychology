@@ -4,6 +4,7 @@ public class Appuntamento {
 	private String oraInizio;
 	private String oraFine;
 	private String modalità;
+	private String pagato;
 	
 	Appuntamento(java.sql.Date dataGiorno, String oraInizio, String oraFine, String modalità){
 		this.dataGiorno = dataGiorno;
@@ -25,6 +26,9 @@ public class Appuntamento {
 	public String getModalità() {
 		return modalità;
 	}
+	public String getPagato() {
+		return pagato;
+	}
 
 //SETTERS:
 	public void setDataGiorno(java.sql.Date dataGiorno) {
@@ -39,4 +43,8 @@ public class Appuntamento {
 	public void setModalità(String mod) {
 		this.modalità = mod;
 	}
+	public void setPagato(String pagato) {
+		this.pagato = pagato;
+	}
+	
 }
