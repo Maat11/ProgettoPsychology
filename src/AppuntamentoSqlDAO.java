@@ -1,5 +1,9 @@
 
 public class AppuntamentoSqlDAO implements AppuntamentoDAO{
+	
+	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+	private static final String USER = "postgres";
+	private static final String PASSWORD = "Informatica1";
 
 	@Override
 	public boolean inserisci(Appuntamento app) throws PersonalException {
