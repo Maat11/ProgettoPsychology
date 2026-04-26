@@ -1,3 +1,11 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import javax.swing.JOptionPane;
 
 public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	
@@ -10,7 +18,37 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 		String sql = "INSERT INTO prgzia.Appuntamento(id_paziente, data_giorno, ora_Inizio, ora_fine, modalità) "
 				+ "VALUES(?, ?, ?, ?, ?) ";
 		
-		return false;
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+			
+			//CAST ORA INIZIO:
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime oraIn = LocalTime.parse(oraInizio, formatter);
+            Time sqlTimeIn = Time.valueOf(oraIn);
+            
+            //CAST ORA FINE:
+            LocalTime oraFin = LocalTime.parse(oraFine, formatter);
+            Time sqlTimeFin = Time.valueOf(oraFin);
+            
+            long minutiDifferenza = java.time.Duration.between(oraIn, oraFin).toMinutes();
+			
+//            if(minutiDifferenza >= 60) {
+//                psmt.setInt(1, idPaz);
+//                psmt.setDate(2, data);
+//                psmt.setTime(3, sqlTimeIn);
+//                psmt.setTime(4, sqlTimeFin);
+//                psmt.setString(5, mod);
+                
+            int result = psmt.executeUpdate();
+            
+            return result > 0;
+//            }else {
+//            	JOptionPane.showMessageDialog(null, "L'ora di inizio e l'ora di fine di una seduta devono distare almeno di un'ora (60 min) tra loro");
+//            	return false;
+//            }
+    	}catch(PersonalException e) {
+    		return false;
+    	} 		
 	}
 
 }

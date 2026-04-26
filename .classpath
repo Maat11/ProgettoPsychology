@@ -6,5 +6,12 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/jcalendar-1.4/lib/jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/jcalendar-1.4/lib/jgoodies-looks-2.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/jcalendar-1.4/lib/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/LIBRERIE java/com.miglayout.core_11.4.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/LIBRERIE java/com.miglayout.swing_11.4.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/LIBRERIE java/jbcrypt-0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
