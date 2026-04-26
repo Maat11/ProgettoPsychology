@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +15,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	private static final String PASSWORD = "Informatica1";
 
 	@Override
-	public boolean inserisci(Appuntamento app) throws PersonalException {
+	public boolean inserisci(Appuntamento app) throws PersonalException{
 		String sql = "INSERT INTO prgzia.Appuntamento(id_paziente, data_giorno, ora_Inizio, ora_fine, modalità) "
 				+ "VALUES(?, ?, ?, ?, ?) ";
 		
@@ -23,30 +24,23 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 			
 			//CAST ORA INIZIO:
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime oraIn = LocalTime.parse(oraInizio, formatter);
+            LocalTime oraIn = LocalTime.parse(app.getOraInizio(), formatter);
             Time sqlTimeIn = Time.valueOf(oraIn);
             
             //CAST ORA FINE:
-            LocalTime oraFin = LocalTime.parse(oraFine, formatter);
+            LocalTime oraFin = LocalTime.parse(app.getOraFine(), formatter);
             Time sqlTimeFin = Time.valueOf(oraFin);
             
-            long minutiDifferenza = java.time.Duration.between(oraIn, oraFin).toMinutes();
-			
-//            if(minutiDifferenza >= 60) {
-//                psmt.setInt(1, idPaz);
-//                psmt.setDate(2, data);
-//                psmt.setTime(3, sqlTimeIn);
-//                psmt.setTime(4, sqlTimeFin);
-//                psmt.setString(5, mod);
+                psmt.setInt(1, app.getIdPaz());
+                psmt.setDate(2, app.getDataGiorno());
+                psmt.setTime(3, sqlTimeIn);
+                psmt.setTime(4, sqlTimeFin);
+                psmt.setString(5, app.getModalità());
                 
             int result = psmt.executeUpdate();
             
             return result > 0;
-//            }else {
-//            	JOptionPane.showMessageDialog(null, "L'ora di inizio e l'ora di fine di una seduta devono distare almeno di un'ora (60 min) tra loro");
-//            	return false;
-//            }
-    	}catch(PersonalException e) {
+    	}catch(SQLException e) {
     		return false;
     	} 		
 	}

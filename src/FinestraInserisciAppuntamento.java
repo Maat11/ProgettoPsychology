@@ -11,9 +11,12 @@ import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Date;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -305,7 +308,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 				btnInserisci = new JButton("Inserisci");
 				btnInserisci.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						//CONTROLLO CAMPI:
+						//CONTROLLO CAMPI: INSERISCI IL CTRLHour
 //						if(ctrlTxt()) {
 //							//INSERISCI APPUNTAMENTO:
 //							try {
@@ -336,7 +339,25 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			}
 		}
 	}
-//METODI
+//METODI:
+	private boolean ctrlHour() {
+		//CAST ORA INIZIO:
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime oraIn = LocalTime.parse(txtOraInizio.getText(), formatter);
+        Time sqlTimeIn = Time.valueOf(oraIn);
+        
+        //CAST ORA FINE:
+        LocalTime oraFin = LocalTime.parse(txtOraFine.getText(), formatter);
+        Time sqlTimeFin = Time.valueOf(oraFin);
+        
+        long minutiDifferenza = java.time.Duration.between(oraIn, oraFin).toMinutes();
+		
+	    if(minutiDifferenza >= 60) {
+	    	return true;
+	    }
+		return false;
+	}
+	
 	private boolean ctrlTxt() {
 		if(txtCodiceFiscale.getText().isBlank()) {
 			JOptionPane.showMessageDialog(null, "Errore, il campo id paziente non può essere vuoto!");
