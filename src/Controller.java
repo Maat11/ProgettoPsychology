@@ -1,7 +1,9 @@
 
 public class Controller {
 	
-//CLASSI
+//CLASSI:
+	private Paziente paziente;
+	private PazienteSqlDAO pazienteSqlDAO;
 	
 //PAGINE
 	
