@@ -1,12 +1,14 @@
 
 public class Appuntamento {
+	private int idPaziente;
 	private java.sql.Date dataGiorno;
 	private String oraInizio;
 	private String oraFine;
 	private String modalità;
 	private String pagato;
 	
-	Appuntamento(java.sql.Date dataGiorno, String oraInizio, String oraFine, String modalità){
+	Appuntamento(int idPaz, java.sql.Date dataGiorno, String oraInizio, String oraFine, String modalità){
+		this.idPaziente = idPaz;
 		this.dataGiorno = dataGiorno;
 		this.oraInizio = oraInizio;
 		this.oraFine = oraFine;
@@ -14,6 +16,9 @@ public class Appuntamento {
 	}
 	
 //GETTERS:
+	public int getIdPaz() {
+		return idPaziente;
+	}
 	public java.sql.Date getDataGiorno() {
 		return dataGiorno;
 	}
@@ -31,6 +36,9 @@ public class Appuntamento {
 	}
 
 //SETTERS:
+	public void setIdPaz(int idPaz) {
+		this.idPaziente = idPaz;
+	}
 	public void setDataGiorno(java.sql.Date dataGiorno) {
 		this.dataGiorno = dataGiorno;
 	}
