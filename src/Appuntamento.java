@@ -1,6 +1,5 @@
 
 public class Appuntamento {
-	private int idAgenda;
 	private java.sql.Date dataGiorno;
 	private String oraInizio;
 	private String oraFine;
@@ -14,9 +13,6 @@ public class Appuntamento {
 	}
 	
 //GETTERS:
-	public int getIdAgenda() {
-		return idAgenda;
-	}
 	public java.sql.Date getDataGiorno() {
 		return dataGiorno;
 	}
@@ -31,9 +27,6 @@ public class Appuntamento {
 	}
 
 //SETTERS:
-	public void setIdAgenda(int idAgenda) {
-		this.idAgenda = idAgenda;
-	}
 	public void setDataGiorno(java.sql.Date dataGiorno) {
 		this.dataGiorno = dataGiorno;
 	}
