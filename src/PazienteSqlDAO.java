@@ -88,7 +88,7 @@ public class PazienteSqlDAO implements PazienteDAO{
             	return rs.getInt("id_paziente");
             }
     	}catch(SQLException e) {
-    		throw new PersonalException("Impossibile trova il paziente a causa di un errore tecnico.");
+    		throw new PersonalException("Impossibile trovare il paziente a causa di un errore tecnico.");
     	}
 		return 0;
 	}
