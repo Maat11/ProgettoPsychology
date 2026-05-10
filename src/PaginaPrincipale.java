@@ -64,7 +64,7 @@ public class PaginaPrincipale extends JFrame {
 				sqlDate = java.sql.Date.valueOf(dataOdiernaLocalDate);
 				
 				//POPOLA TABELLA:
-//				theController.tabellaAppuntamentiInsert(sqlDate, model);
+
 			}
 		});
 		theController = c;
@@ -84,7 +84,7 @@ public class PaginaPrincipale extends JFrame {
 		itemInserisciAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//INSERISCI APPUNTAMENTO:
-
+				
 			}
 		});
 		menuInserisciAppuntamento.add(itemInserisciAppuntamenti);
@@ -114,7 +114,7 @@ public class PaginaPrincipale extends JFrame {
 		itemInserisciCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//AGGIUNTA DI UN CLIENTE:
-
+				theController.fromPaginaPrincipaleToFienstraInserisciPaziente();
 			}
 		});
 		menuCliente.add(itemInserisciCliente);
