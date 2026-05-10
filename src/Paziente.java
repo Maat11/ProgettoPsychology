@@ -1,5 +1,6 @@
 
 public class Paziente {
+	private int id;
 	private String nome;
 	private String cognome;
 	private String codiceFsicale; 
@@ -19,6 +20,9 @@ public class Paziente {
 	}
 	
 //GETTERS:
+	public int getId() {
+		return id;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -45,6 +49,9 @@ public class Paziente {
 	}
 	
 //SETTERS:
+	public void setId(int id) {
+		this.id = id;
+	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
