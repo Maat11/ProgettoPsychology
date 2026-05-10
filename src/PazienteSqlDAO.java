@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class PazienteSqlDAO implements PazienteDAO{
 	
@@ -38,6 +39,24 @@ public class PazienteSqlDAO implements PazienteDAO{
 		}    
 	}
 	
+	//SERVE A POPOLARE LA TABELLA CON TUTTI I DATI DEL PAZIENTE:
+	@Override
+	public void popolaTabella(DefaultTableModel model, String cognome) throws PersonalException {
+		if(cognome.isBlank()) {
+			popolaTabellaFirstMode(model);
+		}else {
+			popolaTabellaSecondMode(model, cognome);
+		}
+	}
+	
+	private void popolaTabellaFirstMode(DefaultTableModel model) {
+		
+	}
+	
+	private void popolaTabellaSecondMode(DefaultTableModel model, String cognome) {
+		
+	}
+	
 	//SERVE PER RENDERE LA PRIMA LETTERA MAIUSCOLA:
 	private String upperCaseFirstChar(String str) {
 		//String DA MODIFICARE:
@@ -49,5 +68,5 @@ public class PazienteSqlDAO implements PazienteDAO{
 		//INSERISCI NELLA VARIBILE:
 		return str = primaCharStr.toUpperCase()+restNome;
 	}
-	
+
 }
