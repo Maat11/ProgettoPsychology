@@ -15,6 +15,9 @@ import javax.swing.JOptionPane;
 import com.sun.tools.javac.Main;
 
 public class CryptoUtilsDAO {
+	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
+	private static final String USER = "postgres";
+	private static final String PASSWORD = "Informatica1";
 	
 	public String encrypt(String codiceFiscale, byte[] iv) {
 	    try {
@@ -72,31 +75,31 @@ public class CryptoUtilsDAO {
 
 	
 	//MI SERVE PER LA DECRIPTAZIONE:
-//	public String decrypPrendiIV(int idPaz) {
-//		String sql = "SELECT * "
-//				+ "FROM prgzia.Iv AS I "
-//				+ "JOIN prgzia.Paziente AS P ON I.id_paziente = P.id_paziente "
-//				+ "WHERE I.id_paziente = ? ";
-//		
-//		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
-//    			PreparedStatement psmt = conn.prepareStatement(sql)) {
-//						
-//                psmt.setInt(1, idPaz);
-//                
-//            ResultSet rs = psmt.executeQuery();
-//            
-//            if(rs.next()) {
-//            	//PRENDI L'IV:
-//            	String ivString = rs.getString("Iv");
-//            	
-//            	//DECRIPTA E RESTITUISCI IL CODICE FISCALE DEECRIPTATO:
-//            	return decrypt(rs.getString("codice_fiscale"), ivString);
-//            }
-//    	}catch(Exception e) {
-//    		JOptionPane.showMessageDialog(null, "Errore nella funzione: decryptPrendiIv nella classe CryptoUtilsDAO" + e);
-//    	} 		
-//		return "";
-//	}
+	public String decrypPrendiIV(int idPaz) {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Iv AS I "
+				+ "JOIN prgzia.Paziente AS P ON I.id_paziente = P.id_paziente "
+				+ "WHERE I.id_paziente = ? ";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+						
+                psmt.setInt(1, idPaz);
+                
+            ResultSet rs = psmt.executeQuery();
+            
+            if(rs.next()) {
+            	//PRENDI L'IV:
+            	String ivString = rs.getString("Iv");
+            	
+            	//DECRIPTA E RESTITUISCI IL CODICE FISCALE DEECRIPTATO:
+            	return decrypt(rs.getString("codice_fiscale"), ivString);
+            }
+    	}catch(Exception e) {
+    		JOptionPane.showMessageDialog(null, "Errore nella funzione: decryptPrendiIv nella classe CryptoUtilsDAO" + e);
+    	} 		
+		return "";
+	}
 	
 	
 	
