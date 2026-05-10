@@ -101,9 +101,6 @@ public class CryptoUtilsDAO {
 		return "";
 	}
 	
-	
-	
-	
 	//MI SERVE PER LA CHIAVE SEGRETA PER LA CRIPTAZIONE E DECRIPTAZIONE DEI DATI SENSIBILI:
 	private static String getKey() {
 		// 1. Definiamo l'oggetto Properties e la stringa per la chiave
@@ -144,4 +141,27 @@ public class CryptoUtilsDAO {
 	    	return "";
 	    }
 	}
+	
+	
+	//MI SERVE PER INSERIRLO NELLA TABELLA IV:
+	public boolean inserisciInTabellaIV(int idPaz, String iv) {
+		String sql = "INSERT INTO prgzia.Iv(id_paziente, Iv) "
+				+ "VALUES(?, ?)";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+    		
+                psmt.setInt(1, idPaz);
+                psmt.setString(2, iv);
+                
+            int fine = psmt.executeUpdate();
+            
+            return fine > 0;
+    	}catch(Exception e) {
+    		JOptionPane.showMessageDialog(null, "Errore nell'inserimento nella tabella IV! (CLASSE CryptoUtilsDAO), funzione: inserisciInTbellaIV" + e);
+    		return false;
+    	}    
+	}
+	
+	
 }
