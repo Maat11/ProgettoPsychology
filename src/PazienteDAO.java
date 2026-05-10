@@ -6,4 +6,5 @@ public interface PazienteDAO {
 	
 	void popolaTabella(DefaultTableModel model, String cognome) throws PersonalException;
 	
+	int prendiIdPaziente(String codiceFiscale) throws PersonalException;
 }
