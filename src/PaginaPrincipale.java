@@ -83,7 +83,7 @@ public class PaginaPrincipale extends JFrame {
 		JMenuItem itemInserisciAppuntamenti = new JMenuItem("Inserisci appuntamento");
 		itemInserisciAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//INSERISCI APPUNTAMENTO:
+				//FINESTRA INSERISCI APPUNTAMENTO:
 				
 			}
 		});
@@ -92,7 +92,7 @@ public class PaginaPrincipale extends JFrame {
 		JMenuItem itemDisdiciAppuntamento = new JMenuItem("Disdici appuntamento");
 		itemDisdiciAppuntamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//DISDICI APPUNTAMENTO:
+				//FINESTRA DISDICI APPUNTAMENTO:
 
 			}
 		});
