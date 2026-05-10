@@ -1,3 +1,5 @@
+import java.security.SecureRandom;
+
 import javax.swing.JOptionPane;
 
 public class Controller {
@@ -27,16 +29,16 @@ public class Controller {
 	}
 	
 //METHODS:
-	//SERVE AD INSERIRE IL PAZIENTE:
-	public boolean inserisciPaziente(Paziente p) {
-		pazienteSqlDAO = new PazienteSqlDAO();
-		try {
-			return pazienteSqlDAO.inserisci(p);
-		} catch (PersonalException e) {
-			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-	}
+	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
+//	public boolean inserisciPaziente(Paziente p) {
+//		pazienteSqlDAO = new PazienteSqlDAO();
+//		try {
+//			return pazienteSqlDAO.inserisci(p);
+//		} catch (PersonalException e) {
+//			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+//			return false;
+//		}
+//	}
 	
 	//SERVE AD INSERIRE UN APPUNTAMENTO:
 	public boolean inserisciAppuntamento(Appuntamento app) {
@@ -57,4 +59,14 @@ public class Controller {
 		finestraInserisciPaziente.setVisible(true);		
 	}
 	
+	
+	
+	
+	
+	//ARRAY DI BYTE RANDOM:
+	private  byte[] getArrayRandom() {
+		byte[] iv = new byte[12];
+		new SecureRandom().nextBytes(iv);
+		return iv;
+	}
 }
