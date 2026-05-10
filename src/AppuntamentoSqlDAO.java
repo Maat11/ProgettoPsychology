@@ -40,9 +40,9 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
             int result = psmt.executeUpdate();
             
             return result > 0;
-    	}catch(SQLException e) {
-    		return false;
-    	} 		
+    	}catch (SQLException e) {
+    		throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");
+		}		
 	}
 
 }
