@@ -14,6 +14,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 	
 //METHODS:
 	
+	//SERVE PER L'INSRIMENTO DEL PAZIENTE NEL DB:
 	@Override
 	public boolean inserisci(Paziente p) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Paziente(nome, cognome, codice_fiscale, data_nascita, telefono, prezzo) "
