@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -39,23 +40,23 @@ public class PazienteSqlDAO implements PazienteDAO{
 		}    
 	}
 	
-	//SERVE A POPOLARE LA TABELLA CON TUTTI I DATI DEL PAZIENTE:
-	@Override
-	public void popolaTabella(DefaultTableModel model, String cognome) throws PersonalException {
-		if(cognome.isBlank()) {
-			popolaTabellaFirstMode(model);
-		}else {
-			popolaTabellaSecondMode(model, cognome);
-		}
-	}
-	
-	private void popolaTabellaFirstMode(DefaultTableModel model) {
-		
-	}
-	
-	private void popolaTabellaSecondMode(DefaultTableModel model, String cognome) {
-		
-	}
+	//SERVE A POPOLARE LA TABELLA CON TUTTI I DATI DEL PAZIENTE: INCOMPLETE
+//	@Override
+//	public void popolaTabella(DefaultTableModel model, String cognome) throws PersonalException {
+//		if(cognome.isBlank()) {
+//			popolaTabellaFirstMode(model);
+//		}else {
+//			popolaTabellaSecondMode(model, cognome);
+//		}
+//	}
+//	
+//	private void popolaTabellaFirstMode(DefaultTableModel model) {
+//		
+//	}
+//	
+//	private void popolaTabellaSecondMode(DefaultTableModel model, String cognome) {
+//		
+//	}
 	
 	//SERVE PER RENDERE LA PRIMA LETTERA MAIUSCOLA:
 	private String upperCaseFirstChar(String str) {
@@ -67,6 +68,29 @@ public class PazienteSqlDAO implements PazienteDAO{
 		
 		//INSERISCI NELLA VARIBILE:
 		return str = primaCharStr.toUpperCase()+restNome;
+	}
+
+	//MI SERVE PER PRENDERE L'ID DEL PAZIENTE TRAMITE IL CODICE FISCALE CRIPTATO:
+	@Override
+	public int prendiIdPaziente(String codiceFiscale) throws PersonalException {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Paziente "
+				+ "WHERE codice_fiscale = ? ";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+            
+				psmt.setString(1, codiceFiscale);
+				
+                ResultSet rs = psmt.executeQuery();
+                
+            if(rs.next()) {
+            	return rs.getInt("id_paziente");
+            }
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile trova il paziente a causa di un errore tecnico.");
+    	}
+		return 0;
 	}
 
 }
