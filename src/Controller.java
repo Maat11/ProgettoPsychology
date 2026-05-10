@@ -1,4 +1,5 @@
 import java.security.SecureRandom;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
@@ -9,6 +10,7 @@ public class Controller {
 	private PazienteSqlDAO pazienteSqlDAO;
 	private Appuntamento appuntamento;
 	private AppuntamentoSqlDAO appuntamentoSqlDAO;
+	private CryptoUtilsDAO cryptoUtilsDAO;
 		
 //PAGINE
 	public PaginaPrincipale paginaPrincipale;
@@ -30,15 +32,28 @@ public class Controller {
 	
 //METHODS:
 	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
-//	public boolean inserisciPaziente(Paziente p) {
-//		pazienteSqlDAO = new PazienteSqlDAO();
-//		try {
-//			return pazienteSqlDAO.inserisci(p);
-//		} catch (PersonalException e) {
-//			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-//			return false;
-//		}
-//	}
+	public boolean inserisciPaziente(Paziente p) {
+		pazienteSqlDAO = new PazienteSqlDAO();
+		byte[] iv = getArrayRandom();
+		//CRIPTO IL CODICE FISCALE:
+		cryptoUtilsDAO = new CryptoUtilsDAO();
+		try {
+			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFsicale(), iv));
+			if(pazienteSqlDAO.inserisci(p)) {
+				int idPaz = pazienteSqlDAO.prendiIdPaziente(p.getCodiceFsicale());
+				return insertIvInDB(idPaz, iv);
+			}
+		} catch (PersonalException e) {
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+		return false;
+	}
+	
+	//MI SERVE PER INSERIRE l'IV NEL DB:
+	private boolean insertIvInDB(int idPaz, byte[] iv){
+		cryptoUtilsDAO = new CryptoUtilsDAO();
+		return cryptoUtilsDAO.inserisciInTabellaIV(idPaz, Base64.getEncoder().encodeToString(iv));
+	}
 	
 	//SERVE AD INSERIRE UN APPUNTAMENTO:
 	public boolean inserisciAppuntamento(Appuntamento app) {
