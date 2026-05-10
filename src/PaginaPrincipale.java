@@ -84,7 +84,7 @@ public class PaginaPrincipale extends JFrame {
 		itemInserisciAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//INSERISCI APPUNTAMENTO:
-//				theController.daPaginaPrincipaleAFinestraInserisciAppuntamento();
+
 			}
 		});
 		menuInserisciAppuntamento.add(itemInserisciAppuntamenti);
@@ -93,7 +93,7 @@ public class PaginaPrincipale extends JFrame {
 		itemDisdiciAppuntamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//DISDICI APPUNTAMENTO:
-//				theController.daPaginaPrincipaleAFinestraDisdiciAppuntamento();
+
 			}
 		});
 		menuInserisciAppuntamento.add(itemDisdiciAppuntamento);
@@ -102,7 +102,7 @@ public class PaginaPrincipale extends JFrame {
 		itemMenuVisualizzaAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VISUALIZZA APPUNTAMENTI PASSATI E FUTURI:
-//				theController.daPaginaPrincipaleAFinestraVisualizzaAppuntamenti();
+
 			}
 		});
 		menuInserisciAppuntamento.add(itemMenuVisualizzaAppuntamenti);
@@ -114,7 +114,7 @@ public class PaginaPrincipale extends JFrame {
 		itemInserisciCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//AGGIUNTA DI UN CLIENTE:
-//				theController.daPaginaPrincipaleAFinestraInserisciCLiente();
+
 			}
 		});
 		menuCliente.add(itemInserisciCliente);
@@ -123,7 +123,7 @@ public class PaginaPrincipale extends JFrame {
 		itemModificaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//MODIFICA DI UN CLIENTE:
-//				theController.daPaginaPrincipaleAFinestraModificaDatiCliente();
+
 			}
 		});
 		menuCliente.add(itemModificaCliente);
@@ -132,7 +132,7 @@ public class PaginaPrincipale extends JFrame {
 		itemEliminaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ELIMINAZIONE DI UN CLIENTE:
-//				theController.daPaginaPrincipaleAFInestraEliminaCliente();
+
 			}
 		});
 		menuCliente.add(itemEliminaCliente);
@@ -141,7 +141,7 @@ public class PaginaPrincipale extends JFrame {
 		itemVisualizzaPazienti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//PAGINA PER VISUALIZZARE TUTTI I CLIENTI:
-//				theController.daPaginaPrincipaleAPaginaVisualizzaPazienti();
+
 			}
 		});
 		menuCliente.add(itemVisualizzaPazienti);
@@ -152,7 +152,7 @@ public class PaginaPrincipale extends JFrame {
 		JMenuItem itemVisualizzaCreditori = new JMenuItem("Visualizza creditori");
 		itemVisualizzaCreditori.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				theController.daPaginaPrincipaleMenuPagamentiAFinestraVisualizzaPazientiDebito();
+
 			}
 		});
 		menuPagamento.add(itemVisualizzaCreditori);
@@ -202,7 +202,7 @@ public class PaginaPrincipale extends JFrame {
 		btnCompleta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VISUALIZZA DETTAGLI:
-//				theController.daPaginaPrincipaleAFinestraCompletaAppuntamento(dateSel, oraInSel);
+
 				setPulsantiEnableInFalse();
 			}
 		});
@@ -215,7 +215,7 @@ public class PaginaPrincipale extends JFrame {
 		btnNotaRapida.setEnabled(false);
 		btnNotaRapida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				theController.daPaginaPrincipaleAFinestraInsertisciNotaRapida(idPazSel, dateSel, oraInSel);
+
 				setPulsantiEnableInFalse();
 			}
 		});
