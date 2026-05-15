@@ -56,12 +56,6 @@ public class Controller {
 		return false;
 	}
 	
-//	//MI SERVE PER INSERIRE l'IV NEL DB:
-//	private boolean insertIvInDB(int idPaz, String iv){
-//		cryptoUtilsDAO = new CryptoUtilsDAO();
-//		return cryptoUtilsDAO.inserisciInTabellaIV(idPaz, Base64.getEncoder().encodeToString(iv));
-//	}
-	
 	//SERVE AD INSERIRE UN APPUNTAMENTO:
 	public boolean inserisciAppuntamento(Appuntamento app) {
 		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
