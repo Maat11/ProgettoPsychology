@@ -27,7 +27,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 			
                 psmt.setString(1, upperCaseFirstChar(p.getNome()));
                 psmt.setString(2, upperCaseFirstChar(p.getCognome()));
-                psmt.setString(3, p.getCodiceFsicale().toUpperCase());
+                psmt.setString(3, p.getCodiceFsicale().trim());
                 psmt.setDate(4, p.getDataNascita());
                 psmt.setString(5, p.getTelefono());
                 psmt.setDouble(6, p.getPrezzo());
@@ -72,7 +72,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 
 	//MI SERVE PER PRENDERE L'ID DEL PAZIENTE TRAMITE IL CODICE FISCALE CRIPTATO:
 	@Override
-	public int prendiIdPaziente(String codiceFiscale) throws PersonalException {
+	public int prendiIdPaziente(String codFiscCript) throws PersonalException {
 		String sql = "SELECT * "
 				+ "FROM prgzia.Paziente "
 				+ "WHERE codice_fiscale = ? ";
@@ -80,16 +80,18 @@ public class PazienteSqlDAO implements PazienteDAO{
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
             
-				psmt.setString(1, codiceFiscale);
+				psmt.setString(1, codFiscCript);
 				
                 ResultSet rs = psmt.executeQuery();
                 
             if(rs.next()) {
+            	System.out.println("Questo è l'id del paziente, preso dalla funzione prendiID"+ rs.getInt("id_paziente"));
             	return rs.getInt("id_paziente");
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile trovare il paziente a causa di un errore tecnico.");
     	}
+		System.out.println("Sto dopo il try catch nella funzione per trovare l'id del pazienteeee");
 		return 0;
 	}
 

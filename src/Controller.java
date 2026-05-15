@@ -34,14 +34,21 @@ public class Controller {
 	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
 	public boolean inserisciPaziente(Paziente p) {
 		pazienteSqlDAO = new PazienteSqlDAO();
+		
 		byte[] iv = getArrayRandom();
-		//CRIPTO IL CODICE FISCALE:
+		
 		cryptoUtilsDAO = new CryptoUtilsDAO();
 		try {
-			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFsicale(), iv));
+			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFsicale().toUpperCase(), iv));
+			
 			if(pazienteSqlDAO.inserisci(p)) {
-				int idPaz = pazienteSqlDAO.prendiIdPaziente(p.getCodiceFsicale());
-				return insertIvInDB(idPaz, iv);
+				p.setId(pazienteSqlDAO.prendiIdPaziente(p.getCodiceFsicale()));
+
+				if(p.getId() != 0) {
+					return cryptoUtilsDAO.inserisciInTabellaIV(p.getId(), Base64.getEncoder().encodeToString(iv));
+				}else {
+					return false;
+				}
 			}
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
@@ -49,11 +56,11 @@ public class Controller {
 		return false;
 	}
 	
-	//MI SERVE PER INSERIRE l'IV NEL DB:
-	private boolean insertIvInDB(int idPaz, byte[] iv){
-		cryptoUtilsDAO = new CryptoUtilsDAO();
-		return cryptoUtilsDAO.inserisciInTabellaIV(idPaz, Base64.getEncoder().encodeToString(iv));
-	}
+//	//MI SERVE PER INSERIRE l'IV NEL DB:
+//	private boolean insertIvInDB(int idPaz, String iv){
+//		cryptoUtilsDAO = new CryptoUtilsDAO();
+//		return cryptoUtilsDAO.inserisciInTabellaIV(idPaz, Base64.getEncoder().encodeToString(iv));
+//	}
 	
 	//SERVE AD INSERIRE UN APPUNTAMENTO:
 	public boolean inserisciAppuntamento(Appuntamento app) {

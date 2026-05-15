@@ -182,6 +182,12 @@ public class FinestraInserisciPaziente extends JDialog {
 						if(ctrlFields()){
 							//FUNZIONE CHE SERVE PER L'INSERIMENTO DI UN PAZIENTE:
 							
+							Paziente p = new Paziente(txtNome.getText().trim(), txtCognome.getText().trim(), txtCodiceFiscale.getText().trim(), getDate(dateChooserNascita) ,txtTelefono.getText().trim(), Double.valueOf(txtPrezzo.getText().trim()));
+							if(theController.inserisciPaziente(p)) {
+								JOptionPane.showMessageDialog(null, "L'inserimento è andato a buon fine!");
+							}else {
+								JOptionPane.showMessageDialog(null, "L'inserimento non è andato a buon fine!");
+							}
 						}
 					}
 				});
@@ -272,6 +278,14 @@ public class FinestraInserisciPaziente extends JDialog {
 		}
 		return true;
 	}
-
-
+	
+//METHODS:
+	private java.sql.Date getDate(JDateChooser date){
+		java.sql.Date sqlDate = (date.getDate() != null)
+			    ? new java.sql.Date(date.getDate().getTime())
+			    : null;
+		return sqlDate;
+	}
+	
+	
 }

@@ -144,7 +144,7 @@ public class CryptoUtilsDAO {
 	
 	
 	//MI SERVE PER INSERIRLO NELLA TABELLA IV:
-	public boolean inserisciInTabellaIV(int idPaz, String iv) {
+	public boolean inserisciInTabellaIV(int idPaz, String iv) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Iv(id_paziente, Iv) "
 				+ "VALUES(?, ?)";
 		
@@ -158,9 +158,8 @@ public class CryptoUtilsDAO {
             
             return fine > 0;
     	}catch(Exception e) {
-    		JOptionPane.showMessageDialog(null, "Errore nell'inserimento nella tabella IV! (CLASSE CryptoUtilsDAO), funzione: inserisciInTbellaIV" + e);
-    		return false;
-    	}    
+    		throw new PersonalException("Impossibile inserire l'iv paziente a causa di un errore tecnico.");
+    	}
 	}
 	
 	
