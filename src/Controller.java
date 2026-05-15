@@ -34,10 +34,10 @@ public class Controller {
 	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
 	public boolean inserisciPaziente(Paziente p) {
 		pazienteSqlDAO = new PazienteSqlDAO();
+		cryptoUtilsDAO = new CryptoUtilsDAO();
 		
 		byte[] iv = getArrayRandom();
 		
-		cryptoUtilsDAO = new CryptoUtilsDAO();
 		try {
 			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFsicale().toUpperCase(), iv));
 			
