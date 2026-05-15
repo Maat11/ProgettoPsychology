@@ -85,13 +85,11 @@ public class PazienteSqlDAO implements PazienteDAO{
                 ResultSet rs = psmt.executeQuery();
                 
             if(rs.next()) {
-            	System.out.println("Questo è l'id del paziente, preso dalla funzione prendiID"+ rs.getInt("id_paziente"));
             	return rs.getInt("id_paziente");
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile trovare il paziente a causa di un errore tecnico.");
     	}
-		System.out.println("Sto dopo il try catch nella funzione per trovare l'id del pazienteeee");
 		return 0;
 	}
 
