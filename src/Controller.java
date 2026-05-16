@@ -2,6 +2,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class Controller {
 
@@ -18,7 +19,7 @@ public class Controller {
 //FINESTRE
 	public FinestraInserisciAppuntamento finestraInserisciAppuntamento;
 	public FinestraInserisciPaziente finestraInserisciPaziente;
-	
+	public FinestraSceltaPazientePerAppuntamento finestraSceltaPazientePerAppuntamento;
 //COSTRUTTORE:	
 	Controller(){
 		paginaPrincipale = new PaginaPrincipale(this);
@@ -83,6 +84,12 @@ public class Controller {
 		finestraInserisciAppuntamento.setVisible(true);
 	}
 	
+	//SERVE PER ANDARE DALLA FINESTRA PER CREARE UN APPUNTAMENTO ALLA FINESTRA PER LA SCELTA DEL CODICE FISCALE DEL PAZIENTE CHE ANDRA' ALL'APPUNTAMENTO:
+	public void fromFinestraInserisciAppuntamentoToFinestraSceltaPazientePerAppuntamento(JTextField txtCodiceFiscale) {
+		finestraInserisciAppuntamento.setEnabled(false);
+		
+		finestraSceltaPazientePerAppuntamento = new FinestraSceltaPazientePerAppuntamento(txtCodiceFiscale, this);
+	}
 	
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
