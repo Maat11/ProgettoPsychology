@@ -75,8 +75,13 @@ public class Controller {
 		finestraInserisciPaziente.setVisible(true);		
 	}
 	
-	
-	
+	//SERVE PER ANDARE ALLA FINESTRA PER INSERIRE UN APPUNTAMENTO:
+	public void fromPaginaPrincipaleToFinestraInserisciAppuntamento() {
+		paginaPrincipale.setEnabled(false);
+		
+		finestrainserisciAppuntamento = new FinestraInserisciAppuntamento(this);
+		finestrainserisciAppuntamento.setVisible(true);
+	}
 	
 	
 	//ARRAY DI BYTE RANDOM:

@@ -296,8 +296,8 @@ public class FinestraInserisciAppuntamento extends JDialog {
 						//TORNA INDIETRO:
 						setEnabled(false);
 						setVisible(false);
-//						theController.paginaPrincipale.setVisible(true);
-//						theController.paginaPrincipale.setEnabled(true);
+						theController.paginaPrincipale.setVisible(true);
+						theController.paginaPrincipale.setEnabled(true);
 						txtClear();
 					}
 				});

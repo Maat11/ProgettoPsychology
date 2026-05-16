@@ -84,7 +84,7 @@ public class PaginaPrincipale extends JFrame {
 		itemInserisciAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//FINESTRA INSERISCI APPUNTAMENTO:
-				
+				theController.fromPaginaPrincipaleToFinestraInserisciAppuntamento();
 			}
 		});
 		menuInserisciAppuntamento.add(itemInserisciAppuntamenti);
