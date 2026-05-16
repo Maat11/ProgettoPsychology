@@ -16,7 +16,7 @@ public class Controller {
 	public PaginaPrincipale paginaPrincipale;
 		
 //FINESTRE
-	public FinestraInserisciAppuntamento finestrainserisciAppuntamento;
+	public FinestraInserisciAppuntamento finestraInserisciAppuntamento;
 	public FinestraInserisciPaziente finestraInserisciPaziente;
 	
 //COSTRUTTORE:	
@@ -79,8 +79,8 @@ public class Controller {
 	public void fromPaginaPrincipaleToFinestraInserisciAppuntamento() {
 		paginaPrincipale.setEnabled(false);
 		
-		finestrainserisciAppuntamento = new FinestraInserisciAppuntamento(this);
-		finestrainserisciAppuntamento.setVisible(true);
+		finestraInserisciAppuntamento = new FinestraInserisciAppuntamento(this);
+		finestraInserisciAppuntamento.setVisible(true);
 	}
 	
 	
