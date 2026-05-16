@@ -185,6 +185,9 @@ public class FinestraInserisciPaziente extends JDialog {
 							Paziente p = new Paziente(txtNome.getText().trim(), txtCognome.getText().trim(), txtCodiceFiscale.getText().trim(), getDate(dateChooserNascita) ,txtTelefono.getText().trim(), Double.valueOf(txtPrezzo.getText().trim()));
 							if(theController.inserisciPaziente(p)) {
 								JOptionPane.showMessageDialog(null, "L'inserimento è andato a buon fine!");
+								
+								//CLEAR FIELDS:
+								clearTextFiedls();
 							}else {
 								JOptionPane.showMessageDialog(null, "L'inserimento non è andato a buon fine!");
 							}
@@ -208,6 +211,8 @@ public class FinestraInserisciPaziente extends JDialog {
 						theController.paginaPrincipale.setVisible(true);
 						theController.paginaPrincipale.setEnabled(true);
 						
+						//CLEAR FIELDS:
+						clearTextFiedls();
 					}
 				});
 				btnIndietro.setActionCommand("Cancel");
@@ -215,7 +220,9 @@ public class FinestraInserisciPaziente extends JDialog {
 			}
 		}
 	}
-//METODI:
+	
+	
+//METHODS:
 	//SERVE PER PULIRE I CAMPI:
 	private void clearTextFiedls() {
 		txtNome.setText(null);
@@ -279,7 +286,7 @@ public class FinestraInserisciPaziente extends JDialog {
 		return true;
 	}
 	
-//METHODS:
+	//CONVERTI LA DATA DI UN JCOMPONENT IN UNO PER IL DB:
 	private java.sql.Date getDate(JDateChooser date){
 		java.sql.Date sqlDate = (date.getDate() != null)
 			    ? new java.sql.Date(date.getDate().getTime())
