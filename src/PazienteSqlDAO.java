@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +14,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 	private static final String USER = "postgres";
 	private static final String PASSWORD = "Informatica1";
 
+	private CryptoUtilsDAO cryptoUtilsDAO;
 	
 //METHODS:
 	
@@ -50,12 +52,55 @@ public class PazienteSqlDAO implements PazienteDAO{
 		}
 	}
 	
-	private void popolaTabellaFirstMode(DefaultTableModel model) {
+	private void popolaTabellaFirstMode(DefaultTableModel model) throws PersonalException {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Paziente AS P "
+				+ "ORDER BY cognome ASC ";
 		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+            
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			
+                ResultSet rs = psmt.executeQuery();
+                
+                cryptoUtilsDAO = new CryptoUtilsDAO();
+                
+            while(rs.next()) {
+            	String dataNacitaFormattata =  sdf.format(rs.getDate("data_nascita"));
+            	String codiceFiscaleDecriptato = cryptoUtilsDAO.decrypPrendiIV(rs.getInt("id_paziente"));
+				model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecriptato, dataNacitaFormattata, rs.getString("telefono"), rs.getString("email"),  rs.getDouble("prezzo"), rs.getDouble("credito")});
+            }
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile popolare la tabella con i pazienti a causa di un errore tecnico.");
+    	}	
 	}
 	
-	private void popolaTabellaSecondMode(DefaultTableModel model, String cognome) {
+	private void popolaTabellaSecondMode(DefaultTableModel model, String cognome) throws PersonalException {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Paziente "
+				+ "WHERE cognome = ? "
+				+ "ORDER BY Nome ASC ";
 		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+            
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			
+			psmt.setString(1, cognome);
+			
+                ResultSet rs = psmt.executeQuery();
+                
+                cryptoUtilsDAO = new CryptoUtilsDAO();
+            
+                while(rs.next()) {
+            	String dataNacitaFormattata =  sdf.format(rs.getDate("data_nascita"));
+            	String codiceFiscaleDecriptato = cryptoUtilsDAO.decrypPrendiIV(rs.getInt("id_paziente"));
+				model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecriptato, dataNacitaFormattata, rs.getString("telefono"), rs.getString("email"),  rs.getDouble("prezzo"), rs.getDouble("credito")});
+            }
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile popolare la tabella con i pazienti a causa di un errore tecnico.");
+    	}	
 	}
 	
 	//SERVE PER RENDERE LA PRIMA LETTERA MAIUSCOLA:

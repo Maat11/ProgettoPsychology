@@ -64,7 +64,7 @@ public class PaginaPrincipale extends JFrame {
 				sqlDate = java.sql.Date.valueOf(dataOdiernaLocalDate);
 				
 				//POPOLA TABELLA:
-
+				theController.popolaTabellaConPazientiEConData(sqlDate, model);
 			}
 		});
 		theController = c;
@@ -238,7 +238,14 @@ public class PaginaPrincipale extends JFrame {
 				new String[]{"Data giorno", "Ora inizio" , "Ora fine" , "id", "Nome", "Cognome", "Telefono", "Modalità", "Pagato"}
 			);
 		
+		
 		table = new JTable(model);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		table.getColumnModel().getColumn(0).setWidth(0);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setPreferredWidth(0);
+		
 		table.getColumnModel().getColumn(3).setWidth(0);
 		table.getColumnModel().getColumn(3).setMaxWidth(0);
 		table.getColumnModel().getColumn(3).setMinWidth(0);

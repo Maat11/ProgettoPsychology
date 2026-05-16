@@ -13,10 +13,12 @@ import java.beans.PropertyChangeListener;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -35,12 +37,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JSpinner;
+import java.awt.SystemColor;
 
 public class FinestraInserisciAppuntamento extends JDialog {
 	private Controller theController;
 	
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private JPanel panelCentral;
 	private JButton btnBack;
 	private JButton btnInserisci;
 	private JDateChooser dateChooser;
@@ -53,7 +58,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 	private JTextField txtOraFine;
 	private JComboBox comboBox;
 	private java.sql.Date sqlDate;
-	private int countClick;
+	private int countMouseClick;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public FinestraInserisciAppuntamento(Controller c) {
@@ -67,7 +72,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 		        String dataFormattata = sdf.format(sqlDate);
 		        
 				lblDataSelezionata.setText(dataFormattata);
-//				theController.tabellaAppuntamentiInsert(sqlDate, model);
+				theController.popolaTabellaConPazientiEConData(sqlDate, model);
 			}
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -85,6 +90,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
 			JPanel panelTop = new JPanel();
+			panelTop.setBackground(SystemColor.info);
 			contentPanel.add(panelTop, BorderLayout.NORTH);
 			{
 				JLabel lblWelcome = new JLabel("Inserisci un appuntamento");
@@ -93,7 +99,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			}
 		}
 		{
-			JPanel panelCentral = new JPanel();
+			panelCentral = new JPanel();
 			contentPanel.add(panelCentral, BorderLayout.CENTER);
 			
 			JLabel lblScegliData = new JLabel("Compila i campi");
@@ -122,7 +128,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 					            lblDataSelezionata.setText(sqlFormatString);
 
 					            // Aggiorna la tabella con la data selezionata
-//					            theController.tabellaAppuntamentiInsert(sqlDate, model);
+					            theController.popolaTabellaConPazientiEConData(sqlDate, model);
 
 					        } catch (Exception e) {
 					            // Gestisci eventuali errori durante la conversione
@@ -157,13 +163,13 @@ public class FinestraInserisciAppuntamento extends JDialog {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					//VAI NELLA FINESTRA PER SCEGLIERE IL PAZIENTE QUANDO L'UTENTE CLICCA DUE VOLTE:
-					countClick++;
-					if(countClick == 2) {
+					countMouseClick++;
+					if(countMouseClick == 2) {
 						//VAI ALLA FINESTRA DOVE SI SCEGLIE IL PAZIENTE + COUNT = 0:
 						IdPaziente = new JTextField();
 						IdPaziente.setVisible(false);
-//						theController.daFinestraInserisciAppuntamentoAFinsetraScegliIdPazPerAppuntamento(txtCodiceFiscale, IdPaziente);
-						countClick = 0;
+						theController.fromFinestraInserisciAppuntamentoToFinestraSceltaPazientePerAppuntamento(txtCodiceFiscale, IdPaziente);
+						countMouseClick = 0;
 					}
 				}
 			});
@@ -191,32 +197,32 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			String[] tipoSeduta = {"Presenza", "Online"};
 			
 			comboBox = new JComboBox(tipoSeduta);
+			
 			GroupLayout gl_panelCentral = new GroupLayout(panelCentral);
 			gl_panelCentral.setHorizontalGroup(
 				gl_panelCentral.createParallelGroup(Alignment.LEADING)
 					.addGroup(gl_panelCentral.createSequentialGroup()
 						.addContainerGap()
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panelCentral.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_panelCentral.createSequentialGroup()
-									.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING, false)
-										.addGroup(gl_panelCentral.createSequentialGroup()
-											.addComponent(lblData, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE))
-										.addComponent(lblOraInizio, GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-										.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
+									.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING, false)
+											.addGroup(gl_panelCentral.createSequentialGroup()
+												.addComponent(lblData, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE))
+											.addComponent(lblOraInizio, GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+											.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
+										.addComponent(lblOraFine, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
 									.addGap(16)
 									.addGroup(gl_panelCentral.createParallelGroup(Alignment.TRAILING, false)
 										.addComponent(comboBox, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(txtOraFine, Alignment.LEADING)
 										.addComponent(txtOraInizio)
 										.addComponent(dateChooser, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(txtCodiceFiscale, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE))
+										.addComponent(txtCodiceFiscale, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
 									.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE))
 								.addGroup(gl_panelCentral.createSequentialGroup()
-									.addComponent(lblOraFine, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(Alignment.TRAILING, gl_panelCentral.createSequentialGroup()
 									.addComponent(lblScegliData, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
 									.addGap(18)))
 							.addGroup(gl_panelCentral.createSequentialGroup()
@@ -241,7 +247,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 							.addComponent(lblDataSelezionata, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
-							.addComponent(panelTable, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+							.addComponent(panelTable, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
 							.addGroup(gl_panelCentral.createSequentialGroup()
 								.addGap(1)
 								.addGroup(gl_panelCentral.createParallelGroup(Alignment.BASELINE)
@@ -257,13 +263,13 @@ public class FinestraInserisciAppuntamento extends JDialog {
 									.addComponent(txtOraInizio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addGroup(gl_panelCentral.createParallelGroup(Alignment.BASELINE)
-									.addComponent(lblOraFine, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
-									.addComponent(txtOraFine, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addComponent(txtOraFine, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblOraFine, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
 								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addGroup(gl_panelCentral.createParallelGroup(Alignment.BASELINE)
 									.addComponent(lblModalità, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
 									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-						.addGap(36))
+						.addGap(24))
 			);
 			panelTable.setLayout(new BorderLayout(0, 0));
 			
@@ -308,29 +314,37 @@ public class FinestraInserisciAppuntamento extends JDialog {
 				btnInserisci = new JButton("Inserisci");
 				btnInserisci.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						//CONTROLLO CAMPI: INSERISCI IL CTRLHour
-//						if(ctrlTxt()) {
-//							//INSERISCI APPUNTAMENTO:
-//							try {
-//								//CAST DELLA DATA: 
-//								java.sql.Date sqlDate = new java.sql.Date(dateChooser.getDate().getTime());
-//								
-//								//INSERIMENTO DELL'APPUNTAMENTO:
-//								if(theController.inserisciAppuntamento(Integer.valueOf(String.valueOf(IdPaziente.getText().trim())), sqlDate, txtOraInizio.getText().trim(), txtOraFine.getText().trim(), comboBox.getSelectedItem().toString().trim())) {
-//									//PULISCI I CAMPI:
-//									txtClear();
-//									//AGGIORNA LA TABELLA:
-//									theController.tabellaAppuntamentiInsert(sqlDate, model);
-//									//MESSAGGIO:
-//									JOptionPane.showMessageDialog(null, "Hai inserito correttamente l'appuntamento!");
-//								}else {
-//									txtClear();
-//									JOptionPane.showMessageDialog(null, "Errore, l'appuntamento non è stato inserito correttamente. RIPROVA!");
-//								}
-//							}catch(ClassCastException  cast) {
-//								JOptionPane.showMessageDialog(null, "Errore nel cast delle date! "+ cast);
-//							}
-//						}
+//						CONTROLLO CAMPI: INSERISCI IL CTRLHour
+						if(ctrlTxt()) {
+							//INSERISCI APPUNTAMENTO:
+							try {
+								//CAST DELLA DATA: 
+								java.sql.Date sqlDate = new java.sql.Date(dateChooser.getDate().getTime());
+								//INSERIMENTO DELL'APPUNTAMENTO:
+								if(txtOraFine.getText().isBlank()){
+									if(ctrlHour()) {
+										Appuntamento appuntamento = new Appuntamento(Integer.valueOf(String.valueOf(IdPaziente.getText().trim())), sqlDate, txtOraInizio.getText().trim(), txtOraFine.getText().trim(), comboBox.getSelectedItem().toString().trim());
+										if(theController.inserisciAppuntamento(appuntamento)) {
+											//PULISCI I CAMPI:
+											txtClear();
+											//AGGIORNA LA TABELLA:
+											theController.popolaTabellaConPazientiEConData(sqlDate, model);
+											//MESSAGGIO:
+											JOptionPane.showMessageDialog(null, "Hai inserito correttamente l'appuntamento!");
+										}else {
+											JOptionPane.showMessageDialog(null, "Errore, l'appuntamento non è stato inserito correttamente. RIPROVA!");
+										}
+									}else {
+										JOptionPane.showMessageDialog(null, "Errore con l'ora");
+									}
+								}
+							} catch(ClassCastException  cast) {
+								JOptionPane.showMessageDialog(null, "Errore nel cast delle date! "+ cast);
+							} catch(Exception exc) {
+								System.out.println(exc.toString());
+								JOptionPane.showMessageDialog(null, "Errore di tipo 2");
+							}
+						}
 					}		
 				});
 				btnInserisci.setActionCommand("OK");
@@ -341,23 +355,32 @@ public class FinestraInserisciAppuntamento extends JDialog {
 	}
 //METODI:
 	private boolean ctrlHour() {
-		//CAST ORA INIZIO:
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime oraIn = LocalTime.parse(txtOraInizio.getText(), formatter);
-        Time sqlTimeIn = Time.valueOf(oraIn);
-        
-        //CAST ORA FINE:
-        LocalTime oraFin = LocalTime.parse(txtOraFine.getText(), formatter);
-        Time sqlTimeFin = Time.valueOf(oraFin);
-        
-        long minutiDifferenza = java.time.Duration.between(oraIn, oraFin).toMinutes();
-		
-	    if(minutiDifferenza >= 60) {
-	    	return true;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+	    try {
+	        // Parsing dell'orario di inizio
+	        LocalTime oraIn = LocalTime.parse(txtOraInizio.getText(), formatter);
+
+	        // Se txtOraFine è vuoto, imposta oraFin a un'ora dopo oraIn
+	        LocalTime oraFin;
+	        if (txtOraFine.getText().isBlank()) {
+	            oraFin = oraIn.plusHours(1); // Aggiungi un'ora
+	            txtOraFine.setText(oraFin.format(formatter)); // Aggiorna il campo txtOraFine
+	        } else {
+	            // Altrimenti, parsalo
+	            oraFin = LocalTime.parse(txtOraFine.getText(), formatter);
+	        }
+
+	        // Calcola la differenza in minuti
+	        long minutiDifferenza = Duration.between(oraIn, oraFin).toMinutes();
+
+	        // Verifica se la differenza è almeno 60 minuti
+	        return minutiDifferenza >= 60;
+	    } catch (DateTimeParseException e) {
+	        // Se il formato non è valido, restituisci false
+	        return false;
 	    }
-		return false;
 	}
-	
 	private boolean ctrlTxt() {
 		if(txtCodiceFiscale.getText().isBlank()) {
 			JOptionPane.showMessageDialog(null, "Errore, il campo id paziente non può essere vuoto!");

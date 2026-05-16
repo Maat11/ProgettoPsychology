@@ -3,6 +3,7 @@ import java.util.Base64;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class Controller {
 
@@ -85,10 +86,35 @@ public class Controller {
 	}
 	
 	//SERVE PER ANDARE DALLA FINESTRA PER CREARE UN APPUNTAMENTO ALLA FINESTRA PER LA SCELTA DEL CODICE FISCALE DEL PAZIENTE CHE ANDRA' ALL'APPUNTAMENTO:
-	public void fromFinestraInserisciAppuntamentoToFinestraSceltaPazientePerAppuntamento(JTextField txtCodiceFiscale) {
+	public void fromFinestraInserisciAppuntamentoToFinestraSceltaPazientePerAppuntamento(JTextField txtCodiceFiscale, JTextField idPaziente) {
 		finestraInserisciAppuntamento.setEnabled(false);
 		
-		finestraSceltaPazientePerAppuntamento = new FinestraSceltaPazientePerAppuntamento(txtCodiceFiscale, this);
+		finestraSceltaPazientePerAppuntamento = new FinestraSceltaPazientePerAppuntamento(txtCodiceFiscale, idPaziente, this);
+		finestraSceltaPazientePerAppuntamento.setVisible(true);
+	}
+	
+	//MI SERVE A POPOLARE LA TABELLA CON I PAZIENTI:
+	public void popolaTabellaConPazienti(DefaultTableModel model, String cognome) {
+		pazienteSqlDAO = new PazienteSqlDAO();
+		model.setRowCount(0);
+		
+		try {
+			pazienteSqlDAO.popolaTabella(model, cognome);
+		} catch (PersonalException e) {
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}	
+	}
+	
+	//MI SERVE PER POPOLARE LA TABELLA DEGLI APPUNTAMENTI CERCANDO CON UNA DATA SPECIFICA:
+	public void popolaTabellaConPazientiEConData(java.sql.Date data, DefaultTableModel model) {
+		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
+		model.setRowCount(0);
+		
+		try {
+			appuntamentoSqlDAO.popolaTabellaConData(data, model);
+		} catch (PersonalException e) {
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}		
 	}
 	
 	//ARRAY DI BYTE RANDOM:

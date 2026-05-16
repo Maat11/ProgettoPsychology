@@ -1,12 +1,15 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	
@@ -43,6 +46,33 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
     	}catch (SQLException e) {
     		throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");
 		}		
+	}
+	
+	@Override
+	public void popolaTabellaConData(java.sql.Date data, DefaultTableModel model) throws PersonalException {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Appuntamento AS A "
+				+ "JOIN prgzia.Paziente AS P ON A.id_paziente = P.id_paziente "
+				+ "WHERE A.data_giorno = ? "
+				+ "ORDER BY ora_inizio ASC ";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+						
+                psmt.setDate(1, data);
+                
+            ResultSet rs = psmt.executeQuery();
+            
+            //FORMATTER:
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdfOra = new SimpleDateFormat("HH:mm");
+            
+            while(rs.next()) {
+				model.addRow(new Object[]{sdf.format(rs.getDate("data_giorno")), sdfOra.format(rs.getTime("ora_inizio")), sdfOra.format(rs.getTime("ora_fine")), rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), rs.getString("telefono"), rs.getString("modalità"), rs.getString("pagato")});
+            }
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");
+    	} 
 	}
 
 }
