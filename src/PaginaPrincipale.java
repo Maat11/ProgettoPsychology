@@ -93,7 +93,7 @@ public class PaginaPrincipale extends JFrame {
 		itemDisdiciAppuntamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//FINESTRA DISDICI APPUNTAMENTO:
-
+				theController.fromPaginaPrincipaleToFinestraEliminaAppuntamento();
 			}
 		});
 		menuInserisciAppuntamento.add(itemDisdiciAppuntamento);
