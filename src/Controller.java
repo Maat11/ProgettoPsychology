@@ -21,6 +21,7 @@ public class Controller {
 	public FinestraInserisciAppuntamento finestraInserisciAppuntamento;
 	public FinestraInserisciPaziente finestraInserisciPaziente;
 	public FinestraSceltaPazientePerAppuntamento finestraSceltaPazientePerAppuntamento;
+	
 //COSTRUTTORE:	
 	Controller(){
 		paginaPrincipale = new PaginaPrincipale(this);
