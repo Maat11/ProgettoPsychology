@@ -71,7 +71,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 				model.addRow(new Object[]{sdf.format(rs.getDate("data_giorno")), sdfOra.format(rs.getTime("ora_inizio")), sdfOra.format(rs.getTime("ora_fine")), rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), rs.getString("telefono"), rs.getString("modalità"), rs.getString("pagato")});
             }
     	}catch(SQLException e) {
-    		throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");
+    		throw new PersonalException("Impossibile popolare la tabella a causa di un errore tecnico.");
     	} 
 	}
 
