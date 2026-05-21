@@ -21,6 +21,7 @@ public class Controller {
 	public FinestraInserisciAppuntamento finestraInserisciAppuntamento;
 	public FinestraInserisciPaziente finestraInserisciPaziente;
 	public FinestraSceltaPazientePerAppuntamento finestraSceltaPazientePerAppuntamento;
+	public FinestraEliminaAppuntamento finestraEliminaAppuntamento;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -92,6 +93,13 @@ public class Controller {
 		
 		finestraSceltaPazientePerAppuntamento = new FinestraSceltaPazientePerAppuntamento(txtCodiceFiscale, idPaziente, this);
 		finestraSceltaPazientePerAppuntamento.setVisible(true);
+	}
+	
+	public void fromPaginaPrincipaleToFinestraEliminaAppuntamento() {
+		paginaPrincipale.setEnabled(false);
+		
+		finestraEliminaAppuntamento = new FinestraEliminaAppuntamento(this);
+		finestraEliminaAppuntamento.setVisible(true);
 	}
 	
 	//MI SERVE A POPOLARE LA TABELLA CON I PAZIENTI:
