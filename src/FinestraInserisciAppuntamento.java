@@ -128,7 +128,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 					            lblDataSelezionata.setText(sqlFormatString);
 
 					            // Aggiorna la tabella con la data selezionata
-					            theController.popolaTabellaConPazientiEConData(sqlDate, model);
+					            theController.popolaTabellaAppuntamentiConPazientiEConData(sqlDate, model);
 
 					        } catch (Exception e) {
 					            // Gestisci eventuali errori durante la conversione
@@ -328,7 +328,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 											//PULISCI I CAMPI:
 											txtClear();
 											//AGGIORNA LA TABELLA:
-											theController.popolaTabellaConPazientiEConData(sqlDate, model);
+											theController.popolaTabellaAppuntamentiConPazientiEConData(sqlDate, model);
 											//MESSAGGIO:
 											JOptionPane.showMessageDialog(null, "Hai inserito correttamente l'appuntamento!");
 										}else {
