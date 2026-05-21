@@ -107,7 +107,7 @@ public class Controller {
 	}
 	
 	//MI SERVE PER POPOLARE LA TABELLA DEGLI APPUNTAMENTI CERCANDO CON UNA DATA SPECIFICA:
-	public void popolaTabellaConPazientiEConData(java.sql.Date data, DefaultTableModel model) {
+	public void popolaTabellaAppuntamentiConPazientiEConData(java.sql.Date data, DefaultTableModel model) {
 		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
 		model.setRowCount(0);
 		

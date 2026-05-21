@@ -72,7 +72,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 		        String dataFormattata = sdf.format(sqlDate);
 		        
 				lblDataSelezionata.setText(dataFormattata);
-				theController.popolaTabellaConPazientiEConData(sqlDate, model);
+				theController.popolaTabellaAppuntamentiConPazientiEConData(sqlDate, model);
 			}
 			@Override
 			public void windowClosing(WindowEvent e) {

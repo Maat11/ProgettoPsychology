@@ -64,7 +64,7 @@ public class PaginaPrincipale extends JFrame {
 				sqlDate = java.sql.Date.valueOf(dataOdiernaLocalDate);
 				
 				//POPOLA TABELLA:
-				theController.popolaTabellaConPazientiEConData(sqlDate, model);
+				theController.popolaTabellaAppuntamentiConPazientiEConData(sqlDate, model);
 			}
 		});
 		theController = c;
