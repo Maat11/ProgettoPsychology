@@ -17,6 +17,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	private static final String USER = "postgres";
 	private static final String PASSWORD = "Informatica1";
 
+	//MI SERVE PER INSERIRE UN APPUNTAMENTO:
 	@Override
 	public boolean inserisci(Appuntamento app) throws PersonalException{
 		String sql = "INSERT INTO prgzia.Appuntamento(id_paziente, data_giorno, ora_Inizio, ora_fine, modalità) "
@@ -48,6 +49,37 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 		}		
 	}
 	
+	//MI SERVE PER ELIMINARE UN APPUNTAMENTO:
+	@Override
+	public boolean elimina(java.sql.Date data, String oraInizio, String oraFine) throws PersonalException {
+		String sql = "DELETE FROM prgzia.Appuntamento "
+				+ "WHERE data_giorno = ? AND ora_inizio = ? AND ora_fine = ? ";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+						
+			//CAST ORA INIZIO:
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime oraIn = LocalTime.parse(oraInizio, formatter);
+            Time sqlTimeIn = Time.valueOf(oraIn);
+            
+            //CAST ORA FINE:
+            LocalTime oraFin = LocalTime.parse(oraFine, formatter);
+            Time sqlTimeFin = Time.valueOf(oraFin);
+            
+                psmt.setDate(1, data);
+                psmt.setTime(2, sqlTimeIn);
+                psmt.setTime(3, sqlTimeFin);
+                
+            int result = psmt.executeUpdate();
+            
+            return result > 0;
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile eliminare l'appuntamento selezionato a causa di un errore tecnico.");
+    	}
+	}
+
+	//MI SERVE PER POPOLARE LA TABELLA CON GLI APPUNTAMENTI ED I PAZIENTI ASSOCIATI:
 	@Override
 	public void popolaTabellaConData(java.sql.Date data, DefaultTableModel model) throws PersonalException {
 		String sql = "SELECT * "
@@ -75,4 +107,5 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
     	} 
 	}
 
+	
 }
