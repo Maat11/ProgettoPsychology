@@ -126,6 +126,17 @@ public class Controller {
 		}		
 	}
 	
+	public boolean eliminaAppuntamento(java.sql.Date data, String oraInizio, String oraFine) {
+		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
+		
+		try {
+			return appuntamentoSqlDAO.elimina(data, oraInizio, oraFine);
+		} catch (PersonalException e) {
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+	}
+	
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
 		byte[] iv = new byte[12];
