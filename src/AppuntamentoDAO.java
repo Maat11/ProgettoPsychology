@@ -4,5 +4,7 @@ public interface AppuntamentoDAO {
 
 	boolean inserisci(Appuntamento app) throws PersonalException;
 	
+	boolean elimina(Appuntamento app) throws PersonalException;
+	
 	void popolaTabellaConData(java.sql.Date data, DefaultTableModel model) throws PersonalException;
 }
