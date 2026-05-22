@@ -70,17 +70,21 @@ public class PaginaPrincipale extends JFrame {
 		theController = c;
 		
 		setTitle("Pagina Principale");
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(690, 565);
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		setJMenuBar(menuBar);
 		
 		JMenu menuInserisciAppuntamento = new JMenu("Appuntamenti");
+		menuInserisciAppuntamento.setFont(new Font("Dialog", Font.PLAIN, 15));
 		menuBar.add(menuInserisciAppuntamento);
 		
 		JMenuItem itemInserisciAppuntamenti = new JMenuItem("Inserisci appuntamento");
+		itemInserisciAppuntamenti.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemInserisciAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//FINESTRA INSERISCI APPUNTAMENTO:
@@ -90,6 +94,7 @@ public class PaginaPrincipale extends JFrame {
 		menuInserisciAppuntamento.add(itemInserisciAppuntamenti);
 		
 		JMenuItem itemDisdiciAppuntamento = new JMenuItem("Disdici appuntamento");
+		itemDisdiciAppuntamento.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemDisdiciAppuntamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//FINESTRA DISDICI APPUNTAMENTO:
@@ -99,6 +104,7 @@ public class PaginaPrincipale extends JFrame {
 		menuInserisciAppuntamento.add(itemDisdiciAppuntamento);
 		
 		JMenuItem itemMenuVisualizzaAppuntamenti = new JMenuItem("Visualizza appuntamenti per data");
+		itemMenuVisualizzaAppuntamenti.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemMenuVisualizzaAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VISUALIZZA APPUNTAMENTI PASSATI E FUTURI:
@@ -108,9 +114,11 @@ public class PaginaPrincipale extends JFrame {
 		menuInserisciAppuntamento.add(itemMenuVisualizzaAppuntamenti);
 		
 		JMenu menuCliente = new JMenu("Pazienti");
+		menuCliente.setFont(new Font("Dialog", Font.PLAIN, 15));
 		menuBar.add(menuCliente);
 		
 		JMenuItem itemInserisciCliente = new JMenuItem("Inserisci pazienti");
+		itemInserisciCliente.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemInserisciCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//AGGIUNTA DI UN CLIENTE:
@@ -120,6 +128,7 @@ public class PaginaPrincipale extends JFrame {
 		menuCliente.add(itemInserisciCliente);
 		
 		JMenuItem itemModificaCliente = new JMenuItem("Modifica pazienti");
+		itemModificaCliente.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemModificaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//MODIFICA DI UN CLIENTE:
@@ -129,6 +138,7 @@ public class PaginaPrincipale extends JFrame {
 		menuCliente.add(itemModificaCliente);
 		
 		JMenuItem itemEliminaCliente = new JMenuItem("Elimina pazienti");
+		itemEliminaCliente.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemEliminaCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ELIMINAZIONE DI UN CLIENTE:
@@ -138,6 +148,7 @@ public class PaginaPrincipale extends JFrame {
 		menuCliente.add(itemEliminaCliente);
 		
 		JMenuItem itemVisualizzaPazienti = new JMenuItem("Visualizza pazienti");
+		itemVisualizzaPazienti.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemVisualizzaPazienti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//PAGINA PER VISUALIZZARE TUTTI I CLIENTI:
@@ -147,9 +158,11 @@ public class PaginaPrincipale extends JFrame {
 		menuCliente.add(itemVisualizzaPazienti);
 		
 		JMenu menuPagamento = new JMenu("Pagamento");
+		menuPagamento.setFont(new Font("Dialog", Font.PLAIN, 15));
 		menuBar.add(menuPagamento);
 		
 		JMenuItem itemVisualizzaCreditori = new JMenuItem("Visualizza creditori");
+		itemVisualizzaCreditori.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		itemVisualizzaCreditori.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
