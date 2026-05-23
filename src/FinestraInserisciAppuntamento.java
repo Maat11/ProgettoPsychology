@@ -152,9 +152,11 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			lblDataSelezionata.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			
 			JLabel lblData = new JLabel("Data");
+			lblData.setHorizontalAlignment(SwingConstants.CENTER);
 			lblData.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			
 			JLabel lblNome = new JLabel("Codice fiscale");
+			lblNome.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNome.setToolTipText("Inserisci l'id del paziente");
 			lblNome.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			
@@ -176,6 +178,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			txtCodiceFiscale.setColumns(10);
 			
 			JLabel lblOraInizio = new JLabel("Ora inizio");
+			lblOraInizio.setHorizontalAlignment(SwingConstants.CENTER);
 			lblOraInizio.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			
 			txtOraInizio = new JTextField();
@@ -184,6 +187,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			txtOraInizio.setColumns(10);
 			
 			JLabel lblOraFine = new JLabel("Ora fine");
+			lblOraFine.setHorizontalAlignment(SwingConstants.CENTER);
 			lblOraFine.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			
 			txtOraFine = new JTextField();
@@ -192,6 +196,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			txtOraFine.setColumns(10);
 			
 			JLabel lblModalità = new JLabel("Modalità");
+			lblModalità.setHorizontalAlignment(SwingConstants.CENTER);
 			lblModalità.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			
 			String[] tipoSeduta = {"Presenza", "Online"};
@@ -204,36 +209,31 @@ public class FinestraInserisciAppuntamento extends JDialog {
 					.addGroup(gl_panelCentral.createSequentialGroup()
 						.addContainerGap()
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_panelCentral.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panelCentral.createSequentialGroup()
-									.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING, false)
-											.addGroup(gl_panelCentral.createSequentialGroup()
-												.addComponent(lblData, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE))
-											.addComponent(lblOraInizio, GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-											.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-										.addComponent(lblOraFine, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE))
-									.addGap(16)
-									.addGroup(gl_panelCentral.createParallelGroup(Alignment.TRAILING, false)
-										.addComponent(comboBox, Alignment.LEADING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(txtOraFine, Alignment.LEADING)
-										.addComponent(txtOraInizio)
-										.addComponent(dateChooser, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(txtCodiceFiscale, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-									.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE))
-								.addGroup(gl_panelCentral.createSequentialGroup()
-									.addComponent(lblScegliData, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-									.addGap(18)))
 							.addGroup(gl_panelCentral.createSequentialGroup()
-								.addComponent(lblModalità)
-								.addPreferredGap(ComponentPlacement.RELATED)))
+								.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblData, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+									.addComponent(lblOraInizio, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+									.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+									.addComponent(lblOraFine, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+									.addComponent(lblModalità, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
+								.addGap(16)
+								.addGroup(gl_panelCentral.createParallelGroup(Alignment.TRAILING)
+									.addComponent(comboBox, Alignment.LEADING, 0, 140, Short.MAX_VALUE)
+									.addComponent(txtOraFine, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+									.addComponent(txtOraInizio, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+									.addComponent(dateChooser, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+									.addGroup(gl_panelCentral.createSequentialGroup()
+										.addGap(2)
+										.addComponent(txtCodiceFiscale, GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)))
+								.addGap(49))
+							.addComponent(lblScegliData, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
+						.addGap(0)
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
 							.addGroup(gl_panelCentral.createSequentialGroup()
-								.addComponent(lblElencoAppuntamenti)
+								.addComponent(lblElencoAppuntamenti, GroupLayout.PREFERRED_SIZE, 219, Short.MAX_VALUE)
 								.addGap(18)
-								.addComponent(lblDataSelezionata, GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE))
-							.addComponent(panelTable, GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+								.addComponent(lblDataSelezionata, GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
+							.addComponent(panelTable, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
 						.addContainerGap())
 			);
 			gl_panelCentral.setVerticalGroup(
@@ -241,22 +241,23 @@ public class FinestraInserisciAppuntamento extends JDialog {
 					.addGroup(gl_panelCentral.createSequentialGroup()
 						.addGap(20)
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.TRAILING)
-							.addGroup(gl_panelCentral.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblScegliData)
-								.addComponent(lblElencoAppuntamenti, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblElencoAppuntamenti, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
 							.addComponent(lblDataSelezionata, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
-							.addComponent(panelTable, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
 							.addGroup(gl_panelCentral.createSequentialGroup()
-								.addGap(1)
+								.addComponent(panelTable, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+								.addGap(24))
+							.addGroup(gl_panelCentral.createSequentialGroup()
+								.addComponent(lblScegliData)
+								.addGap(16)
 								.addGroup(gl_panelCentral.createParallelGroup(Alignment.BASELINE)
 									.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
 									.addComponent(txtCodiceFiscale, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addGap(14)
 								.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
-									.addComponent(lblData)
-									.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblData))
 								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
 									.addComponent(lblOraInizio, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
@@ -268,8 +269,8 @@ public class FinestraInserisciAppuntamento extends JDialog {
 								.addPreferredGap(ComponentPlacement.UNRELATED)
 								.addGroup(gl_panelCentral.createParallelGroup(Alignment.BASELINE)
 									.addComponent(lblModalità, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
-									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-						.addGap(24))
+									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addContainerGap())))
 			);
 			panelTable.setLayout(new BorderLayout(0, 0));
 			
