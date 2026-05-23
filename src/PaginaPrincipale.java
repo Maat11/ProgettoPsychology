@@ -118,7 +118,7 @@ public class PaginaPrincipale extends JFrame {
 		itemInserisciCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//AGGIUNTA DI UN CLIENTE:
-				theController.fromPaginaPrincipaleToFienstraInserisciPaziente();
+				theController.fromPaginaPToFienstraInserisciPaziente(1);
 			}
 		});
 		menuCliente.add(itemInserisciCliente);
