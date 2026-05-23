@@ -138,5 +138,22 @@ public class PazienteSqlDAO implements PazienteDAO{
 		return 0;
 	}
 
-	
+	@Override
+	public boolean elimina(int idPaziente) throws PersonalException {
+		String sql = "DELETE "
+				+ "FROM prgzia.Paziente AS P "
+				+ "WHERE P.id_paziente = ? ";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+    		
+                psmt.setInt(1, idPaziente);
+                
+            int fine = psmt.executeUpdate();
+            return fine > 0;
+    	}catch(Exception e) {
+    		throw new PersonalException("Impossibile eliminare il paziente a causa di un errore tecnico.");
+    	}		
+	}
+
 }

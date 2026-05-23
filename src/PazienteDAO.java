@@ -11,4 +11,5 @@ public interface PazienteDAO {
 	
 	int prendiIdPaziente(String codiceFiscale) throws PersonalException;
 	
+	boolean elimina(int idPaziente) throws PersonalException;
 }
