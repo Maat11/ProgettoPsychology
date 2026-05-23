@@ -221,6 +221,7 @@ public class FinestraEliminaAppuntamento extends JDialog {
 							if(scelta == JOptionPane.YES_OPTION) {
 								if(theController.eliminaAppuntamento(dataSel, oraInSel, oraFinSel)) {
 									JOptionPane.showMessageDialog(null, "L'appuntamento è stato eliminato con successo");
+									lblAppSelezionato.setText(null);
 								}
 							}else {
 								JOptionPane.showMessageDialog(null, "Operazione annullata!");
