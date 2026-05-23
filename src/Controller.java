@@ -160,6 +160,18 @@ public class Controller {
 		paginaPaziente.setVisible(true);
 	}
 	
+	//SERVE PER ELIMIANARE UN PAZIENTE:
+	public boolean eliminaPaziente(int idPaziente) {
+		pazienteSqlDAO = new PazienteSqlDAO();
+		
+		try {
+			return pazienteSqlDAO.elimina(idPaziente);
+		} catch (PersonalException e) {
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+	}
+	
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
 		byte[] iv = new byte[12];
