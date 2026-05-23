@@ -278,15 +278,24 @@ public class FinestraInserisciAppuntamento extends JDialog {
 			
 			model  = new DefaultTableModel(
 					new Object[][]{},
-					new String[]{"Data", "Ora inizio", "Ora fine", "Id", "Nome", "Cognome", "Telefono"}
+					new String[]{"id App.", "Data", "Ora inizio", "Ora fine", "Id", "Nome", "Cognome", "Telefono"}
 				);
 			
 			table = new JTable(model);
-			table.getColumnModel().getColumn(3).setMinWidth(0);
-			table.getColumnModel().getColumn(3).setMaxWidth(0);
-			table.getColumnModel().getColumn(3).setWidth(0);
-			table.getColumnModel().getColumn(3).setPreferredWidth(0);
 			table.setFont(new Font("Tahoma", Font.PLAIN, 13));
+			
+			//NON MOSTRARE LA COLONNA ID APPUNTAMENTO:
+			table.getColumnModel().getColumn(0).setMinWidth(0);
+			table.getColumnModel().getColumn(0).setMaxWidth(0);
+			table.getColumnModel().getColumn(0).setWidth(0);
+			table.getColumnModel().getColumn(0).setPreferredWidth(0);
+			
+			//NON MOSTRARE LA COLONNA ID PAZIENTE:
+			table.getColumnModel().getColumn(4).setMinWidth(0);
+			table.getColumnModel().getColumn(4).setMaxWidth(0);
+			table.getColumnModel().getColumn(4).setWidth(0);
+			table.getColumnModel().getColumn(4).setPreferredWidth(0);
+			
 			scrollPane.setColumnHeaderView(table);
 			scrollPane.setViewportView(table);
 			panelCentral.setLayout(gl_panelCentral);
