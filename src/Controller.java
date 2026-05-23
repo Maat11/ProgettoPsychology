@@ -74,10 +74,14 @@ public class Controller {
 	}
 	
 	//SERVE PER ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER LA CREAZIONE DI UN CLIENTE:
-	public void fromPaginaPrincipaleToFienstraInserisciPaziente() {
-		paginaPrincipale.setEnabled(false);
+	public void fromPaginaPToFienstraInserisciPaziente(int typChiam) {
+		if(typChiam == 1) {
+			paginaPrincipale.setEnabled(false);
+		}else if(typChiam == 2){
+			paginaPaziente.setEnabled(false);
+		}
 		
-		finestraInserisciPaziente = new FinestraInserisciPaziente(this);
+		finestraInserisciPaziente = new FinestraInserisciPaziente(this, typChiam);
 		finestraInserisciPaziente.setVisible(true);		
 	}
 	
