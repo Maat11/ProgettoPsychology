@@ -16,7 +16,8 @@ public class Controller {
 		
 //PAGINE
 	public PaginaPrincipale paginaPrincipale;
-		
+	public PaginaPaziente paginaPaziente;
+	
 //FINESTRE
 	public FinestraInserisciAppuntamento finestraInserisciAppuntamento;
 	public FinestraInserisciPaziente finestraInserisciPaziente;
@@ -145,6 +146,14 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
+	}
+	
+	//SERVE PER ANDARE DALLA PAGINA PRINCIPALE ALLA PAGINA PAZIENTI:
+	public void fromPaginaPrincipaleToPaginaPaziente() {
+		paginaPrincipale.setVisible(false);
+		
+		paginaPaziente = new PaginaPaziente(this);
+		paginaPaziente.setVisible(true);
 	}
 	
 	//ARRAY DI BYTE RANDOM:
