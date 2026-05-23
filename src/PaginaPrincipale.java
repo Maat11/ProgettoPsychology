@@ -108,7 +108,7 @@ public class PaginaPrincipale extends JFrame {
 		itemMenuVisualizzaAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VISUALIZZA APPUNTAMENTI PASSATI E FUTURI:
-
+				theController.fromPaginaPrincipaleToFienstraVisualizzaAppuntamenti();
 			}
 		});
 		menuInserisciAppuntamento.add(itemMenuVisualizzaAppuntamenti);

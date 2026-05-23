@@ -22,6 +22,7 @@ public class Controller {
 	public FinestraInserisciPaziente finestraInserisciPaziente;
 	public FinestraSceltaPazientePerAppuntamento finestraSceltaPazientePerAppuntamento;
 	public FinestraEliminaAppuntamento finestraEliminaAppuntamento;
+	public FinestraVisualizzaAppuntamenti finestraVisualizzaAppuntamenti;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -95,6 +96,7 @@ public class Controller {
 		finestraSceltaPazientePerAppuntamento.setVisible(true);
 	}
 	
+	//SERVE PER ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER ELIMINA UN APPUNTAMENTO:
 	public void fromPaginaPrincipaleToFinestraEliminaAppuntamento() {
 		paginaPrincipale.setEnabled(false);
 		
@@ -102,7 +104,15 @@ public class Controller {
 		finestraEliminaAppuntamento.setVisible(true);
 	}
 	
-	//MI SERVE A POPOLARE LA TABELLA CON I PAZIENTI:
+	//SERVE PER ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER VISUALIZZARE GLI APPUNTAMENTI (TUTTI) IN BASE ALLA DATA:
+	public void fromPaginaPrincipaleToFienstraVisualizzaAppuntamenti() {
+		paginaPrincipale.setEnabled(false);
+		
+		finestraVisualizzaAppuntamenti = new FinestraVisualizzaAppuntamenti(this);
+		finestraVisualizzaAppuntamenti.setVisible(true);		
+	}
+	
+	//SERVE A POPOLARE LA TABELLA CON I PAZIENTI:
 	public void popolaTabellaConPazienti(DefaultTableModel model, String cognome) {
 		pazienteSqlDAO = new PazienteSqlDAO();
 		model.setRowCount(0);
