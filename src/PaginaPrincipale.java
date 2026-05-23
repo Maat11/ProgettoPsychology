@@ -248,21 +248,31 @@ public class PaginaPrincipale extends JFrame {
 		
 		model  = new DefaultTableModel(
 				new Object[][]{},
-				new String[]{"Data giorno", "Ora inizio" , "Ora fine" , "id", "Nome", "Cognome", "Telefono", "Modalità", "Pagato"}
+				new String[]{"id App", "Data giorno", "Ora inizio" , "Ora fine" , "id", "Nome", "Cognome", "Telefono", "Modalità", "Pagato"}
 			);
 		
 		
 		table = new JTable(model);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
+		//NON MOSTRARE LA COLONNA ID APPUNTAMENTO:
 		table.getColumnModel().getColumn(0).setWidth(0);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
 		table.getColumnModel().getColumn(0).setMinWidth(0);
 		table.getColumnModel().getColumn(0).setPreferredWidth(0);
 		
-		table.getColumnModel().getColumn(3).setWidth(0);
-		table.getColumnModel().getColumn(3).setMaxWidth(0);
-		table.getColumnModel().getColumn(3).setMinWidth(0);
-		table.getColumnModel().getColumn(3).setPreferredWidth(0);
+		//NON MOSTRARE LA COLONNA CON LA DATA DELL'APPUNTAMENTO:
+		table.getColumnModel().getColumn(1).setWidth(0);
+		table.getColumnModel().getColumn(1).setMaxWidth(0);
+		table.getColumnModel().getColumn(1).setMinWidth(0);
+		table.getColumnModel().getColumn(1).setPreferredWidth(0);
+		
+		//NON MOSTRARE LA COLONNA ID PAZIENTE:
+		table.getColumnModel().getColumn(4).setWidth(0);
+		table.getColumnModel().getColumn(4).setMaxWidth(0);
+		table.getColumnModel().getColumn(4).setMinWidth(0);
+		table.getColumnModel().getColumn(4).setPreferredWidth(0);
+		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
