@@ -43,11 +43,9 @@ public class FinestraEliminaAppuntamento extends JDialog {
 	private JTable table;
 	private JDateChooser dateChooser;
 	private JLabel lblAppSelezionato;
-	private java.sql.Date dataSel;
-	private String dataSceltaString;
-	private String oraInSel;
-	private String oraFinSel;
 	private String pagato;
+	private int idApp;
+	
 	
 	public FinestraEliminaAppuntamento(Controller c) {
 		addWindowListener(new WindowAdapter() {
@@ -98,7 +96,7 @@ public class FinestraEliminaAppuntamento extends JDialog {
 			
 			model  = new DefaultTableModel(
 					new Object[][]{},
-					new String[]{"Data", "Inizio", "Fine", "Id", "Nome", "Cognome", "Telefono", "Modalità", "Pagato"}
+					new String[]{"id App.", "Data", "Inizio", "Fine", "Id", "Nome", "Cognome", "Telefono", "Modalità", "Pagato"}
 				);
 			
 			{
@@ -165,28 +163,24 @@ public class FinestraEliminaAppuntamento extends JDialog {
 								lblAppSelezionato.setText("L'appuntamento selezionato è in data " + " " + String.valueOf(table.getValueAt(selRow, 0)) + " e " + "inizia alle ore " + String.valueOf(table.getValueAt(selRow, 1)) + " e finisce alle ore " + String.valueOf(table.getValueAt(selRow, 2)) + " con il paziente " + String.valueOf(table.getValueAt(selRow, 4)) + " " + String.valueOf(table.getValueAt(selRow, 5)));
 								lblAppSelezionato.setVisible(true);
 								
-								dataSceltaString = String.valueOf(table.getValueAt(selRow, 0));
-								oraInSel = String.valueOf(table.getValueAt(selRow, 1));
-								oraFinSel = String.valueOf(table.getValueAt(selRow, 2));
-								pagato = String.valueOf(table.getValueAt(selRow, 8));
+								idApp = Integer.valueOf(String.valueOf(table.getValueAt(selRow, 0)));
+								pagato = String.valueOf(table.getValueAt(selRow, 9));
 								
-								DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-						        LocalDate localDate = LocalDate.parse(dataSceltaString, inputFormatter);
 
-						        // 2. Formatta LocalDate nel formato "yyyy-MM-dd"
-						        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-						        String formattedString = localDate.format(outputFormatter);
-
-						        dataSel = java.sql.Date.valueOf(formattedString);
-								
 							}
 						});
 						
+//						NASCONDI L'ID DELL'APPUNTAMENTO:
+						table.getColumnModel().getColumn(0).setWidth(0);
+						table.getColumnModel().getColumn(0).setMaxWidth(0);
+						table.getColumnModel().getColumn(0).setMinWidth(0);
+						table.getColumnModel().getColumn(0).setPreferredWidth(0);
+						
 //						NASCONDI L'ID DEL PAZIENTE:
-						table.getColumnModel().getColumn(3).setWidth(0);
-						table.getColumnModel().getColumn(3).setMaxWidth(0);
-						table.getColumnModel().getColumn(3).setMinWidth(0);
-						table.getColumnModel().getColumn(3).setPreferredWidth(0);
+						table.getColumnModel().getColumn(4).setWidth(0);
+						table.getColumnModel().getColumn(4).setMaxWidth(0);
+						table.getColumnModel().getColumn(4).setMinWidth(0);
+						table.getColumnModel().getColumn(4).setPreferredWidth(0);
 						
 						scrollPane.setColumnHeaderView(table);
 						scrollPane.setViewportView(table);
@@ -219,7 +213,7 @@ public class FinestraEliminaAppuntamento extends JDialog {
 						if(ctrlField()) {
 							int scelta = JOptionPane.showConfirmDialog(null, "Eliminare definitivamente l'appuntamento?", "Messaggio di conferma", JOptionPane.YES_NO_OPTION);
 							if(scelta == JOptionPane.YES_OPTION) {
-								if(theController.eliminaAppuntamento(dataSel, oraInSel, oraFinSel)) {
+								if(theController.eliminaAppuntamento(idApp)) {
 									JOptionPane.showMessageDialog(null, "L'appuntamento è stato eliminato con successo");
 									lblAppSelezionato.setText(null);
 								}

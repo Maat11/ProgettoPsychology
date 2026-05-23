@@ -126,11 +126,11 @@ public class Controller {
 		}		
 	}
 	
-	public boolean eliminaAppuntamento(java.sql.Date data, String oraInizio, String oraFine) {
+	public boolean eliminaAppuntamento(int idApp) {
 		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
 		
 		try {
-			return appuntamentoSqlDAO.elimina(data, oraInizio, oraFine);
+			return appuntamentoSqlDAO.elimina(idApp);
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			return false;

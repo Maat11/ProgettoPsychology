@@ -51,25 +51,25 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	
 	//MI SERVE PER ELIMINARE UN APPUNTAMENTO:
 	@Override
-	public boolean elimina(java.sql.Date data, String oraInizio, String oraFine) throws PersonalException {
+	public boolean elimina(int idApp) throws PersonalException {
 		String sql = "DELETE FROM prgzia.Appuntamento "
-				+ "WHERE data_giorno = ? AND ora_inizio = ? AND ora_fine = ? ";
+				+ "WHERE id_appuntamento = ?";
 		
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 						
-			//CAST ORA INIZIO:
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime oraIn = LocalTime.parse(oraInizio, formatter);
-            Time sqlTimeIn = Time.valueOf(oraIn);
+//			//CAST ORA INIZIO:
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+//            LocalTime oraIn = LocalTime.parse(oraInizio, formatter);
+//            Time sqlTimeIn = Time.valueOf(oraIn);
+//            
+//            //CAST ORA FINE:
+//            LocalTime oraFin = LocalTime.parse(oraFine, formatter);
+//            Time sqlTimeFin = Time.valueOf(oraFin);
             
-            //CAST ORA FINE:
-            LocalTime oraFin = LocalTime.parse(oraFine, formatter);
-            Time sqlTimeFin = Time.valueOf(oraFin);
-            
-                psmt.setDate(1, data);
-                psmt.setTime(2, sqlTimeIn);
-                psmt.setTime(3, sqlTimeFin);
+                psmt.setInt(1, idApp);
+//                psmt.setTime(2, sqlTimeIn);
+//                psmt.setTime(3, sqlTimeFin);
                 
             int result = psmt.executeUpdate();
             
@@ -100,7 +100,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
             SimpleDateFormat sdfOra = new SimpleDateFormat("HH:mm");
             
             while(rs.next()) {
-				model.addRow(new Object[]{sdf.format(rs.getDate("data_giorno")), sdfOra.format(rs.getTime("ora_inizio")), sdfOra.format(rs.getTime("ora_fine")), rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), rs.getString("telefono"), rs.getString("modalità"), rs.getString("pagato")});
+				model.addRow(new Object[]{rs.getInt("id_appuntamento"), sdf.format(rs.getDate("data_giorno")), sdfOra.format(rs.getTime("ora_inizio")), sdfOra.format(rs.getTime("ora_fine")), rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), rs.getString("telefono"), rs.getString("modalità"), rs.getString("pagato")});
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile popolare la tabella a causa di un errore tecnico.");
