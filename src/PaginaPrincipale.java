@@ -123,26 +123,6 @@ public class PaginaPrincipale extends JFrame {
 		});
 		menuCliente.add(itemInserisciCliente);
 		
-		JMenuItem itemModificaCliente = new JMenuItem("Modifica pazienti");
-		itemModificaCliente.setFont(new Font("Dialog", Font.PLAIN, 14));
-		itemModificaCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//MODIFICA DI UN CLIENTE:
-
-			}
-		});
-		menuCliente.add(itemModificaCliente);
-		
-		JMenuItem itemEliminaCliente = new JMenuItem("Elimina pazienti");
-		itemEliminaCliente.setFont(new Font("Dialog", Font.PLAIN, 14));
-		itemEliminaCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//ELIMINAZIONE DI UN CLIENTE:
-
-			}
-		});
-		menuCliente.add(itemEliminaCliente);
-		
 		JMenuItem itemVisualizzaPazienti = new JMenuItem("Visualizza pazienti");
 		itemVisualizzaPazienti.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemVisualizzaPazienti.addActionListener(new ActionListener() {
