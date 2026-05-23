@@ -103,7 +103,7 @@ public class PaginaPrincipale extends JFrame {
 		});
 		menuInserisciAppuntamento.add(itemDisdiciAppuntamento);
 		
-		JMenuItem itemMenuVisualizzaAppuntamenti = new JMenuItem("Visualizza appuntamenti per data");
+		JMenuItem itemMenuVisualizzaAppuntamenti = new JMenuItem("Visualizza appuntamenti");
 		itemMenuVisualizzaAppuntamenti.setFont(new Font("Dialog", Font.PLAIN, 14));
 		itemMenuVisualizzaAppuntamenti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
