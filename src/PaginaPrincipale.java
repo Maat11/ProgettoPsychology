@@ -37,11 +37,7 @@ public class PaginaPrincipale extends JFrame {
 	private JTable table;
 	private JButton btnEliminaAppuntamento;
 	private JButton btnCompleta;
-//	private java.sql.Date dateSel;
-//	private String oraInSel;
-//	private String oraFinSel;
 	private java.sql.Date sqlDate;
-//	private int idPazSel;
 	private String dataSel2; //LA PASSO ALLA FINESTRA PER LE NOTE RAPIDE
 	private JButton btnNotaRapida;
 	private String statoApp;
@@ -278,21 +274,6 @@ public class PaginaPrincipale extends JFrame {
 				int rowSel = table.rowAtPoint(e.getPoint());
 				if(rowSel != -1) {
 					//PRENDERE LA DATA E L'ORA DI INIZIO, NEL CASO ANCHE L'ORA DI FINE:
-//					dataSel2 = String.valueOf(table.getValueAt(row, 1)).trim();
-//					
-//					//FORMATTER:
-//					 // 1. Parsing della stringa in LocalDate
-//			        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//			        LocalDate localDate = LocalDate.parse(dataSel2, inputFormatter);
-//
-//			        // 2. Formatta LocalDate nel formato "yyyy-MM-dd"
-//			        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//			        String formattedString = localDate.format(outputFormatter);
-//
-//			        dateSel = java.sql.Date.valueOf(formattedString); 
-//					
-//					oraInSel = String.valueOf(table.getValueAt(row, 1));
-//					oraFinSel  =String.valueOf(table.getValueAt(row, 2));
 					idAppSel = Integer.valueOf(String.valueOf(table.getValueAt(rowSel, 0)));
 					
 					statoApp = String.valueOf(table.getValueAt(rowSel, 9));
