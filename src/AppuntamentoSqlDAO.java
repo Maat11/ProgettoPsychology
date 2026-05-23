@@ -58,18 +58,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 						
-//			//CAST ORA INIZIO:
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-//            LocalTime oraIn = LocalTime.parse(oraInizio, formatter);
-//            Time sqlTimeIn = Time.valueOf(oraIn);
-//            
-//            //CAST ORA FINE:
-//            LocalTime oraFin = LocalTime.parse(oraFine, formatter);
-//            Time sqlTimeFin = Time.valueOf(oraFin);
-            
                 psmt.setInt(1, idApp);
-//                psmt.setTime(2, sqlTimeIn);
-//                psmt.setTime(3, sqlTimeFin);
                 
             int result = psmt.executeUpdate();
             
