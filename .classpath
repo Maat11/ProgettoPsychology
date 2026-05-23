@@ -14,5 +14,6 @@
 	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/LIBRERIE java/com.miglayout.swing_11.4.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/LIBRERIE java/jbcrypt-0.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/PostgreSQL 17/postgresql-42.7.5.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.forms_1.9.0.v20240327-0800.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
