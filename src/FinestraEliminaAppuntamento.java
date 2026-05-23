@@ -160,12 +160,13 @@ public class FinestraEliminaAppuntamento extends JDialog {
 							@Override
 							public void mouseClicked(MouseEvent e) {
 								int selRow = table.rowAtPoint(e.getPoint());
-								lblAppSelezionato.setText("L'appuntamento selezionato è in data " + " " + String.valueOf(table.getValueAt(selRow, 0)) + " e " + "inizia alle ore " + String.valueOf(table.getValueAt(selRow, 1)) + " e finisce alle ore " + String.valueOf(table.getValueAt(selRow, 2)) + " con il paziente " + String.valueOf(table.getValueAt(selRow, 4)) + " " + String.valueOf(table.getValueAt(selRow, 5)));
+								lblAppSelezionato.setText("L'appuntamento selezionato è in data " + " " + String.valueOf(table.getValueAt(selRow, 1)) + " e " + "inizia alle ore " + String.valueOf(table.getValueAt(selRow, 2)) + " e finisce alle ore " + String.valueOf(table.getValueAt(selRow, 3)) + " con il paziente " + String.valueOf(table.getValueAt(selRow, 5)) + " " + String.valueOf(table.getValueAt(selRow, 6)));
 								lblAppSelezionato.setVisible(true);
 								
 								idApp = Integer.valueOf(String.valueOf(table.getValueAt(selRow, 0)));
 								pagato = String.valueOf(table.getValueAt(selRow, 9));
 								
+								btnElimina.setEnabled(true);
 
 							}
 						});
@@ -207,6 +208,7 @@ public class FinestraEliminaAppuntamento extends JDialog {
 			}
 			{
 				btnElimina = new JButton("Elimina");
+				btnElimina.setEnabled(false);
 				btnElimina.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						//ELIMINA APPUNTAMENTO:
@@ -216,6 +218,8 @@ public class FinestraEliminaAppuntamento extends JDialog {
 								if(theController.eliminaAppuntamento(idApp)) {
 									JOptionPane.showMessageDialog(null, "L'appuntamento è stato eliminato con successo");
 									lblAppSelezionato.setText(null);
+									btnElimina.setEnabled(false);
+									dateChooser.setDate(null);
 								}
 							}else {
 								JOptionPane.showMessageDialog(null, "Operazione annullata!");
