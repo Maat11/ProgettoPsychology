@@ -37,15 +37,15 @@ public class PaginaPrincipale extends JFrame {
 	private JTable table;
 	private JButton btnEliminaAppuntamento;
 	private JButton btnCompleta;
-	private java.sql.Date dateSel;
-	private String oraInSel;
-	private String oraFinSel;
+//	private java.sql.Date dateSel;
+//	private String oraInSel;
+//	private String oraFinSel;
 	private java.sql.Date sqlDate;
-	private int idPazSel;
+//	private int idPazSel;
 	private String dataSel2; //LA PASSO ALLA FINESTRA PER LE NOTE RAPIDE
 	private JButton btnNotaRapida;
 	private String statoApp;
-
+	private int idAppSel;
 	
 	public PaginaPrincipale(Controller c) {
 		addWindowListener(new WindowAdapter() {
@@ -194,18 +194,16 @@ public class PaginaPrincipale extends JFrame {
 		btnEliminaAppuntamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ELIMINA APPUNTAMENTO:
-//				int confirm = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare l'appuntamento selezionato?", "Conferma Operazione", JOptionPane.YES_NO_OPTION);
-//				if(confirm == JOptionPane.YES_OPTION) {
-//					if(theController.eliminaAppuntamento(dateSel, oraInSel, oraFinSel)) {
-////						theController.tabellaAppuntamentiInsert(sqlDate, model);
-//						JOptionPane.showMessageDialog(null, "Complimenti, l'appuntamento è stato cancellato correttamente!");
-//					}else {
-//						JOptionPane.showMessageDialog(null, "Errore, qualcosa è andato storto!");
-//					}
-//				}else {
-//					JOptionPane.showMessageDialog(null, "L'operazione è stata annullata!");
-//				}
-//				setPulsantiEnableInFalse();
+				int confirm = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare l'appuntamento selezionato?", "Conferma Operazione", JOptionPane.YES_NO_OPTION);
+				if(confirm == JOptionPane.YES_OPTION) {
+					if(theController.eliminaAppuntamento(idAppSel)) {
+						theController.popolaTabellaAppuntamentiConPazientiEConData(sqlDate, model);
+						JOptionPane.showMessageDialog(null, "Complimenti, l'appuntamento è stato cancellato correttamente!");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "L'operazione è stata annullata!");
+				}
+				setPulsantiEnableInFalse();
 			}
 		});
 		panelBottom.add(btnEliminaAppuntamento, BorderLayout.WEST);
@@ -277,39 +275,36 @@ public class PaginaPrincipale extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//SELEZIONA RIGA:
-				int row = table.rowAtPoint(e.getPoint());
-				if(row != -1) {
+				int rowSel = table.rowAtPoint(e.getPoint());
+				if(rowSel != -1) {
 					//PRENDERE LA DATA E L'ORA DI INIZIO, NEL CASO ANCHE L'ORA DI FINE:
-					dataSel2 = String.valueOf(table.getValueAt(row, 1)).trim();
+//					dataSel2 = String.valueOf(table.getValueAt(row, 1)).trim();
+//					
+//					//FORMATTER:
+//					 // 1. Parsing della stringa in LocalDate
+//			        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//			        LocalDate localDate = LocalDate.parse(dataSel2, inputFormatter);
+//
+//			        // 2. Formatta LocalDate nel formato "yyyy-MM-dd"
+//			        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//			        String formattedString = localDate.format(outputFormatter);
+//
+//			        dateSel = java.sql.Date.valueOf(formattedString); 
+//					
+//					oraInSel = String.valueOf(table.getValueAt(row, 1));
+//					oraFinSel  =String.valueOf(table.getValueAt(row, 2));
+					idAppSel = Integer.valueOf(String.valueOf(table.getValueAt(rowSel, 0)));
 					
-					//FORMATTER:
-					 // 1. Parsing della stringa in LocalDate
-			        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			        LocalDate localDate = LocalDate.parse(dataSel2, inputFormatter);
-
-			        // 2. Formatta LocalDate nel formato "yyyy-MM-dd"
-			        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			        String formattedString = localDate.format(outputFormatter);
-
-			        dateSel = java.sql.Date.valueOf(formattedString); 
-					
-					oraInSel = String.valueOf(table.getValueAt(row, 1));
-					oraFinSel  =String.valueOf(table.getValueAt(row, 2));
-					
-					statoApp = String.valueOf(table.getValueAt(row, 9));
+					statoApp = String.valueOf(table.getValueAt(rowSel, 9));
 					
 					//MI SERVE PER BLOCCARE IL PULSANTE COMPLETA UNA VOLTA CHE E' COMPLETATO L'APPUNTAMENTO:
 					if(statoApp.equalsIgnoreCase("Non definito")) {
 						//SBLOCCA PULSANTI:
 						btnEliminaAppuntamento.setEnabled(true);
-						btnNotaRapida.setEnabled(true);
+						
 						btnCompleta.setEnabled(true);
-					}else {
-						//SBLOCCA PULSANTI:
-						btnEliminaAppuntamento.setEnabled(false);
-						btnNotaRapida.setEnabled(true);
-						btnCompleta.setEnabled(false);
 					}
+					btnNotaRapida.setEnabled(true);
 					
 					//MI SERVE PER LA FINESTRA DELLE NOTE RAPIDE
 //					idPazSel = theController.risaliAlCodiceFiscaleTramiteApp(dateSel, oraInSel);
