@@ -248,7 +248,7 @@ public class PaginaPrincipale extends JFrame {
 		
 		model  = new DefaultTableModel(
 				new Object[][]{},
-				new String[]{"id App", "Data giorno", "Ora inizio" , "Ora fine" , "id", "Nome", "Cognome", "Telefono", "Modalità", "Pagato"}
+				new String[]{"id App", "Data giorno", "Ora inizio" , "Ora fine" , "id paziente", "Nome", "Cognome", "Telefono", "Modalità", "Pagato"}
 			);
 		
 		
@@ -280,7 +280,7 @@ public class PaginaPrincipale extends JFrame {
 				int row = table.rowAtPoint(e.getPoint());
 				if(row != -1) {
 					//PRENDERE LA DATA E L'ORA DI INIZIO, NEL CASO ANCHE L'ORA DI FINE:
-					dataSel2 = String.valueOf(table.getValueAt(row, 0)).trim();
+					dataSel2 = String.valueOf(table.getValueAt(row, 1)).trim();
 					
 					//FORMATTER:
 					 // 1. Parsing della stringa in LocalDate
@@ -296,7 +296,7 @@ public class PaginaPrincipale extends JFrame {
 					oraInSel = String.valueOf(table.getValueAt(row, 1));
 					oraFinSel  =String.valueOf(table.getValueAt(row, 2));
 					
-					statoApp = String.valueOf(table.getValueAt(row, 8));
+					statoApp = String.valueOf(table.getValueAt(row, 9));
 					
 					//MI SERVE PER BLOCCARE IL PULSANTE COMPLETA UNA VOLTA CHE E' COMPLETATO L'APPUNTAMENTO:
 					if(statoApp.equalsIgnoreCase("Non definito")) {
