@@ -148,7 +148,7 @@ public class PaginaPrincipale extends JFrame {
 		itemVisualizzaPazienti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//PAGINA PER VISUALIZZARE TUTTI I CLIENTI:
-
+				theController.fromPaginaPrincipaleToPaginaPaziente();
 			}
 		});
 		menuCliente.add(itemVisualizzaPazienti);
