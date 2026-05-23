@@ -34,10 +34,10 @@ public class FinestraInserisciPaziente extends JDialog {
 	private JTextField txtPrezzo;
 	private JButton btnIndietro;
 	
-	public FinestraInserisciPaziente(Controller c) {
+	public FinestraInserisciPaziente(Controller c, int typChiam) {
 		addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosing(WindowEvent e) {//COSI' QUANDO LA CHIUDE CON LA X NON SI IMBALLA;
+			public void windowClosing(WindowEvent e) {
 				btnIndietro.doClick();
 			}
 		});
@@ -205,14 +205,16 @@ public class FinestraInserisciPaziente extends JDialog {
 				btnIndietro.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						//TORNA INDIETRO:
-						setEnabled(false);
-						clearTextFiedls();
+						setVisible(false);
 						
-						theController.paginaPrincipale.setVisible(true);
-						theController.paginaPrincipale.setEnabled(true);
+						if(typChiam == 1) {
+							theController.paginaPrincipale.setVisible(true);
+							theController.paginaPrincipale.setEnabled(true);
+						}else if(typChiam == 2) {
+							theController.paginaPaziente.setVisible(true);
+							theController.paginaPaziente.setEnabled(true);
+						}
 						
-						//CLEAR FIELDS:
-						clearTextFiedls();
 					}
 				});
 				btnIndietro.setActionCommand("Cancel");
