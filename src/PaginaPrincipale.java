@@ -202,6 +202,7 @@ public class PaginaPrincipale extends JFrame {
 		btnNotaRapida.setEnabled(false);
 		btnNotaRapida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//VAI ALLA FINESTA PER INSERIRE UNA NOTA RAPIDA:
 
 				setPulsantiEnableInFalse();
 			}
