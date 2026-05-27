@@ -24,6 +24,7 @@ public class Controller {
 	public FinestraSceltaPazientePerAppuntamento finestraSceltaPazientePerAppuntamento;
 	public FinestraEliminaAppuntamento finestraEliminaAppuntamento;
 	public FinestraVisualizzaAppuntamenti finestraVisualizzaAppuntamenti;
+	public FinestraEliminaPaziente finestraEliminaPaziente;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -170,6 +171,14 @@ public class Controller {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
+	}
+	
+	//SERVE PER ANDARE DALLA PAGINA PAZIENTE ALLA FINESTRA PER ELIMINARE IL PAZIENTE:
+	public void fromPaginaPazienteToFinestraEliminaPaziente() {
+		paginaPaziente.setEnabled(false);
+		
+		finestraEliminaPaziente = new FinestraEliminaPaziente(this);
+		finestraEliminaPaziente.setVisible(true);
 	}
 	
 	//ARRAY DI BYTE RANDOM:
