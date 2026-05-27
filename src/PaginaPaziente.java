@@ -55,12 +55,16 @@ public class PaginaPaziente extends JFrame {
 			public void windowActivated(WindowEvent e) {
 				theController.popolaTabellaConPazienti(model, "");
 			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				btnBack.doClick();
+			}
 		});
 		theController = c;
 		
 		setTitle("Pagina dedicata ai pazienti");
-//		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 500);
 		setLocationRelativeTo(null);
 		
