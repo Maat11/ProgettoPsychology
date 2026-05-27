@@ -94,7 +94,7 @@ public class PaginaPaziente extends JFrame {
 		mntmEliminaPaziente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ELIMINA PAZIENTE:
-				
+				theController.fromPaginaPazienteToFinestraEliminaPaziente();
 			}
 		});
 		menuPaziente.add(mntmEliminaPaziente);
