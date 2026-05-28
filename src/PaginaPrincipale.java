@@ -155,11 +155,11 @@ public class PaginaPrincipale extends JFrame {
 		contentPane.add(panelTop, BorderLayout.NORTH);
 		
 		lblWelcome = new JLabel("Appuntamenti di oggi ");
-		lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelTop.add(lblWelcome);
 		
 		lblData = new JLabel(" ");
-		lblData.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblData.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		panelTop.add(lblData);
 		
 		JPanel panelBottom = new JPanel();
