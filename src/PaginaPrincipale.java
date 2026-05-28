@@ -38,10 +38,11 @@ public class PaginaPrincipale extends JFrame {
 	private JButton btnEliminaAppuntamento;
 	private JButton btnCompleta;
 	private java.sql.Date sqlDate;
-	private String dataSel2; //LA PASSO ALLA FINESTRA PER LE NOTE RAPIDE
 	private JButton btnNotaRapida;
 	private String statoApp;
 	private int idAppSel;
+	private String nomeSel;
+	private String cognomeSel;
 	
 	public PaginaPrincipale(Controller c) {
 		addWindowListener(new WindowAdapter() {
@@ -179,6 +180,7 @@ public class PaginaPrincipale extends JFrame {
 				}else {
 					JOptionPane.showMessageDialog(null, "L'operazione è stata annullata!");
 				}
+				clearFields();
 				setPulsantiEnableInFalse();
 			}
 		});
@@ -190,6 +192,7 @@ public class PaginaPrincipale extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//VISUALIZZA DETTAGLI:
 
+				clearFields();
 				setPulsantiEnableInFalse();
 			}
 		});
@@ -203,7 +206,8 @@ public class PaginaPrincipale extends JFrame {
 		btnNotaRapida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VAI ALLA FINESTA PER INSERIRE UNA NOTA RAPIDA:
-				
+				theController.fromPaginaPrincipaleToFinestraNotaRapida(nomeSel, cognomeSel);
+				clearFields();
 				setPulsantiEnableInFalse();
 			}
 		});
@@ -259,6 +263,10 @@ public class PaginaPrincipale extends JFrame {
 					
 					statoApp = String.valueOf(table.getValueAt(rowSel, 9));
 					
+					//SERVE NEL CASO L'OPERATORE DEVE INSERIRE UNA NOTA RAPIDA, COSI' SI MOSTRA IL NOME E IL COGNOME NELLA FINESTRA DEDICATA:
+					nomeSel = String.valueOf(table.getValueAt(rowSel, 5));
+					cognomeSel = String.valueOf(table.getValueAt(rowSel, 6));
+					
 					//MI SERVE PER BLOCCARE IL PULSANTE COMPLETA UNA VOLTA CHE E' COMPLETATO L'APPUNTAMENTO:
 					if(statoApp.equalsIgnoreCase("Non definito")) {
 						//SBLOCCA PULSANTI:
@@ -284,5 +292,17 @@ public class PaginaPrincipale extends JFrame {
 		btnNotaRapida.setEnabled(false);
 		btnCompleta.setEnabled(false);
 	}
-
+	
+	//SERVE PER PULIRE I VARI DATI:
+	private void clearFields() {
+		statoApp = null;
+		nomeSel = null;
+		cognomeSel = null;
+		idAppSel = 0;
+	}
+	
+//	private String statoApp;
+//	private int idAppSel;
+//	private String nomeSel;
+//	private String cognomeSel;
 }
