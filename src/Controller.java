@@ -25,6 +25,7 @@ public class Controller {
 	public FinestraEliminaAppuntamento finestraEliminaAppuntamento;
 	public FinestraVisualizzaAppuntamenti finestraVisualizzaAppuntamenti;
 	public FinestraEliminaPaziente finestraEliminaPaziente;
+	public FinestraNotaRapida finestraNotaRapida;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -159,6 +160,14 @@ public class Controller {
 		
 		paginaPaziente = new PaginaPaziente(this);
 		paginaPaziente.setVisible(true);
+	}
+	
+	//SERVE AD ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER INSERIRE UNA NOTA RAPIDA:
+	public void fromPaginaPrincipaleToFinestraNotaRapida(String nome, String cognome) {
+		paginaPrincipale.setEnabled(false);
+		
+		finestraNotaRapida = new FinestraNotaRapida(this, nome, cognome);
+		finestraNotaRapida.setVisible(true);
 	}
 	
 	//SERVE PER ELIMIANARE UN PAZIENTE:
