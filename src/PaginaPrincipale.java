@@ -41,8 +41,7 @@ public class PaginaPrincipale extends JFrame {
 	private JButton btnNotaRapida;
 	private String statoApp;
 	private int idAppSel;
-	private String nomeSel;
-	private String cognomeSel;
+	private int idPazSel;
 	
 	public PaginaPrincipale(Controller c) {
 		addWindowListener(new WindowAdapter() {
@@ -206,7 +205,7 @@ public class PaginaPrincipale extends JFrame {
 		btnNotaRapida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VAI ALLA FINESTA PER INSERIRE UNA NOTA RAPIDA:
-				theController.fromPaginaPrincipaleToFinestraNotaRapida(nomeSel, cognomeSel);
+				theController.fromPaginaPrincipaleToFinestraNotaRapida(idPazSel);
 				clearFields();
 				setPulsantiEnableInFalse();
 			}
@@ -263,9 +262,8 @@ public class PaginaPrincipale extends JFrame {
 					
 					statoApp = String.valueOf(table.getValueAt(rowSel, 9));
 					
-					//SERVE NEL CASO L'OPERATORE DEVE INSERIRE UNA NOTA RAPIDA, COSI' SI MOSTRA IL NOME E IL COGNOME NELLA FINESTRA DEDICATA:
-					nomeSel = String.valueOf(table.getValueAt(rowSel, 5));
-					cognomeSel = String.valueOf(table.getValueAt(rowSel, 6));
+					//SERVE NEL CASO L'OPERATORE DEVE INSERIRE UNA NOTA RAPIDA:
+					idPazSel = Integer.valueOf(String.valueOf(table.getValueAt(rowSel, 4)));
 					
 					//MI SERVE PER BLOCCARE IL PULSANTE COMPLETA UNA VOLTA CHE E' COMPLETATO L'APPUNTAMENTO:
 					if(statoApp.equalsIgnoreCase("Non definito")) {
@@ -296,8 +294,7 @@ public class PaginaPrincipale extends JFrame {
 	//SERVE PER PULIRE I VARI DATI:
 	private void clearFields() {
 		statoApp = null;
-		nomeSel = null;
-		cognomeSel = null;
+		idPazSel = 0;
 		idAppSel = 0;
 	}
 	
