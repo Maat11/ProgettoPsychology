@@ -205,7 +205,7 @@ public class PaginaPrincipale extends JFrame {
 		btnNotaRapida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VAI ALLA FINESTA PER INSERIRE UNA NOTA RAPIDA:
-				theController.fromPaginaPrincipaleToFinestraNotaRapida(idPazSel);
+				theController.fromPaginaPrincipaleToFinestraNotaRapida(idPazSel, idAppSel);
 				clearFields();
 				setPulsantiEnableInFalse();
 			}
@@ -257,7 +257,7 @@ public class PaginaPrincipale extends JFrame {
 				//SELEZIONA RIGA:
 				int rowSel = table.rowAtPoint(e.getPoint());
 				if(rowSel != -1) {
-					//PRENDERE LA DATA E L'ORA DI INIZIO, NEL CASO ANCHE L'ORA DI FINE:
+					//PRENDERE L'id, E LO STATO, DELL'APPUNTAMENTO + L'id DEL PAZIENTE:
 					idAppSel = Integer.valueOf(String.valueOf(table.getValueAt(rowSel, 0)));
 					
 					statoApp = String.valueOf(table.getValueAt(rowSel, 9));

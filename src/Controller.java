@@ -160,10 +160,10 @@ public class Controller {
 	}
 	
 	//SERVE AD ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER INSERIRE UNA NOTA RAPIDA:
-	public void fromPaginaPrincipaleToFinestraNotaRapida(int idPaziente) {
+	public void fromPaginaPrincipaleToFinestraNotaRapida(int idPaziente, int idAppuntamento) {
 		paginaPrincipale.setEnabled(false);
 		
-		finestraNotaRapida = new FinestraNotaRapida(this, idPaziente);
+		finestraNotaRapida = new FinestraNotaRapida(this, idPaziente, idAppuntamento);
 		finestraNotaRapida.setVisible(true);
 	}
 	
