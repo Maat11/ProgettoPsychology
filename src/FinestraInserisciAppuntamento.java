@@ -230,9 +230,9 @@ public class FinestraInserisciAppuntamento extends JDialog {
 						.addGap(0)
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.LEADING)
 							.addGroup(gl_panelCentral.createSequentialGroup()
-								.addComponent(lblElencoAppuntamenti, GroupLayout.PREFERRED_SIZE, 219, Short.MAX_VALUE)
-								.addGap(18)
-								.addComponent(lblDataSelezionata, GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
+								.addComponent(lblElencoAppuntamenti, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(lblDataSelezionata, GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
 							.addComponent(panelTable, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
 						.addContainerGap())
 			);
