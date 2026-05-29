@@ -262,7 +262,7 @@ public class PaginaPrincipale extends JFrame {
 					
 					statoApp = String.valueOf(table.getValueAt(rowSel, 9));
 					
-					//SERVE NEL CASO L'OPERATORE DEVE INSERIRE UNA NOTA RAPIDA:
+					//SERVE NEL CASO L'OPERATORE DOVESSE INSERIRE UNA NOTA RAPIDA:
 					idPazSel = Integer.valueOf(String.valueOf(table.getValueAt(rowSel, 4)));
 					
 					//MI SERVE PER BLOCCARE IL PULSANTE COMPLETA UNA VOLTA CHE E' COMPLETATO L'APPUNTAMENTO:
@@ -273,10 +273,6 @@ public class PaginaPrincipale extends JFrame {
 						btnCompleta.setEnabled(true);
 					}
 					btnNotaRapida.setEnabled(true);
-					
-					//MI SERVE PER LA FINESTRA DELLE NOTE RAPIDE
-//					idPazSel = theController.risaliAlCodiceFiscaleTramiteApp(dateSel, oraInSel);
-					
 					
 				}
 			}
