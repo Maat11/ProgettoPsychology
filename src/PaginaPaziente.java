@@ -69,6 +69,7 @@ public class PaginaPaziente extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		menuBar.setBackground(SystemColor.activeCaption);
 		setJMenuBar(menuBar);
 		
