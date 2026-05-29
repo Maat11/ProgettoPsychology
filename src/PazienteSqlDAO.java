@@ -155,7 +155,8 @@ public class PazienteSqlDAO implements PazienteDAO{
     		throw new PersonalException("Impossibile eliminare il paziente a causa di un errore tecnico.");
     	}		
 	}
-
+	
+	//SERVE A TROVARE UN PAZIENTE TRAMITE id:
 	@Override
 	public Paziente trova(int idPaziente) throws PersonalException {
 		String sql = "SELECT * "
