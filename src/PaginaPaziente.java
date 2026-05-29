@@ -131,7 +131,7 @@ public class PaginaPaziente extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelTop = new JPanel();
-		panelTop.setBackground(new Color(240, 240, 240));
+		panelTop.setBackground(new Color(255, 255, 240));
 		contentPane.add(panelTop, BorderLayout.NORTH);
 		
 		lblWelcome = new JLabel("In questa pagina puoi visualizzare i tuoi pazienti");
