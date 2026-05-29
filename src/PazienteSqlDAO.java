@@ -156,4 +156,27 @@ public class PazienteSqlDAO implements PazienteDAO{
     	}		
 	}
 
+	@Override
+	public Paziente trova(int idPaziente) throws PersonalException {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Paziente AS P "
+				+ "WHERE P.id_paziente = ? "; 
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+            
+				psmt.setInt(1, idPaziente);
+				
+                ResultSet rs = psmt.executeQuery();
+                
+            if(rs.next()) {
+            	Paziente paziente = new Paziente(rs.getString("nome"), rs.getString("cognome"), rs.getString("codice_fiscale"), rs.getDate("data_nascita"), rs.getString("telefono"), rs.getDouble("prezzo"));
+            	paziente.setId(Integer.valueOf("id_paziente"));
+            }
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile trovare il paziente a causa di un errore tecnico.");
+    	}
+		return null;
+	}
+
 }
