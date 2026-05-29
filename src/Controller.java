@@ -13,8 +13,8 @@ public class Controller {
 	private Appuntamento appuntamento;
 	private AppuntamentoDAO appuntamentoDAO = new AppuntamentoSqlDAO();
 	private CryptoUtilsDAO cryptoUtilsDAO;
-	private Nota nota;
-	private NotaDAO notaDAO = new NotaSqlDAO();
+	private NotaRapida notaRapida;
+	private NotaRapidaDAO notaRapidaDAO = new NotaRapidaSqlDAO();
 		
 //PAGINE
 	public PaginaPrincipale paginaPrincipale;
@@ -122,7 +122,7 @@ public class Controller {
 	//SERVE A POPOLARE LA TABELLA CON I PAZIENTI:
 	public void popolaTabellaConPazienti(DefaultTableModel model, String cognome) {
 		model.setRowCount(0);
-		
+ 
 		try {
 			pazienteDAO.popolaTabella(model, cognome);
 		} catch (PersonalException e) {
@@ -142,7 +142,6 @@ public class Controller {
 	}
 	
 	public boolean eliminaAppuntamento(int idApp) {
-		
 		try {
 			return appuntamentoDAO.elimina(idApp);
 		} catch (PersonalException e) {
@@ -169,7 +168,6 @@ public class Controller {
 	
 	//SERVE PER ELIMIANARE UN PAZIENTE:
 	public boolean eliminaPaziente(int idPaziente) {
-		
 		try {
 			return pazienteDAO.elimina(idPaziente);
 		} catch (PersonalException e) {
@@ -197,8 +195,13 @@ public class Controller {
 	}
 	
 	//SERVE PER INSERIRE LA NOTA RAPIDA:
-	 public boolean inserisciNota() {
-		 return false;
+	 public boolean inserisciNotaRapida(NotaRapida notaRap) {
+		 try {
+			return notaRapidaDAO.inserisci(notaRap);
+		 } catch (PersonalException e) {
+			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			 return false;
+		 }
 	 }
 	
 	//ARRAY DI BYTE RANDOM:
