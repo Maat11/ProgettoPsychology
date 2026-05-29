@@ -43,6 +43,7 @@ public class FinestraNotaRapida extends JDialog {
 	private JTextArea txtAreaNota;
 	
 	public FinestraNotaRapida(Controller c, int idPaz, int idAppuntamento) {
+		getContentPane().setBackground(new Color(0, 0, 255));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
@@ -95,16 +96,18 @@ public class FinestraNotaRapida extends JDialog {
 			panelCentral.setLayout(new BorderLayout(0, 0));
 			
 			JPanel panelCentralTop = new JPanel();
-			panelCentralTop.setBackground(SystemColor.inactiveCaptionBorder);
+			panelCentralTop.setBackground(new Color(240, 255, 240));
 			panelCentral.add(panelCentralTop, BorderLayout.NORTH);
 			panelCentralTop.setLayout(new BorderLayout(0, 0));
 			
 			JLabel lblMessaggio2 = new JLabel("Compila i seguenti campi");
+			lblMessaggio2.setBackground(new Color(240, 255, 255));
 			lblMessaggio2.setForeground(SystemColor.textHighlight);
 			lblMessaggio2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 			panelCentralTop.add(lblMessaggio2);
 			
 			JPanel panelCentral2 = new JPanel();
+			panelCentral2.setBackground(new Color(245, 255, 250));
 			panelCentral.add(panelCentral2, BorderLayout.CENTER);
 			
 			JLabel lblNewLabel = new JLabel("Titolo nota");
@@ -126,6 +129,7 @@ public class FinestraNotaRapida extends JDialog {
 			lblNewLabel_2.setEnabled(false);
 			
 			JPanel panelTxtArea = new JPanel();
+			panelTxtArea.setBackground(new Color(245, 255, 250));
 			GroupLayout gl_panelCentral2 = new GroupLayout(panelCentral2);
 			gl_panelCentral2.setHorizontalGroup(
 				gl_panelCentral2.createParallelGroup(Alignment.LEADING)
@@ -164,6 +168,12 @@ public class FinestraNotaRapida extends JDialog {
 			panelTxtArea.add(lblNota, BorderLayout.NORTH);
 			
 			txtAreaNota = new JTextArea();
+			txtAreaNota.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					btnInserisci.setEnabled(true);
+				}
+			});
 			txtAreaNota.setWrapStyleWord(true);
 			txtAreaNota.setLineWrap(true);
 			txtAreaNota.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -172,6 +182,7 @@ public class FinestraNotaRapida extends JDialog {
 		}
 		{
 			JPanel panelBottom = new JPanel();
+			panelBottom.setBackground(new Color(245, 255, 250));
 			contentPanel.add(panelBottom, BorderLayout.SOUTH);
 			panelBottom.setLayout(new BorderLayout(0, 0));
 			{
