@@ -9,9 +9,9 @@ public class Controller {
 
 //CLASSI:
 	private Paziente paziente;
-	private PazienteSqlDAO pazienteSqlDAO;
+	private PazienteDAO pazienteDAO = new PazienteSqlDAO();
 	private Appuntamento appuntamento;
-	private AppuntamentoSqlDAO appuntamentoSqlDAO;
+	private AppuntamentoDAO appuntamentoDAO = new AppuntamentoSqlDAO();
 	private CryptoUtilsDAO cryptoUtilsDAO;
 		
 //PAGINE
@@ -41,7 +41,6 @@ public class Controller {
 //METHODS:
 	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
 	public boolean inserisciPaziente(Paziente p) {
-		pazienteSqlDAO = new PazienteSqlDAO();
 		cryptoUtilsDAO = new CryptoUtilsDAO();
 		
 		byte[] iv = getArrayRandom();
@@ -49,8 +48,8 @@ public class Controller {
 		try {
 			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFsicale().toUpperCase(), iv));
 			
-			if(pazienteSqlDAO.inserisci(p)) {
-				p.setId(pazienteSqlDAO.prendiIdPaziente(p.getCodiceFsicale()));
+			if(pazienteDAO.inserisci(p)) {
+				p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFsicale()));
 
 				if(p.getId() != 0) {
 					return cryptoUtilsDAO.inserisciInTabellaIV(p.getId(), Base64.getEncoder().encodeToString(iv));
@@ -66,9 +65,8 @@ public class Controller {
 	
 	//SERVE AD INSERIRE UN APPUNTAMENTO:
 	public boolean inserisciAppuntamento(Appuntamento app) {
-		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
 		try {
-			return appuntamentoSqlDAO.inserisci(app);
+			return appuntamentoDAO.inserisci(app);
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -121,11 +119,10 @@ public class Controller {
 	
 	//SERVE A POPOLARE LA TABELLA CON I PAZIENTI:
 	public void popolaTabellaConPazienti(DefaultTableModel model, String cognome) {
-		pazienteSqlDAO = new PazienteSqlDAO();
 		model.setRowCount(0);
 		
 		try {
-			pazienteSqlDAO.popolaTabella(model, cognome);
+			pazienteDAO.popolaTabella(model, cognome);
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 		}	
@@ -133,21 +130,19 @@ public class Controller {
 	
 	//MI SERVE PER POPOLARE LA TABELLA DEGLI APPUNTAMENTI CERCANDO CON UNA DATA SPECIFICA:
 	public void popolaTabellaAppuntamentiConPazientiEConData(java.sql.Date data, DefaultTableModel model) {
-		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
 		model.setRowCount(0);
 		
 		try {
-			appuntamentoSqlDAO.popolaTabellaConData(data, model);
+			appuntamentoDAO.popolaTabellaConData(data, model);
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 		}		
 	}
 	
 	public boolean eliminaAppuntamento(int idApp) {
-		appuntamentoSqlDAO = new AppuntamentoSqlDAO();
 		
 		try {
-			return appuntamentoSqlDAO.elimina(idApp);
+			return appuntamentoDAO.elimina(idApp);
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -172,10 +167,9 @@ public class Controller {
 	
 	//SERVE PER ELIMIANARE UN PAZIENTE:
 	public boolean eliminaPaziente(int idPaziente) {
-		pazienteSqlDAO = new PazienteSqlDAO();
 		
 		try {
-			return pazienteSqlDAO.elimina(idPaziente);
+			return pazienteDAO.elimina(idPaziente);
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			return false;
@@ -192,15 +186,18 @@ public class Controller {
 	
 	//SERVE PER TROVARE UN PAZIENTE TRAMITE IL SUO id:
 	public Paziente trovaPaziente(int idPaziente) {
-		pazienteSqlDAO = new PazienteSqlDAO();
 		try {
-			return pazienteSqlDAO.trova(idPaziente);
+			return pazienteDAO.trova(idPaziente);
 		} catch (PersonalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			return null;
 		}
-		return null;
 	}
+	
+	//SERVE PER INSERIRE LA NOTA RAPIDA:
+	 public boolean inserisciNota() {
+		 return false;
+	 }
 	
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
