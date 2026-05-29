@@ -190,6 +190,18 @@ public class Controller {
 		finestraEliminaPaziente.setVisible(true);
 	}
 	
+	//SERVE PER TROVARE UN PAZIENTE TRAMITE IL SUO id:
+	public Paziente trovaPaziente(int idPaziente) {
+		pazienteSqlDAO = new PazienteSqlDAO();
+		try {
+			return pazienteSqlDAO.trova(idPaziente);
+		} catch (PersonalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
 		byte[] iv = new byte[12];
