@@ -13,6 +13,8 @@ public class Controller {
 	private Appuntamento appuntamento;
 	private AppuntamentoDAO appuntamentoDAO = new AppuntamentoSqlDAO();
 	private CryptoUtilsDAO cryptoUtilsDAO;
+	private Nota nota;
+	private NotaDAO notaDAO = new NotaSqlDAO();
 		
 //PAGINE
 	public PaginaPrincipale paginaPrincipale;
