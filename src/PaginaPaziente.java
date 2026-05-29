@@ -69,7 +69,7 @@ public class PaginaPaziente extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBackground(SystemColor.inactiveCaption);
+		menuBar.setBackground(SystemColor.activeCaption);
 		setJMenuBar(menuBar);
 		
 		JMenu menuPaziente = new JMenu("Paziente");

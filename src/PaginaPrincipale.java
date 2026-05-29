@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.SystemColor;
 
 public class PaginaPrincipale extends JFrame {
 	private Controller theController;
@@ -72,6 +73,7 @@ public class PaginaPrincipale extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(SystemColor.activeCaption);
 		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		setJMenuBar(menuBar);
 		
