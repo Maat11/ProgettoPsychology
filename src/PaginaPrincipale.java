@@ -153,6 +153,7 @@ public class PaginaPrincipale extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelTop = new JPanel();
+		panelTop.setBackground(SystemColor.info);
 		contentPane.add(panelTop, BorderLayout.NORTH);
 		
 		lblWelcome = new JLabel("Appuntamenti di oggi ");
