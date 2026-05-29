@@ -172,7 +172,8 @@ public class PazienteSqlDAO implements PazienteDAO{
                 
             if(rs.next()) {
             	Paziente paziente = new Paziente(rs.getString("nome"), rs.getString("cognome"), rs.getString("codice_fiscale"), rs.getDate("data_nascita"), rs.getString("telefono"), rs.getDouble("prezzo"));
-            	paziente.setId(Integer.valueOf("id_paziente"));
+            	paziente.setId(Integer.valueOf(rs.getInt("id_paziente")));
+            	return paziente;
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile trovare il paziente a causa di un errore tecnico.");
