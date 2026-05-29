@@ -393,7 +393,7 @@ public class FinestraInserisciAppuntamento extends JDialog {
 	}
 	private boolean ctrlTxt() {
 		if(txtCodiceFiscale.getText().isBlank()) {
-			JOptionPane.showMessageDialog(null, "Errore, il campo id paziente non può essere vuoto!");
+			JOptionPane.showMessageDialog(null, "Errore, il campo codice fiscale non può essere vuoto!");
 			return false;
 		}
 		if(dateChooser.getDate() == null) {
