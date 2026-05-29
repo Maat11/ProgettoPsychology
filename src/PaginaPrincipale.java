@@ -73,7 +73,7 @@ public class PaginaPrincipale extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBackground(SystemColor.activeCaption);
+		menuBar.setBackground(SystemColor.inactiveCaption);
 		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 15));
 		setJMenuBar(menuBar);
 		
