@@ -5,7 +5,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="resource/images/" kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/jcalendar-1.4/lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/jcalendar-1.4/lib/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/39327/Desktop/PROGETTI/jcalendar-1.4/lib/jgoodies-looks-2.4.1.jar"/>
