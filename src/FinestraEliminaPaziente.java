@@ -27,6 +27,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 public class FinestraEliminaPaziente extends JDialog {
 	private Controller theController;
@@ -40,8 +42,10 @@ public class FinestraEliminaPaziente extends JDialog {
 	private DefaultTableModel model;
 	private int idPaziente;
 	private int rowSel;
+	private JLabel lblPazienteSelezionato;
 	
 	public FinestraEliminaPaziente(Controller c) {
+	
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
@@ -56,7 +60,7 @@ public class FinestraEliminaPaziente extends JDialog {
 		theController = c;
 		
 		setTitle("Finesta per l'eliminzione di un paziente");
-		setSize(800, 450);
+		setSize(1150, 550);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -64,6 +68,7 @@ public class FinestraEliminaPaziente extends JDialog {
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelTop = new JPanel();
+		panelTop.setBackground(SystemColor.info);
 		contentPanel.add(panelTop, BorderLayout.NORTH);
 		
 		JLabel lblWelcome = new JLabel("Seleziona il paziente per eliminarlo");
@@ -79,7 +84,8 @@ public class FinestraEliminaPaziente extends JDialog {
 		panelCentralTop.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblWelcomeDigitaCognome = new JLabel("Digita il cognome del paziente");
-		lblWelcomeDigitaCognome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblWelcomeDigitaCognome.setForeground(SystemColor.textHighlight);
+		lblWelcomeDigitaCognome.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panelCentralTop.add(lblWelcomeDigitaCognome);
 		
 		txtCognomeInserito = new JTextField();
@@ -137,6 +143,9 @@ public class FinestraEliminaPaziente extends JDialog {
 					//SE IL PULSANTE HA SELEZIONATO UNA TUPLA ALLORA:
 					idPaziente = Integer.valueOf(String.valueOf(table.getValueAt(rowSel, 0)));
 					
+					//MOSTRA IL PAZIENTE IN BASSO ALLA TABELLA:
+					lblPazienteSelezionato.setText("Il paziente selezionato è" +" "+ String.valueOf(table.getValueAt(rowSel, 1)) +" "+  String.valueOf(table.getValueAt(rowSel, 2)));
+					
 					btnElimina.setEnabled(true);
 				}
 			}
@@ -144,6 +153,14 @@ public class FinestraEliminaPaziente extends JDialog {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		scrollPane.setColumnHeaderView(table);
 		scrollPane.setViewportView(table);
+		
+		JPanel panelCentralBottom = new JPanel();
+		panelCentral.add(panelCentralBottom, BorderLayout.SOUTH);
+		
+		lblPazienteSelezionato = new JLabel();
+		lblPazienteSelezionato.setForeground(SystemColor.textHighlight);
+		lblPazienteSelezionato.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		panelCentralBottom.add(lblPazienteSelezionato);
 		
 		JPanel panelBottom = new JPanel();
 		contentPanel.add(panelBottom, BorderLayout.SOUTH);
@@ -176,9 +193,8 @@ public class FinestraEliminaPaziente extends JDialog {
 						JOptionPane.showMessageDialog(null, "Il paziente selezionato è stato eliminato correttamente!");
 						
 						//SET VAR = 0
-						idPaziente = 0;
+						clearFields();
 						btnElimina.setEnabled(false);
-						rowSel = 0;
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "L'operazione è stata annullata!");
@@ -187,5 +203,12 @@ public class FinestraEliminaPaziente extends JDialog {
 		});
 		panelBottom.add(btnElimina, BorderLayout.EAST);
 	}
-
+	
+//METHODS:
+	private void clearFields() {
+		idPaziente = 0;
+		rowSel = 0;
+		lblPazienteSelezionato.setText(null);
+		txtCognomeInserito.setText(null);
+	}
 }

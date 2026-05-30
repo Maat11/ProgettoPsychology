@@ -90,7 +90,7 @@ public class PaginaPaziente extends JFrame {
 		mntmModificaPaziente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//MODIFICA PAZIENTE:
-				
+				theController.fromPaginaPrincipaleToFinestraModificaDatiPaziente();
 			}
 		});
 		menuPaziente.add(mntmModificaPaziente);

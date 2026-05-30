@@ -28,6 +28,7 @@ public class Controller {
 	public FinestraVisualizzaAppuntamenti finestraVisualizzaAppuntamenti;
 	public FinestraEliminaPaziente finestraEliminaPaziente;
 	public FinestraNotaRapida finestraNotaRapida;
+	public FinestraModificaDatiPaziente finestraModificaDatiPaziente;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -194,6 +195,14 @@ public class Controller {
 		}
 	}
 	
+	 //SERVE PER ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER LA MODIFICA DEI DATI DEL PAZIENTE:
+	 public void fromPaginaPrincipaleToFinestraModificaDatiPaziente() {
+		 paginaPrincipale.setEnabled(false);
+		 
+		 finestraModificaDatiPaziente = new FinestraModificaDatiPaziente(this);
+		 finestraModificaDatiPaziente.setVisible(true);
+	 }
+	
 	//SERVE PER INSERIRE LA NOTA RAPIDA:
 	 public boolean inserisciNotaRapida(NotaRapida notaRap) {
 		 try {
@@ -203,7 +212,7 @@ public class Controller {
 			 return false;
 		 }
 	 }
-	
+	 
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
 		byte[] iv = new byte[12];
