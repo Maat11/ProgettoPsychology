@@ -12,4 +12,6 @@ public interface PazienteDAO {
 	
 	Paziente trova(int idPaziente) throws PersonalException;
 	
+	boolean modifica(Paziente paziente) throws PersonalException;
+	
 }
