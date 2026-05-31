@@ -72,7 +72,7 @@ public class FinestraVisualizzaAppuntamenti extends JDialog {
 			panelTop.setBackground(SystemColor.info);
 			contentPanel.add(panelTop, BorderLayout.NORTH);
 			{
-				JLabel lblWelcome = new JLabel("Tutti i tuoi appuntamenti (Capire se serve questa parte di messaggio)");
+				JLabel lblWelcome = new JLabel("Visualizza tutti i tuoi appuntamenti passati e futuri");
 				lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 17));
 				panelTop.add(lblWelcome);
 			}
