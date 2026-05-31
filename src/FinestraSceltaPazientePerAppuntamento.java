@@ -16,8 +16,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 public class FinestraSceltaPazientePerAppuntamento extends JDialog {
 	private Controller theController;
@@ -31,6 +34,9 @@ public class FinestraSceltaPazientePerAppuntamento extends JDialog {
 	private JTable table;
 	private JLabel lblWelcome2;
 	private JLabel lblPazienteSelezionato;
+	private JPanel panelCentralTop;
+	private JLabel lblRicercaPerCognome;
+	private JTextField txtCerca;
 	
 	public FinestraSceltaPazientePerAppuntamento(JTextField txtCodiceFiscale, JTextField idPaziente, Controller c) {
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -55,6 +61,7 @@ public class FinestraSceltaPazientePerAppuntamento extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
+		panelTop.setBackground(SystemColor.info);
 		contentPanel.add(panelTop, BorderLayout.NORTH);
 		{
 			JLabel lblWelcome = new JLabel("Seleziona il paziente");
@@ -100,6 +107,41 @@ public class FinestraSceltaPazientePerAppuntamento extends JDialog {
 				scrollPane.setColumnHeaderView(table);
 				scrollPane.setViewportView(table);
 				
+			}
+			{
+				panelCentralTop = new JPanel();
+				panelCentral.add(panelCentralTop, BorderLayout.NORTH);
+				panelCentralTop.setLayout(new BorderLayout(0, 0));
+				{
+					lblRicercaPerCognome = new JLabel("Cerca in base al cognome");
+					lblRicercaPerCognome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+					panelCentralTop.add(lblRicercaPerCognome, BorderLayout.WEST);
+				}
+				{
+					txtCerca = new JTextField();
+					panelCentralTop.add(txtCerca, BorderLayout.EAST);
+					txtCerca.setColumns(10);
+					
+					txtCerca.getDocument().addDocumentListener(new DocumentListener() {
+
+						@Override
+						public void insertUpdate(DocumentEvent e) {
+							theController.popolaTabellaConPazienti(model, txtCerca.getText().trim());
+						}
+
+						@Override
+						public void removeUpdate(DocumentEvent e) {
+							theController.popolaTabellaConPazienti(model, txtCerca.getText().trim());
+						}
+
+						@Override
+						public void changedUpdate(DocumentEvent e) {
+							theController.popolaTabellaConPazienti(model, txtCerca.getText().trim());
+						}
+						
+					});
+					
+				}
 			}
 		}
 		{
