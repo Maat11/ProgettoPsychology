@@ -77,30 +77,28 @@ public class PazienteSqlDAO implements PazienteDAO{
 	}
 	
 	private void popolaTabellaSecondMode(DefaultTableModel model, String cognome) throws PersonalException {
-		String sql = "SELECT * "
-				+ "FROM prgzia.Paziente "
-				+ "WHERE cognome = ? "
-				+ "ORDER BY Nome ASC ";
-		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
-    			PreparedStatement psmt = conn.prepareStatement(sql)) {
-            
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			
-			psmt.setString(1, cognome);
-			
-                ResultSet rs = psmt.executeQuery();
-                
-                cryptoUtilsDAO = new CryptoUtilsDAO();
-            
-                while(rs.next()) {
-            	String dataNacitaFormattata =  sdf.format(rs.getDate("data_nascita"));
-            	String codiceFiscaleDecriptato = cryptoUtilsDAO.decrypPrendiIV(rs.getInt("id_paziente"));
-				model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecriptato, dataNacitaFormattata, rs.getString("telefono"), rs.getString("email"),  rs.getDouble("prezzo"), rs.getDouble("credito")});
-            }
-    	}catch(SQLException e) {
-    		throw new PersonalException("Impossibile popolare la tabella con i pazienti a causa di un errore tecnico.");
-    	}	
+	    //USA LIKE PER TROVARE COGNOME CHE INIZIANO CON LA STRINGA INSERITA:
+	    String sql = "SELECT * FROM prgzia.Paziente WHERE cognome LIKE ? ORDER BY Nome ASC";
+
+	    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+	         PreparedStatement psmt = conn.prepareStatement(sql)) {
+
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        cryptoUtilsDAO = new CryptoUtilsDAO();
+
+	        //AGGIUNGI IL WILDCARD % PER CERCARE COGNOMI CHE INZIANO CON LA STRINGA INSERITA:
+	        psmt.setString(1, cognome + "%");
+
+	        ResultSet rs = psmt.executeQuery();
+
+	        while (rs.next()) {
+	            String dataNascitaFormattata = sdf.format(rs.getDate("data_nascita"));
+	            String codiceFiscaleDecryptato = cryptoUtilsDAO.decrypPrendiIV(rs.getInt("id_paziente"));
+	            model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecryptato, dataNascitaFormattata, rs.getString("telefono"), rs.getString("email"), rs.getDouble("prezzo"), rs.getDouble("credito")});
+	        }
+	    } catch (SQLException e) {
+	        throw new PersonalException("Impossibile popolare la tabella con i pazienti a causa di un errore tecnico.");
+	    }
 	}
 	
 	//SERVE PER RENDERE LA PRIMA LETTERA MAIUSCOLA:
