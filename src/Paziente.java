@@ -3,7 +3,7 @@ public class Paziente {
 	private int id;
 	private String nome;
 	private String cognome;
-	private String codiceFsicale; 
+	private String codiceFiscale; 
 	private java.sql.Date dataNascita;
 	private String email;
 	private String telefono;
@@ -13,7 +13,7 @@ public class Paziente {
 	public Paziente(String nome, String cognome, String codiceFiscale, java.sql.Date dataNascita, String telefono, double prezzo){
 		this.nome = nome;
 		this.cognome = cognome;
-		this.codiceFsicale = codiceFiscale;
+		this.codiceFiscale = codiceFiscale;
 		this.dataNascita = dataNascita;
 		this.telefono = telefono;
 		this.prezzo = prezzo;
@@ -29,8 +29,8 @@ public class Paziente {
 	public String getCognome() {
 		return cognome;
 	}
-	public String getCodiceFsicale() {
-		return codiceFsicale;
+	public String getCodiceFiscale() {
+		return codiceFiscale;
 	}
 	public java.sql.Date getDataNascita() {
 		return dataNascita;
@@ -58,8 +58,8 @@ public class Paziente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	public void setCodiceFsicale(String codiceFsicale) {
-		this.codiceFsicale = codiceFsicale;
+	public void setCodiceFsicale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
 	}
 	public void setDataNascita(java.sql.Date dataNascita) {
 		this.dataNascita = dataNascita;

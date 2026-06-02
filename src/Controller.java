@@ -49,10 +49,10 @@ public class Controller {
 		byte[] iv = getArrayRandom();
 		
 		try {
-			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFsicale().toUpperCase(), iv));
+			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase(), iv));
 			
 			if(pazienteDAO.inserisci(p)) {
-				p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFsicale()));
+				p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFiscale()));
 
 				if(p.getId() != 0) {
 					return cryptoUtilsDAO.inserisciInTabellaIV(p.getId(), Base64.getEncoder().encodeToString(iv));
@@ -197,10 +197,20 @@ public class Controller {
 	
 	 //SERVE PER ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER LA MODIFICA DEI DATI DEL PAZIENTE:
 	 public void fromPaginaPrincipaleToFinestraModificaDatiPaziente() {
-		 paginaPrincipale.setEnabled(false);
+		 paginaPaziente.setEnabled(false);
 		 
 		 finestraModificaDatiPaziente = new FinestraModificaDatiPaziente(this);
 		 finestraModificaDatiPaziente.setVisible(true);
+	 }
+	 
+	 //SERVE PER LA MODIFICA DEL PAZIENTE:
+	 public boolean modificaPaziente(Paziente p) {
+		 try {
+			 return pazienteDAO.modifica(p);
+		 } catch (PersonalException e) {
+			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			 return false;
+		 }
 	 }
 	
 	//SERVE PER INSERIRE LA NOTA RAPIDA:

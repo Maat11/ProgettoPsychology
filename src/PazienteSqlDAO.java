@@ -27,11 +27,11 @@ public class PazienteSqlDAO implements PazienteDAO{
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 			
-                psmt.setString(1, upperCaseFirstChar(p.getNome()));
-                psmt.setString(2, upperCaseFirstChar(p.getCognome()));
-                psmt.setString(3, p.getCodiceFsicale().trim());
+                psmt.setString(1, upperCaseFirstChar(p.getNome()).trim());
+                psmt.setString(2, upperCaseFirstChar(p.getCognome()).trim());
+                psmt.setString(3, p.getCodiceFiscale().trim());
                 psmt.setDate(4, p.getDataNascita());
-                psmt.setString(5, p.getTelefono());
+                psmt.setString(5, p.getTelefono().trim());
                 psmt.setDouble(6, p.getPrezzo());
                 
             int fine = psmt.executeUpdate();
@@ -171,6 +171,7 @@ public class PazienteSqlDAO implements PazienteDAO{
             if(rs.next()) {
             	Paziente paziente = new Paziente(rs.getString("nome"), rs.getString("cognome"), rs.getString("codice_fiscale"), rs.getDate("data_nascita"), rs.getString("telefono"), rs.getDouble("prezzo"));
             	paziente.setId(Integer.valueOf(rs.getInt("id_paziente")));
+            	paziente.setEmail(rs.getString("email"));
             	return paziente;
             }
     	}catch(SQLException e) {
@@ -179,4 +180,36 @@ public class PazienteSqlDAO implements PazienteDAO{
 		return null;
 	}
 
+	//SERVE PER LA MODIFICA DI UN PAZIENTE:
+	@Override
+	public boolean modifica(Paziente p) throws PersonalException {
+		String sql = "UPDATE prgzia.Paziente "
+				+ "SET Nome = ?, "
+				+ "Cognome = ?, "
+				+ "data_nascita = ?, "
+				+ "telefono = ?, "
+				+ "email = ?, "
+				+ "prezzo = ? "
+				+ "WHERE id_paziente = ? ";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+    		
+                psmt.setString(1,p.getNome());
+                psmt.setString(2, p.getCognome());
+                psmt.setDate(3, p.getDataNascita());
+                psmt.setString(4, p.getTelefono());
+                psmt.setString(5, p.getEmail().toLowerCase());
+                psmt.setDouble(6, p.getPrezzo());
+                psmt.setInt(7, p.getId());
+                
+            int fine = psmt.executeUpdate();
+            
+            return fine > 0;
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile modificare il paziente a causa di un errore tecnico.");
+    	}   
+	}
+	
+	
 }
