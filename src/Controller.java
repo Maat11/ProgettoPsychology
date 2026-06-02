@@ -233,7 +233,7 @@ public class Controller {
 	 }
 	 
 	 //SERVE PER INSERIRE UNA NOTA:
-	 public boolean inserisiNota(Nota nota) {
+	 public boolean inserisciNota(Nota nota) {
 		 try {
 			return notaDAO.inserisciNota(nota);
 		 } catch (PersonalException e) {
