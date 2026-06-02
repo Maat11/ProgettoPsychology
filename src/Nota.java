@@ -1,5 +1,5 @@
 
-public class NotaRapida {
+public class Nota {
 	private int idNota;
 	private int idAppuntamento;
 	private int idPaziente;
@@ -7,8 +7,16 @@ public class NotaRapida {
 	private String nota;
 	private java.sql.Date date;
 	
-//COSTRUTTORE 
-	public NotaRapida(int idAppuntamento, int idPaziente, String nota) {
+	
+//COSTRUTTORE 1: NOTA
+	public Nota(int idPaziente, String titolo, String nota) {
+		this.idPaziente = idPaziente;
+		this.parolaChiave = titolo;
+		this.nota = nota;
+	}
+	
+//COSTRUTTORE 2: NOTA RAPIDA
+	public Nota(int idAppuntamento, int idPaziente, String nota) {
 		this.idAppuntamento = idAppuntamento;
 		this.idPaziente = idPaziente;
 		this.nota = nota;

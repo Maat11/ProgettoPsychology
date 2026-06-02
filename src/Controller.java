@@ -13,8 +13,8 @@ public class Controller {
 	private Appuntamento appuntamento;
 	private AppuntamentoDAO appuntamentoDAO = new AppuntamentoSqlDAO();
 	private CryptoUtilsDAO cryptoUtilsDAO;
-	private NotaRapida notaRapida;
-	private NotaRapidaDAO notaRapidaDAO = new NotaRapidaSqlDAO();
+	private Nota nota;
+	private NotaDAO notaDAO = new NotaSqlDAO();
 		
 //PAGINE
 	public PaginaPrincipale paginaPrincipale;
@@ -29,7 +29,7 @@ public class Controller {
 	public FinestraEliminaPaziente finestraEliminaPaziente;
 	public FinestraNotaRapida finestraNotaRapida;
 	public FinestraModificaDatiPaziente finestraModificaDatiPaziente;
-	public FinestraInserisciNota finestraInserisciNota;
+	public FinestraNota finestraNota;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -215,9 +215,9 @@ public class Controller {
 	 }
 	
 	//SERVE PER INSERIRE LA NOTA RAPIDA:
-	 public boolean inserisciNotaRapida(NotaRapida notaRap) {
+	 public boolean inserisciNotaRapida(Nota notaRap) {
 		 try {
-			return notaRapidaDAO.inserisci(notaRap);
+			return notaDAO.inserisci(notaRap);
 		 } catch (PersonalException e) {
 			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			 return false;
@@ -228,8 +228,8 @@ public class Controller {
 	 public void fromPaginaPazienteToFinestraInserisciNota() {
 		 paginaPaziente.setEnabled(false);
 		 
-		 finestraInserisciNota = new FinestraInserisciNota(this);
-		 finestraInserisciNota.setVisible(true);
+		 finestraNota = new FinestraNota(this);
+		 finestraNota.setVisible(true);
 	 }
 	 
 	//ARRAY DI BYTE RANDOM:

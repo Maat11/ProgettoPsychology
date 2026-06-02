@@ -6,23 +6,23 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public  class NotaRapidaSqlDAO implements NotaRapidaDAO{
+public  class NotaSqlDAO implements NotaDAO{
 
 	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
 	private static final String USER = "postgres";
 	private static final String PASSWORD = "Informatica1";
 	
 	@Override
-	public boolean inserisci(NotaRapida notaRap) throws PersonalException {
-		if(notaRap.getParolaChiave() == null || notaRap.getParolaChiave().isBlank()) {
-			return inserisciMod1(notaRap);
+	public boolean inserisci(Nota nota) throws PersonalException {
+		if(nota.getParolaChiave() == null || nota.getParolaChiave().isBlank()) {
+			return inserisciMod1(nota);
 		}else {
-			return inserisciMod2(notaRap);
+			return inserisciMod2(nota);
 		}
 	}
 
 	//SERVE NEL CASO NON CI FOSSE LA PAROLA CHIAVE NELLA NOTA RAPIDA:
-	private boolean inserisciMod1(NotaRapida notaRap) throws PersonalException {
+	private boolean inserisciMod1(Nota notaRap) throws PersonalException {
 	String sql = "INSERT INTO prgzia.Nota(id_appuntamento, id_paziente, nota) VALUES (?, ?, ?)";
 		
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
@@ -41,16 +41,16 @@ public  class NotaRapidaSqlDAO implements NotaRapidaDAO{
 	}
 	
 	//SERVE NEL CASO CI FOSSE LA PAROLA CHIAVE NELLA NOTA RAPIDA:
-	private boolean inserisciMod2(NotaRapida notaRap) throws PersonalException {
+	private boolean inserisciMod2(Nota nota) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Nota(id_appuntamento, id_paziente, parola_chiave, nota) VALUES (?, ?, ?, ?)";
 		
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
 				PreparedStatement psmt = conn.prepareStatement(sql)) {
 	        
-	            psmt.setInt(1, notaRap.getIdAppuntamento());
-	            psmt.setInt(2, notaRap.getIdPaziente());
-	            psmt.setString(3, notaRap.getParolaChiave());
-	            psmt.setString(4, notaRap.getNota());
+	            psmt.setInt(1, nota.getIdAppuntamento());
+	            psmt.setInt(2, nota.getIdPaziente());
+	            psmt.setString(3, nota.getParolaChiave());
+	            psmt.setString(4, nota.getNota());
 	            
 	        int result = psmt.executeUpdate();
 	        
@@ -59,6 +59,6 @@ public  class NotaRapidaSqlDAO implements NotaRapidaDAO{
 			throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");
 		}	
 	}
-	
+
 	
 }
