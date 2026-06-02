@@ -64,7 +64,6 @@ public class PaginaPaziente extends JFrame {
 		
 		setTitle("Pagina dedicata ai pazienti");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 500);
 		setLocationRelativeTo(null);
 		
