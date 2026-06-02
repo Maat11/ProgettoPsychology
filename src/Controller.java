@@ -29,6 +29,7 @@ public class Controller {
 	public FinestraEliminaPaziente finestraEliminaPaziente;
 	public FinestraNotaRapida finestraNotaRapida;
 	public FinestraModificaDatiPaziente finestraModificaDatiPaziente;
+	public FinestraInserisciNota finestraInserisciNota;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -221,6 +222,14 @@ public class Controller {
 			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			 return false;
 		 }
+	 }
+	 
+	 //SERVE PER ANDARE DALLA PAGINA PAZIENTE ALLA FINESTRA PER INSERIRE UNA NOTA:
+	 public void fromPaginaPazienteToFinestraInserisciNota() {
+		 paginaPaziente.setEnabled(false);
+		 
+		 finestraInserisciNota = new FinestraInserisciNota(this);
+		 finestraInserisciNota.setVisible(true);
 	 }
 	 
 	//ARRAY DI BYTE RANDOM:
