@@ -13,7 +13,7 @@ public  class NotaSqlDAO implements NotaDAO{
 	private static final String PASSWORD = "Informatica1";
 	
 	@Override
-	public boolean inserisci(Nota nota) throws PersonalException {
+	public boolean inserisciNotaRapida(Nota nota) throws PersonalException {
 		if(nota.getParolaChiave() == null || nota.getParolaChiave().isBlank()) {
 			return inserisciMod1(nota);
 		}else {

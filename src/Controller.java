@@ -217,7 +217,7 @@ public class Controller {
 	//SERVE PER INSERIRE LA NOTA RAPIDA:
 	 public boolean inserisciNotaRapida(Nota notaRap) {
 		 try {
-			return notaDAO.inserisci(notaRap);
+			return notaDAO.inserisciNotaRapida(notaRap);
 		 } catch (PersonalException e) {
 			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			 return false;

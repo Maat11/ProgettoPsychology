@@ -1,6 +1,6 @@
 
 public interface NotaDAO {
 	
-	boolean inserisci(Nota nota) throws PersonalException;
+	boolean inserisciNotaRapida(Nota nota) throws PersonalException;
 	
 }
