@@ -20,8 +20,12 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class FinestraInserisciNota extends JDialog {
+public class FinestraNota extends JDialog {
 	private Controller theController;
 	
 	private static final long serialVersionUID = 1L;
@@ -30,12 +34,25 @@ public class FinestraInserisciNota extends JDialog {
 	private JTextField textField;
 	private JTable table;
 	private DefaultTableModel model;
+	private JButton btnInserisci;
+	private JButton btnBack;
 
-	public FinestraInserisciNota(Controller c) {
+	public FinestraNota(Controller c) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				theController.popolaTabellaConPazienti(model, "");
+			}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				//TORNA INDIETRO:
+				btnBack.doClick();
+			}
+		});
 		theController = c;
 		
 		setTitle("Finesra per l'inserimento di una nota");
-		setSize(615, 440);
+		setSize(850, 600);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -104,21 +121,21 @@ public class FinestraInserisciNota extends JDialog {
 			GroupLayout gl_panelCentral = new GroupLayout(panelCentral);
 			gl_panelCentral.setHorizontalGroup(
 				gl_panelCentral.createParallelGroup(Alignment.TRAILING)
-					.addComponent(panelCentralTop, GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+					.addComponent(panelCentralTop, GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE)
 					.addGroup(gl_panelCentral.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
 						.addContainerGap())
 					.addGroup(gl_panelCentral.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(lblNota, GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
-						.addContainerGap())
-					.addGroup(gl_panelCentral.createSequentialGroup()
-						.addGap(215)
-						.addComponent(lblTitolo, GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+						.addGap(135)
+						.addComponent(lblTitolo, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
 						.addGap(18)
-						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-						.addGap(124))
+						.addComponent(textField, GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+						.addGap(243))
+					.addGroup(gl_panelCentral.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(lblNota, GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
+						.addContainerGap())
 			);
 			gl_panelCentral.setVerticalGroup(
 				gl_panelCentral.createParallelGroup(Alignment.LEADING)
@@ -126,8 +143,8 @@ public class FinestraInserisciNota extends JDialog {
 						.addComponent(panelCentralTop, GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
 						.addGap(44)
 						.addGroup(gl_panelCentral.createParallelGroup(Alignment.BASELINE)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblTitolo))
+							.addComponent(lblTitolo)
+							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGap(26)
 						.addComponent(lblNota, GroupLayout.PREFERRED_SIZE, 19, Short.MAX_VALUE)
 						.addGap(18)
@@ -141,11 +158,26 @@ public class FinestraInserisciNota extends JDialog {
 			contentPanel.add(panelBottom, BorderLayout.SOUTH);
 			panelBottom.setLayout(new BorderLayout(0, 0));
 			{
-				JButton btnBack = new JButton("Back");
+				btnBack = new JButton("Back");
+				btnBack.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+						
+						theController.paginaPaziente.setVisible(true);
+						theController.paginaPaziente.setEnabled(true);
+					}
+				});
 				panelBottom.add(btnBack, BorderLayout.WEST);
 			}
 			{
-				JButton btnInserisci = new JButton("Inserisci");
+				btnInserisci = new JButton("Inserisci");
+				btnInserisci.setEnabled(false);
+				btnInserisci.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//INSERISCI LA NOTA:
+						
+					}
+				});
 				panelBottom.add(btnInserisci, BorderLayout.EAST);
 			}
 		}
