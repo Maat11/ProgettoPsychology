@@ -112,6 +112,7 @@ public class PaginaPaziente extends JFrame {
 		mntmInserisciNota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//VAI ALLA FINESTRA PER INSERIRE UNA NOTA:
+				theController.fromPaginaPazienteToFinestraInserisciNota();
 			}
 		});
 		menuNote.add(mntmInserisciNota);
