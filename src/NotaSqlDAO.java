@@ -36,7 +36,7 @@ public  class NotaSqlDAO implements NotaDAO{
 	        
 	        return result > 0;
 		}catch (SQLException e) {
-			throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");
+			throw new PersonalException("Impossibile inserire una nota rapida al paziente selezionato a causa di un errore tecnico.");
 		}	
 	}
 	
@@ -56,8 +56,27 @@ public  class NotaSqlDAO implements NotaDAO{
 	        
 	        return result > 0;
 		}catch (SQLException e) {
-			throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");
+			throw new PersonalException("Impossibile inserire una nota rapida al paziente selezionato a causa di un errore tecnico.");
 		}	
+	}
+
+	@Override
+	public boolean inserisciNota(Nota nota) throws PersonalException {
+		String sql = "INSERT INTO prgzia.Nota(id_paziente, parola_chiave, nota) VALUES (?, ?, ?)";
+		
+		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+				PreparedStatement psmt = conn.prepareStatement(sql)) {
+	        
+	            psmt.setInt(1, nota.getIdPaziente());
+	            psmt.setString(2, nota.getParolaChiave());
+	            psmt.setString(3, nota.getNota());
+	            
+	        int result = psmt.executeUpdate();
+	        
+	        return result > 0;
+		}catch (SQLException e) {
+			throw new PersonalException("Impossibile inserire una nota al paziente selezionato a causa di un errore tecnico.");
+		}
 	}
 
 	

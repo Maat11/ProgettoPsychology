@@ -232,6 +232,16 @@ public class Controller {
 		 finestraNota.setVisible(true);
 	 }
 	 
+	 //SERVE PER INSERIRE UNA NOTA:
+	 public boolean inserisiNota(Nota nota) {
+		 try {
+			return notaDAO.inserisciNota(nota);
+		 } catch (PersonalException e) {
+			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			 return false;
+		 }
+	 }
+	 
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
 		byte[] iv = new byte[12];
