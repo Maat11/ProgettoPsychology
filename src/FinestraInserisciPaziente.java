@@ -56,7 +56,7 @@ public class FinestraInserisciPaziente extends JDialog {
 			panelTop.setBackground(SystemColor.info);
 			contentPanel.add(panelTop, BorderLayout.NORTH);
 			{
-				JLabel lblWelcome = new JLabel("Inserisci un nuovo cliente");
+				JLabel lblWelcome = new JLabel("Inserisci un nuovo paziente");
 				lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				panelTop.add(lblWelcome);
 			}
