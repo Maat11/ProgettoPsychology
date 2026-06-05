@@ -1,13 +1,14 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
 public class IvSqlDAO implements IvDAO{
 
 	//MI SERVE PER LA DECRIPTAZIONE:
-	public String decrypPrendiIV(int idPaz) {
+	public String decrypPrendiIV(int idPaz) throws PersonalException {
 		String sql = "SELECT * "
 				+ "FROM prgzia.Iv AS I "
 				+ "JOIN prgzia.Paziente AS P ON I.id_paziente = P.id_paziente "
@@ -27,8 +28,8 @@ public class IvSqlDAO implements IvDAO{
             	//DECRIPTA E RESTITUISCI IL CODICE FISCALE DEECRIPTATO:
             	return CryptoUtilsDAO.decrypt(rs.getString("codice_fiscale"), ivString);
             }
-    	}catch(Exception e) {
-    		JOptionPane.showMessageDialog(null, "Errore nella funzione: decryptPrendiIv nella classe CryptoUtilsDAO" + e);
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile restituire il codice fiscale del paziente a causa di un errore tecnico.");
     	} 		
 		return "";
 	}
