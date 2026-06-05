@@ -10,10 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class PazienteSqlDAO implements PazienteDAO{
 	
-	private CryptoUtilsDAO cryptoUtilsDAO;
-	
 //METHODS:
-	
 	//SERVE PER L'INSRIMENTO DEL PAZIENTE NEL DB:
 	@Override
 	public boolean inserisci(Paziente p) throws PersonalException {
@@ -60,12 +57,12 @@ public class PazienteSqlDAO implements PazienteDAO{
 			
                 ResultSet rs = psmt.executeQuery();
                 
-                cryptoUtilsDAO = new CryptoUtilsDAO();
+                IvSqlDAO IvSqlDAO = new IvSqlDAO();
                 
             while(rs.next()) {
             	String dataNacitaFormattata =  sdf.format(rs.getDate("data_nascita"));
-            	String codiceFiscaleDecriptato = cryptoUtilsDAO.decrypPrendiIV(rs.getInt("id_paziente"));
-				model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecriptato, dataNacitaFormattata, rs.getString("telefono"), rs.getString("email"),  rs.getDouble("prezzo"), rs.getDouble("credito")});
+            	String codiceFiscaleDecriptato = IvSqlDAO.decrypPrendiIV(rs.getInt("id_paziente"));
+            	model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecriptato, dataNacitaFormattata, rs.getString("telefono"), rs.getString("email"),  rs.getDouble("prezzo"), rs.getDouble("credito")});
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile popolare la tabella con i pazienti a causa di un errore tecnico.");
@@ -80,7 +77,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 	         PreparedStatement psmt = conn.prepareStatement(sql)) {
 
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	        cryptoUtilsDAO = new CryptoUtilsDAO();
+	        IvSqlDAO IvSqlDAO = new IvSqlDAO();
 
 	        //AGGIUNGI IL WILDCARD % PER CERCARE COGNOMI CHE INZIANO CON LA STRINGA INSERITA:
 	        psmt.setString(1, cognome + "%");
@@ -89,7 +86,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 
 	        while (rs.next()) {
 	            String dataNascitaFormattata = sdf.format(rs.getDate("data_nascita"));
-	            String codiceFiscaleDecryptato = cryptoUtilsDAO.decrypPrendiIV(rs.getInt("id_paziente"));
+	            String codiceFiscaleDecryptato = IvSqlDAO.decrypPrendiIV(rs.getInt("id_paziente"));
 	            model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecryptato, dataNascitaFormattata, rs.getString("telefono"), rs.getString("email"), rs.getDouble("prezzo"), rs.getDouble("credito")});
 	        }
 	    } catch (SQLException e) {

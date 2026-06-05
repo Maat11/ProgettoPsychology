@@ -45,7 +45,7 @@ public class Controller {
 //METHODS:
 	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
 	public boolean inserisciPaziente(Paziente p) {
-		cryptoUtilsDAO = new CryptoUtilsDAO();
+		IvSqlDAO ivSqlDAO = new IvSqlDAO();
 		
 		byte[] iv = getArrayRandom();
 		
@@ -56,7 +56,7 @@ public class Controller {
 				p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFiscale()));
 
 				if(p.getId() != 0) {
-					return cryptoUtilsDAO.inserisciInTabellaIV(p.getId(), Base64.getEncoder().encodeToString(iv));
+					return ivSqlDAO.inserisciInTabellaIV(p.getId(), Base64.getEncoder().encodeToString(iv));
 				}else {
 					return false;
 				}
