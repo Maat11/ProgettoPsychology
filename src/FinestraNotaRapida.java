@@ -205,7 +205,7 @@ public class FinestraNotaRapida extends JDialog {
 				btnInserisci.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						//INSERISCI NOTA:
-						NotaRapida notaRap = new NotaRapida(idAppuntamento, idPaz, txtAreaNota.getText().trim());
+						Nota notaRap = new Nota(idAppuntamento, idPaz, txtAreaNota.getText().trim());
 						
 						int confirm = JOptionPane.showConfirmDialog(null, "Procede per l'inserimento di una nota rapida per il paziente scelto?", "Finestra di avviso", JOptionPane.YES_NO_CANCEL_OPTION);
 						
