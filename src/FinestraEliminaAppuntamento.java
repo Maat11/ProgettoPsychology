@@ -75,9 +75,11 @@ public class FinestraEliminaAppuntamento extends JDialog {
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
 			JPanel panelTop = new JPanel();
+			panelTop.setBackground(SystemColor.info);
 			contentPanel.add(panelTop, BorderLayout.NORTH);
 			{
 				JLabel lblWelcome = new JLabel("Seleziona l'appuntamento che vuoi eliminare");
+				lblWelcome.setForeground(SystemColor.textHighlight);
 				lblWelcome.setFont(new Font("Tahoma", Font.PLAIN, 17));
 				panelTop.add(lblWelcome);
 			}
@@ -88,7 +90,7 @@ public class FinestraEliminaAppuntamento extends JDialog {
 			panelCentral.setLayout(new BorderLayout(0, 0));
 			{
 				lblAppSelezionato = new JLabel("");
-				lblAppSelezionato.setForeground(Color.BLUE);
+				lblAppSelezionato.setForeground(SystemColor.textHighlight);
 				lblAppSelezionato.setFont(new Font("Tahoma", Font.PLAIN, 17));
 				lblAppSelezionato.setVisible(false);
 				panelCentral.add(lblAppSelezionato, BorderLayout.SOUTH);
@@ -105,15 +107,18 @@ public class FinestraEliminaAppuntamento extends JDialog {
 				panelCentral2.setLayout(new BorderLayout(0, 0));
 				{
 					JPanel panel = new JPanel();
+					panel.setBackground(new Color(255, 250, 250));
 					panelCentral2.add(panel, BorderLayout.NORTH);
 					panel.setLayout(new BorderLayout(0, 0));
 					{
 						JLabel lblDataSelezionata = new JLabel("Inserisci una data");
+						lblDataSelezionata.setForeground(SystemColor.textHighlight);
 						lblDataSelezionata.setFont(new Font("Tahoma", Font.PLAIN, 14));
 						panel.add(lblDataSelezionata, BorderLayout.WEST);
 					}
 					{
 						JPanel panelContentJDateChooser = new JPanel();
+						panelContentJDateChooser.setBackground(new Color(255, 250, 250));
 						panel.add(panelContentJDateChooser, BorderLayout.EAST);
 						{
 							dateChooser = new JDateChooser();
@@ -208,6 +213,7 @@ public class FinestraEliminaAppuntamento extends JDialog {
 			}
 			{
 				btnElimina = new JButton("Elimina");
+				btnElimina.setForeground(Color.RED);
 				btnElimina.setEnabled(false);
 				btnElimina.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
