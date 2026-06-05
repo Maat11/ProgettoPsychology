@@ -10,10 +10,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class PazienteSqlDAO implements PazienteDAO{
 	
-	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "Informatica1";
-
 	private CryptoUtilsDAO cryptoUtilsDAO;
 	
 //METHODS:
@@ -24,7 +20,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 		String sql = "INSERT INTO prgzia.Paziente(nome, cognome, codice_fiscale, data_nascita, telefono, prezzo) "
 				+ "VALUES(?, ?, ?, ?, ?, ?) ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 			
                 psmt.setString(1, upperCaseFirstChar(p.getNome()).trim());
@@ -57,7 +53,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 				+ "FROM prgzia.Paziente AS P "
 				+ "ORDER BY cognome ASC ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
             
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -80,7 +76,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 	    //USA LIKE PER TROVARE COGNOME CHE INIZIANO CON LA STRINGA INSERITA:
 	    String sql = "SELECT * FROM prgzia.Paziente WHERE cognome LIKE ? ORDER BY Nome ASC";
 
-	    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+	    try (Connection conn = DataBaseConnection.getConnection();
 	         PreparedStatement psmt = conn.prepareStatement(sql)) {
 
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -120,7 +116,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 				+ "FROM prgzia.Paziente "
 				+ "WHERE codice_fiscale = ? ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
             
 				psmt.setString(1, codFiscCript);
@@ -142,7 +138,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 				+ "FROM prgzia.Paziente AS P "
 				+ "WHERE P.id_paziente = ? ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
     		
                 psmt.setInt(1, idPaziente);
@@ -161,7 +157,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 				+ "FROM prgzia.Paziente AS P "
 				+ "WHERE P.id_paziente = ? "; 
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
             
 				psmt.setInt(1, idPaziente);
@@ -192,7 +188,7 @@ public class PazienteSqlDAO implements PazienteDAO{
 				+ "prezzo = ? "
 				+ "WHERE id_paziente = ? ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
     		
                 psmt.setString(1,p.getNome());

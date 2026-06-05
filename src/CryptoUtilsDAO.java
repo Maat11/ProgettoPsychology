@@ -15,11 +15,8 @@ import javax.swing.JOptionPane;
 import com.sun.tools.javac.Main;
 
 public class CryptoUtilsDAO {
-	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "Informatica1";
 	
-	public String encrypt(String codiceFiscale, byte[] iv) {
+	public static String encrypt(String codiceFiscale, byte[] iv) {
 	    try {
 	        if (getKey() == null || getKey().length() != 44) {
 	            System.err.println("ERRORE: La chiave deve essere di 32 caratteri!");
@@ -81,7 +78,7 @@ public class CryptoUtilsDAO {
 				+ "JOIN prgzia.Paziente AS P ON I.id_paziente = P.id_paziente "
 				+ "WHERE I.id_paziente = ? ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 						
                 psmt.setInt(1, idPaz);
@@ -148,7 +145,7 @@ public class CryptoUtilsDAO {
 		String sql = "INSERT INTO prgzia.Iv(id_paziente, Iv) "
 				+ "VALUES(?, ?)";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
     		
                 psmt.setInt(1, idPaz);

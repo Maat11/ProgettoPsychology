@@ -13,17 +13,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	
-	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "Informatica1";
-
 	//MI SERVE PER INSERIRE UN APPUNTAMENTO:
 	@Override
 	public boolean inserisci(Appuntamento app) throws PersonalException{
 		String sql = "INSERT INTO prgzia.Appuntamento(id_paziente, data_giorno, ora_Inizio, ora_fine, modalità) "
 				+ "VALUES(?, ?, ?, ?, ?) ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 			
 			//CAST ORA INIZIO:
@@ -55,7 +51,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 		String sql = "DELETE FROM prgzia.Appuntamento "
 				+ "WHERE id_appuntamento = ?";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 						
                 psmt.setInt(1, idApp);
@@ -77,7 +73,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 				+ "WHERE A.data_giorno = ? "
 				+ "ORDER BY ora_inizio ASC ";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
 						
                 psmt.setDate(1, data);

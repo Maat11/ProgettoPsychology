@@ -8,10 +8,6 @@ import java.time.format.DateTimeFormatter;
 
 public  class NotaSqlDAO implements NotaDAO{
 
-	private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "Informatica1";
-	
 	@Override
 	public boolean inserisciNotaRapida(Nota nota) throws PersonalException {
 		if(nota.getParolaChiave() == null || nota.getParolaChiave().isBlank()) {
@@ -25,7 +21,7 @@ public  class NotaSqlDAO implements NotaDAO{
 	private boolean inserisciMod1(Nota notaRap) throws PersonalException {
 	String sql = "INSERT INTO prgzia.Nota(id_appuntamento, id_paziente, nota) VALUES (?, ?, ?)";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
 				PreparedStatement psmt = conn.prepareStatement(sql)) {
 	        
 	            psmt.setInt(1, notaRap.getIdAppuntamento());
@@ -44,7 +40,7 @@ public  class NotaSqlDAO implements NotaDAO{
 	private boolean inserisciMod2(Nota nota) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Nota(id_appuntamento, id_paziente, parola_chiave, nota) VALUES (?, ?, ?, ?)";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
 				PreparedStatement psmt = conn.prepareStatement(sql)) {
 	        
 	            psmt.setInt(1, nota.getIdAppuntamento());
@@ -64,7 +60,7 @@ public  class NotaSqlDAO implements NotaDAO{
 	public boolean inserisciNota(Nota nota) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Nota(id_paziente, parola_chiave, nota) VALUES (?, ?, ?)";
 		
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); 
+		try (Connection conn = DataBaseConnection.getConnection(); 
 				PreparedStatement psmt = conn.prepareStatement(sql)) {
 	        
 	            psmt.setInt(1, nota.getIdPaziente());
