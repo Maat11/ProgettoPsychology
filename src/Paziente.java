@@ -58,7 +58,7 @@ public class Paziente {
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	public void setCodiceFsicale(String codiceFiscale) {
+	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
 	}
 	public void setDataNascita(java.sql.Date dataNascita) {

@@ -8,12 +8,8 @@ import javax.swing.table.DefaultTableModel;
 public class Controller {
 
 //CLASSI:
-	private Paziente paziente;
 	private PazienteDAO pazienteDAO = new PazienteSqlDAO();
-	private Appuntamento appuntamento;
 	private AppuntamentoDAO appuntamentoDAO = new AppuntamentoSqlDAO();
-	private CryptoUtilsDAO cryptoUtilsDAO;
-	private Nota nota;
 	private NotaDAO notaDAO = new NotaSqlDAO();
 		
 //PAGINE
@@ -50,7 +46,7 @@ public class Controller {
 		byte[] iv = getArrayRandom();
 		
 		try {
-			p.setCodiceFsicale(cryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase(), iv));
+			p.setCodiceFiscale(CryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase(), iv));
 			
 			if(pazienteDAO.inserisci(p)) {
 				p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFiscale()));
