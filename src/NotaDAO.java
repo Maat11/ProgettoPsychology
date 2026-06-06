@@ -1,3 +1,4 @@
+import javax.swing.table.DefaultTableModel;
 
 public interface NotaDAO {
 	
@@ -5,6 +6,6 @@ public interface NotaDAO {
 	
 	boolean inserisciNota(Nota nota) throws PersonalException;
 	
-	void popola(Nota nota) throws PersonalException;
+	void popola(DefaultTableModel model) throws PersonalException;
 	
 }
