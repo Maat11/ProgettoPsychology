@@ -198,7 +198,8 @@ public class PaginaPaziente extends JFrame {
 				lblPazienteSelezionato.setText("Il paziente selezionato è " + String.valueOf(table.getValueAt(rowSel, 1)) + " " + String.valueOf(table.getValueAt(rowSel, 2) + " " + "con codice fiscale " + String.valueOf(table.getValueAt(rowSel, 3))));
 				
 				btnBack.setEnabled(true);
-				btnDettagli.setEnabled(true);
+				//PER IL MOMENTO NON SERVE ANCORA
+				//btnDettagli.setEnabled(true);
 			}
 		});
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
