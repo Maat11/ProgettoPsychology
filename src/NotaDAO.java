@@ -5,4 +5,6 @@ public interface NotaDAO {
 	
 	boolean inserisciNota(Nota nota) throws PersonalException;
 	
+	void popola(Nota nota) throws PersonalException;
+	
 }
