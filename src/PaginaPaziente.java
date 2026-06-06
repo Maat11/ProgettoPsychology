@@ -119,8 +119,8 @@ public class PaginaPaziente extends JFrame {
 		JMenuItem mntmVisualizzaNota = new JMenuItem("Visualizza");
 		mntmVisualizzaNota.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//VAI ALLA FINESTRA PER VISUALIZZARE LE NOTE, INIZ. NOTE RAPIE MA ANCHE NOTE IN BASE AL PAZIENTE:
-				
+				//VAI ALLA PAGINA PER VISUALIZZARE LE NOTE, INIZ. NOTE RAPIE MA ANCHE NOTE IN BASE AL PAZIENTE:
+				theController.fromPaginaPazienteToPaginaNote();
 			}
 		});
 		menuNote.add(mntmVisualizzaNota);
@@ -232,17 +232,6 @@ public class PaginaPaziente extends JFrame {
 				//TORNA INDIETRO:
 				setVisible(false);
 				theController.paginaPrincipale.setVisible(true);
-//				int risp = JOptionPane.showConfirmDialog(null, "Vuoi completare l'operazione di eliminazione del paziente scelto? ", "Finestra di avviso", JOptionPane.YES_NO_CANCEL_OPTION);
-//				if(risp == JOptionPane.YES_OPTION) {
-//					if(theController.eliminaPaziente(idPazSel)) {
-//						JOptionPane.showMessageDialog(null, "Il paziente è stato eliminato correttamente!");
-//						btnElimina.setEnabled(false);
-//						btnDettagli.setEnabled(false);
-//						idPazSel = 0;
-//					}
-//				}else {
-//					JOptionPane.showMessageDialog(null, "L'operazione è stata annullata!");
-//				}
 			}
 		});
 		btnBack.setForeground(Color.BLACK);
