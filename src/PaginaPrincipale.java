@@ -140,6 +140,7 @@ public class PaginaPrincipale extends JFrame {
 		menuCliente.add(itemVisualizzaPazienti);
 		
 		JMenu menuPagamento = new JMenu("Pagamento");
+		menuPagamento.setEnabled(false);
 		menuPagamento.setFont(new Font("Dialog", Font.PLAIN, 15));
 		menuBar.add(menuPagamento);
 		
