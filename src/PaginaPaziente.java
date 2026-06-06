@@ -62,7 +62,7 @@ public class PaginaPaziente extends JFrame {
 		});
 		theController = c;
 		
-		setTitle("Pagina dedicata ai pazienti");
+		setTitle("Pagina pazienti");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setSize(600, 500);
 		setLocationRelativeTo(null);

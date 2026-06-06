@@ -68,13 +68,22 @@ public class PaginaNote extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(new Color(173, 216, 230));
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("New menu");
-		menuBar.add(mnNewMenu);
+		JMenu menuNota = new JMenu("Nota");
+		menuNota.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		menuBar.add(menuNota);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("New menu item");
-		mnNewMenu.add(mntmNewMenuItem);
+		JMenuItem mntmInserisci = new JMenuItem("Inserisci");
+		mntmInserisci.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		mntmInserisci.setHorizontalAlignment(SwingConstants.CENTER);
+		menuNota.add(mntmInserisci);
+		
+		JMenuItem mntmElimina = new JMenuItem("Elimina");
+		mntmElimina.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		mntmElimina.setHorizontalAlignment(SwingConstants.RIGHT);
+		menuNota.add(mntmElimina);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
