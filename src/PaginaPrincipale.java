@@ -278,7 +278,8 @@ public class PaginaPrincipale extends JFrame {
 						//SBLOCCA PULSANTI:
 						btnEliminaAppuntamento.setEnabled(true);
 						
-						btnCompleta.setEnabled(true);
+						//PER IL MOMENTO NON SERVE:
+						//btnCompleta.setEnabled(true);
 					}
 					btnNotaRapida.setEnabled(true);
 					
