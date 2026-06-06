@@ -15,6 +15,7 @@ public class Controller {
 //PAGINE
 	public PaginaPrincipale paginaPrincipale;
 	public PaginaPaziente paginaPaziente;
+	public PaginaNote paginaNote;
 	
 //FINESTRE
 	public FinestraInserisciAppuntamento finestraInserisciAppuntamento;
@@ -26,6 +27,7 @@ public class Controller {
 	public FinestraNotaRapida finestraNotaRapida;
 	public FinestraModificaDatiPaziente finestraModificaDatiPaziente;
 	public FinestraNota finestraNota;
+	public FinestraDettagliNota finestraDettagliNota;
 	
 //COSTRUTTORE:	
 	Controller(){
@@ -236,6 +238,64 @@ public class Controller {
 			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			 return false;
 		 }
+	 }
+	 
+	 //SERVE PER ANDARE DALLA PAGINA PAZIENTE ALLA PAGINA NOTE:
+	 public void fromPaginaPazienteToPaginaNote() {
+		 paginaPaziente.setVisible(false);
+		 
+		 paginaNote = new PaginaNote(this);
+		 paginaNote.setVisible(true);
+	 }
+	 
+	 //SERVE PER POPOLARE LA TABELLA CON LE NOTE, DA QUELLA PIù RECENTE, LIMITE 20:
+	 public void popolaTabellaNote( DefaultTableModel model) {
+		model.setRowCount(0);
+		 
+		try {
+			notaDAO.popolaTabellaConTutteLeNote(model);
+		 } catch (PersonalException e) {
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		 }
+	 }
+	 
+	 //SERVE PER POPOLARE LA TABELLE CON LE NOTE IN BASE AL PAZIENTE SELEZIONATO:
+	 public void popolaTabellaNotePerPaziente(int idPaz, DefaultTableModel model) {
+		 model.setRowCount(0);
+		 
+		 try {
+			notaDAO.popolaTabellaNotePerPaziente(idPaz, model);
+		 } catch (PersonalException e) {
+			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		 }
+	 }
+	 
+	 //SERVE PER ANDARE DALLA PAGINA NOTA ALLA FINESTRA PER I DETTAGLI DI UNA NOTA:
+	 public void fromPaginaNoteToFinestraDettagliNota(int idNota) {
+		 paginaNote.setEnabled(false);
+		 
+		 finestraDettagliNota = new FinestraDettagliNota(idNota, this);
+		 finestraDettagliNota.setVisible(true);
+	 }
+	 
+	 //SERVE A PRENDERE LA NOTA CHE SI HA SELEZIONATO:
+	 public Nota prendiNotaSelezionata(int idNota) {
+		try {
+			return  notaDAO.prendiNota(idNota);
+		} catch (PersonalException e) {
+			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+		return null;
+	 }
+	 
+	 //SERVE PER MODIFICARE, NEL CASO, LA NOTA DI CUI SI STA GUARDANDO I DETTAGLI:
+	 public boolean modificaNota(Nota nota) {
+		 try {
+			return notaDAO.modifica(nota);
+		 } catch (PersonalException e) {
+			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		 }
+		 return false;
 	 }
 	 
 	//ARRAY DI BYTE RANDOM:

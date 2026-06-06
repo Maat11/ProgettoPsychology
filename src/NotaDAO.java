@@ -6,6 +6,12 @@ public interface NotaDAO {
 	
 	boolean inserisciNota(Nota nota) throws PersonalException;
 	
-	void popola(int idPaz, DefaultTableModel model) throws PersonalException;
+	void popolaTabellaConTutteLeNote(DefaultTableModel model) throws PersonalException;
+	
+	void popolaTabellaNotePerPaziente(int idPaz, DefaultTableModel model) throws PersonalException;
+	
+	Nota prendiNota(int idNota) throws PersonalException;
+	
+	boolean modifica(Nota nota) throws PersonalException;
 	
 }
