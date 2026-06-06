@@ -56,7 +56,7 @@ public  class NotaSqlDAO implements NotaDAO{
 		}	
 	}
 	
-	//SERVE PER IL METODO PRINCIPALE, NEL CASO CI FOSSE LA PAROLA CHIAVE:
+	//SERVE PER INSERIRE UNA NOTA (NON RAPIDA):
 	@Override
 	public boolean inserisciNota(Nota nota) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Nota(id_paziente, parola_chiave, nota) VALUES (?, ?, ?)";
@@ -78,7 +78,6 @@ public  class NotaSqlDAO implements NotaDAO{
 
 	@Override
 	public void popola(Nota nota) throws PersonalException {
-		// TODO Auto-generated method stub
 		
 	}
 
