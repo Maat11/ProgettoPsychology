@@ -36,7 +36,7 @@ public  class NotaSqlDAO implements NotaDAO{
 		}	
 	}
 	
-	//SERVE NEL CASO CI FOSSE LA PAROLA CHIAVE NELLA NOTA RAPIDA:
+	//SERVE NEL METODO PRINCIPALE, NEL CASO CI FOSSE LA PAROLA CHIAVE NELLA NOTA RAPIDA:
 	private boolean inserisciMod2(Nota nota) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Nota(id_appuntamento, id_paziente, parola_chiave, nota) VALUES (?, ?, ?, ?)";
 		
@@ -55,7 +55,8 @@ public  class NotaSqlDAO implements NotaDAO{
 			throw new PersonalException("Impossibile inserire una nota rapida al paziente selezionato a causa di un errore tecnico.");
 		}	
 	}
-
+	
+	//SERVE PER IL METODO PRINCIPALE, NEL CASO CI FOSSE LA PAROLA CHIAVE:
 	@Override
 	public boolean inserisciNota(Nota nota) throws PersonalException {
 		String sql = "INSERT INTO prgzia.Nota(id_paziente, parola_chiave, nota) VALUES (?, ?, ?)";
@@ -73,6 +74,12 @@ public  class NotaSqlDAO implements NotaDAO{
 		}catch (SQLException e) {
 			throw new PersonalException("Impossibile inserire una nota al paziente selezionato a causa di un errore tecnico.");
 		}
+	}
+
+	@Override
+	public void popola(Nota nota) throws PersonalException {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
