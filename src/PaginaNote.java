@@ -76,6 +76,12 @@ public class PaginaNote extends JFrame {
 		menuBar.add(menuNota);
 		
 		JMenuItem mntmInserisci = new JMenuItem("Inserisci");
+		mntmInserisci.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//VAI ALLA FINESTRA PER INSERIRE UNA NOTA:
+				theController.fromPaginaNoteToFinestraNota();
+			}
+		});
 		mntmInserisci.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		mntmInserisci.setHorizontalAlignment(SwingConstants.CENTER);
 		menuNota.add(mntmInserisci);

@@ -223,10 +223,10 @@ public class Controller {
 	 }
 	 
 	 //SERVE PER ANDARE DALLA PAGINA PAZIENTE ALLA FINESTRA PER INSERIRE UNA NOTA:
-	 public void fromPaginaPazienteToFinestraInserisciNota() {
+	 public void fromPaginaPazienteToFinestraNota() {
 		 paginaPaziente.setEnabled(false);
 		 
-		 finestraNota = new FinestraNota(this);
+		 finestraNota = new FinestraNota(this, 1);
 		 finestraNota.setVisible(true);
 	 }
 	 
@@ -296,6 +296,13 @@ public class Controller {
 			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 		 }
 		 return false;
+	 }
+	 
+	 public void fromPaginaNoteToFinestraNota() {
+		 paginaNote.setEnabled(false);
+		 
+		 finestraNota = new FinestraNota(this, 2);
+		 finestraNota.setVisible(true);
 	 }
 	 
 	//ARRAY DI BYTE RANDOM:

@@ -44,7 +44,7 @@ public class FinestraNota extends JDialog {
 	private int idPazSel;
 	private JLabel lblPazienteSel;
 	
-	public FinestraNota(Controller c) {
+	public FinestraNota(Controller c, int mode) {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowActivated(WindowEvent e) {
@@ -235,8 +235,16 @@ public class FinestraNota extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						setVisible(false);
 						
-						theController.paginaPaziente.setVisible(true);
-						theController.paginaPaziente.setEnabled(true);
+						if(mode == 1) {
+							//TORNA ALLA PAGINA PAZIENTE NEL CASO SIA STATA CHIAMATA DA LI'
+							theController.paginaPaziente.setVisible(true);
+							theController.paginaPaziente.setEnabled(true);
+						}else if(mode == 2) {
+							//TORNA ALLA PAGINA NOTE NEL CASO SIA STATA CHIAMATA DA LI'
+							theController.paginaNote.setVisible(true);
+							theController.paginaNote.setEnabled(true);
+						}
+						
 					}
 				});
 				panelBottom.add(btnBack, BorderLayout.WEST);
