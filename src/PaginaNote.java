@@ -25,6 +25,7 @@ import javax.swing.JToolBar;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class PaginaNote extends JFrame {
 	private Controller theController;
@@ -43,6 +44,7 @@ public class PaginaNote extends JFrame {
 	private JLabel lblInfo2;
 	private int idNota;
 	private DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer(); //SERVE PER CENTRALIZZARE IL TESTO NELLE CELLE DELLA TABELLA
+	private JButton btnElimina;
 	
 	public PaginaNote(Controller c) {
 		addWindowListener(new WindowAdapter() {
@@ -85,11 +87,6 @@ public class PaginaNote extends JFrame {
 		mntmInserisci.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		mntmInserisci.setHorizontalAlignment(SwingConstants.CENTER);
 		menuNota.add(mntmInserisci);
-		
-		JMenuItem mntmElimina = new JMenuItem("Elimina");
-		mntmElimina.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		mntmElimina.setHorizontalAlignment(SwingConstants.RIGHT);
-		menuNota.add(mntmElimina);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -236,7 +233,9 @@ public class PaginaNote extends JFrame {
 					
 					idNota = Integer.valueOf(String.valueOf(tableNote.getValueAt(selRow, 0)));
 					
+					//RENDO DISPONIBILI I PULSANTI:
 					btnDettagli.setEnabled(true);
+					btnElimina.setEnabled(true);
 				}
 			}
 		});
@@ -288,6 +287,35 @@ public class PaginaNote extends JFrame {
 		});
 		btnDettagli.setEnabled(false);
 		panelBottom.add(btnDettagli, BorderLayout.EAST);
+		
+		JPanel panelBottomCentral = new JPanel();
+		panelBottom.add(panelBottomCentral, BorderLayout.CENTER);
+		
+		btnElimina = new JButton("Elimina");
+		btnElimina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//ELIMINA NOTA:
+				int confirm = JOptionPane.showConfirmDialog(null, "Confermare l'operazione di eliminazione della nota selezionata?", "Messaggio", JOptionPane.YES_NO_OPTION);
+				if(confirm == JOptionPane.YES_OPTION) {
+					if(theController.eliminaNota(idNota)) {
+						JOptionPane.showMessageDialog(null, "L'operazione è andata a buon fine!");
+						
+						//SET ENABLE FALSE DEL PULSANTE:
+						btnElimina.setEnabled(false);
+						
+						//POPOLA TABELLA CON TUTTE LE NOTE:
+						theController.popolaTabellaNote(modelNote);
+					}
+				}else {
+					//SET ENABLE FALSE DEL PULSANTE:
+					btnElimina.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "L'operazione è stata annullata!");
+				}
+			}
+		});
+		btnElimina.setEnabled(false);
+		btnElimina.setForeground(Color.RED);
+		panelBottomCentral.add(btnElimina);
 
 	}
 

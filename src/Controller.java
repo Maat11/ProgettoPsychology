@@ -305,6 +305,16 @@ public class Controller {
 		 finestraNota.setVisible(true);
 	 }
 	 
+	 //SERVE PER ELIMINARE LA NOTA:
+	 public boolean eliminaNota(int idNota) {
+		 try {
+			return notaDAO.elimina(idNota);
+		 } catch (PersonalException e) {
+			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		 }
+		 return false;
+	 }
+	 
 	//ARRAY DI BYTE RANDOM:
 	private  byte[] getArrayRandom() {
 		byte[] iv = new byte[12];

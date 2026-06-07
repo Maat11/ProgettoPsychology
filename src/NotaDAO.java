@@ -14,4 +14,6 @@ public interface NotaDAO {
 	
 	boolean modifica(Nota nota) throws PersonalException;
 	
+	boolean elimina(int idNota) throws PersonalException;
+	
 }

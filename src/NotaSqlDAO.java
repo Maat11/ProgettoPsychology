@@ -180,5 +180,23 @@ public  class NotaSqlDAO implements NotaDAO{
     	}
 	}
 
+	//SERVE AD ELIMINARE UNA NOTA SELEZIONATA:
+	@Override
+	public boolean elimina(int idNota) throws PersonalException {
+		String sql = "DELETE FROM prgzia.Nota AS N WHERE N.id_nota = ? ";
+		
+		try (Connection conn = DataBaseConnection.getConnection(); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+						
+                psmt.setInt(1, idNota);
+                
+            int result = psmt.executeUpdate();
+            
+            return result > 0;
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile eliminare la nota selezionata a causa di un errore tecnico.");
+    	}
+	}
+
 	
 }
