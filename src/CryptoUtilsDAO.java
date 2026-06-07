@@ -16,7 +16,7 @@ import com.sun.tools.javac.Main;
 
 public class CryptoUtilsDAO {
 	
-	public static String encrypt(String codiceFiscale, byte[] iv) {
+	public static String encrypt(String str, byte[] iv) {
 	    try {
 	        if (getKey() == null || getKey().length() != 44) {
 	            System.err.println("ERRORE: La chiave deve essere di 32 caratteri!");
@@ -31,7 +31,7 @@ public class CryptoUtilsDAO {
 	        GCMParameterSpec parametri = new GCMParameterSpec(128, iv);
 	        
 	        scatola.init(Cipher.ENCRYPT_MODE, keySpec, parametri);
-	        byte[] testoCriptatoInByte = scatola.doFinal(codiceFiscale.toUpperCase().getBytes(StandardCharsets.UTF_8));
+	        byte[] testoCriptatoInByte = scatola.doFinal(str.toUpperCase().getBytes(StandardCharsets.UTF_8));
 	        return Base64.getEncoder().encodeToString(testoCriptatoInByte);
 	      
 	    } catch(Exception xxx) {
@@ -41,12 +41,12 @@ public class CryptoUtilsDAO {
 	}
 	
 	//MI SERVE PER LA DECRIPTAZIONE:
-	public static String decrypt(String codiceFiscaleCriptato, String ivString) {
+	public static String decrypt(String str, String ivString) {
 	    try {
 	        // 1. Decodifica l'IV, la chiave e il codice fiscale crittografato da Base64
 	        byte[] iv = Base64.getDecoder().decode(ivString);
 	        byte[] chiaveByt = Base64.getDecoder().decode(getKey()); // Usa questi byte per la chiave
-	        byte[] codFiscCriptBytes = Base64.getDecoder().decode(codiceFiscaleCriptato);
+	        byte[] codFiscCriptBytes = Base64.getDecoder().decode(str);
 
 	        // 2. Crea la SecretKeySpec usando i byte decodificati della chiave
 	        SecretKeySpec keySpec = new SecretKeySpec(chiaveByt, "AES"); // Usa chiaveByt

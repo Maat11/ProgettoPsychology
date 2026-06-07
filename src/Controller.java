@@ -46,10 +46,12 @@ public class Controller {
 		IvSqlDAO ivSqlDAO = new IvSqlDAO();
 		
 		byte[] iv = getArrayRandom();
+		byte[] ivTel = getArrayRandom();
 		
 		try {
-			p.setCodiceFiscale(CryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase(), iv));
-			
+			p.setCodiceFiscale(CryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase().trim(), iv));
+			p.setTelefono(CryptoUtilsDAO.encrypt(p.getTelefono().trim(), ivTel));
+
 			if(pazienteDAO.inserisci(p)) {
 				p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFiscale()));
 
