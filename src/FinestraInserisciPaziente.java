@@ -44,7 +44,7 @@ public class FinestraInserisciPaziente extends JDialog {
 		theController = c;
 		
 		setTitle("Finestra inserisci paziente");
-		setSize(500, 350);
+		setSize(550, 350);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);
