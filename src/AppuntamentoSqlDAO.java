@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AppuntamentoSqlDAO implements AppuntamentoDAO{
-	
+	private IvDAO ivDAO = new IvSqlDAO();
 	//MI SERVE PER INSERIRE UN APPUNTAMENTO:
 	@Override
 	public boolean inserisci(Appuntamento app) throws PersonalException{
@@ -85,7 +85,8 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
             SimpleDateFormat sdfOra = new SimpleDateFormat("HH:mm");
             
             while(rs.next()) {
-				model.addRow(new Object[]{rs.getInt("id_appuntamento"), sdf.format(rs.getDate("data_giorno")), sdfOra.format(rs.getTime("ora_inizio")), sdfOra.format(rs.getTime("ora_fine")), rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), rs.getString("telefono"), rs.getString("modalità"), rs.getString("pagato")});
+            	String telefonoDecrypt = ivDAO.decryptPrendiIvTelefono(rs.getInt("id_paziente"));
+				model.addRow(new Object[]{rs.getInt("id_appuntamento"), sdf.format(rs.getDate("data_giorno")), sdfOra.format(rs.getTime("ora_inizio")), sdfOra.format(rs.getTime("ora_fine")), rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), telefonoDecrypt, rs.getString("modalità"), rs.getString("pagato")});
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile popolare la tabella a causa di un errore tecnico.");
