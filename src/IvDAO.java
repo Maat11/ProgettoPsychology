@@ -12,7 +12,8 @@ public interface IvDAO {
 	
 	public boolean inserisciInTabellaIV(Iv iv) throws PersonalException;
 	
-	//MI SERVONO PER LA MODIFICA DELL'IV DEL TELEFONO:
-	public boolean aggiornaIV(int idPaz, String strIv, Connection conn) throws PersonalException;
+	public boolean aggiornaIVTelefono(int idPaz, String strIv) throws PersonalException;
+	
+	public boolean aggiornaIVEmail(int idPaz, String ivEmail, Connection conn) throws PersonalException;
 	
 }

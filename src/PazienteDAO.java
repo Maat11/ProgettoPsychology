@@ -16,5 +16,7 @@ public interface PazienteDAO {
 	
 	boolean modificaDatiNonSensibili(Paziente paziente) throws PersonalException;
 	
-	boolean aggiornaTelefono(int idPaz, String telefonoCrittografato, Connection conn) throws PersonalException;
+	boolean aggiornaTelefono(int idPaz, String telefonoCrittografatoù) throws PersonalException;
+	
+	boolean insertOrAggiornaEmail(int idPaz, String emailCrittografata, Connection conn) throws PersonalException;
 }

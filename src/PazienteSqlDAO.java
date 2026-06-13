@@ -220,12 +220,14 @@ public class PazienteSqlDAO implements PazienteDAO{
     	}   
 	}
 
+	//SERVE PER AGGIORNARE IL NUMERO DI TELEFONO/CELLULARE:
 	@Override
-	public boolean aggiornaTelefono(int idPaz, String telefonoCrittografato, Connection conn) throws PersonalException {
-	    String sql = "UPDATE prgzia.Paziente SET telefono = ? WHERE id_paziente = ?";
-	    
-	    try (PreparedStatement psmt = conn.prepareStatement(sql)) {
-	    	
+	public boolean aggiornaTelefono(int idPaz, String telefonoCrittografato) throws PersonalException {
+		String sql = "UPDATE prgzia.Paziente SET telefono = ? WHERE id_paziente = ?";
+		
+	    try (Connection conn = DataBaseConnection.getConnection();
+	         PreparedStatement psmt = conn.prepareStatement(sql)) {
+
 	        psmt.setString(1, telefonoCrittografato);
 	        psmt.setInt(2, idPaz);
 	        
@@ -233,6 +235,11 @@ public class PazienteSqlDAO implements PazienteDAO{
 	    } catch (SQLException e) {
 	        throw new PersonalException("Errore aggiornamento telefono: " + e.getMessage());
 	    }
+	}
+	
+	public boolean insertOrAggiornaEmail(int idPaz, String emailCrittografata, Connection conn) throws PersonalException{
+	
+		return false;
 	}
 
 	

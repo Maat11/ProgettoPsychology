@@ -119,19 +119,38 @@ public class IvSqlDAO implements IvDAO{
 		return null;
 	}
 
-	//SERVE A PRENDERE L'IV DEL TELEFONO CHE POI VERRA UTILIZZATO PER MODIFICA IL NUMERO:
+	//SERVE AD AGGIORNARE L'IV DEL TELEFONO/CELLULARE QUANDO SI MODIFICA IL NUMERO:
 	@Override
-	public boolean aggiornaIV(int idPaz, String ivString, Connection conn) throws PersonalException {
-	    String sql = "UPDATE prgzia.Iv SET iv_telefono = ? WHERE id_paziente = ?";
+	public boolean aggiornaIVTelefono(int idPaz, String ivTel) throws PersonalException {
+		String sql = "UPDATE prgzia.Iv SET iv_telefono = ? WHERE id_paziente = ?";
 	    
-	    try (PreparedStatement psmt = conn.prepareStatement(sql)) {
-	    	
-	        psmt.setString(1, ivString);
+		try (Connection conn = DataBaseConnection.getConnection();
+	         PreparedStatement psmt = conn.prepareStatement(sql)) {
+
+	        psmt.setString(1, ivTel);
 	        psmt.setInt(2, idPaz);
 	        
 	        return psmt.executeUpdate() > 0;
 	    } catch (SQLException e) {
 	        throw new PersonalException("Errore aggiornamento IV: " + e.getMessage());
+	    }
+	}
+
+	//SERVE AD AGGIORNARE L'IV DELL'EMAIL QUANDO SI MODIFICA IL NUMERO:
+	@Override
+	public boolean aggiornaIVEmail(int idPaz, String ivEmail, Connection conn) throws PersonalException {
+		String sql = "UPDATE prgzia.Iv "
+				+ "SET iv_email = ? "
+				+ "WHERE id_paziente = ? ";
+	    
+	    try (PreparedStatement psmt = conn.prepareStatement(sql)) {
+	    	
+	        psmt.setString(1, ivEmail);
+	        psmt.setInt(2, idPaz);
+	        
+	        return psmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        throw new PersonalException("Errore aggiornamento IV dell'email: " + e.getMessage());
 	    }
 	}
 	

@@ -229,46 +229,37 @@ public class Controller {
 //SERVE PER LA MODIFICA DEI DATI SENSIBILI:	 
 	 //SERVE PER LA MODIFICA DEL NUMERO DI TELEFONO:
 	 public boolean modificaTelefono(int idPaz, String newNum) {
-		    Connection conn = null;
-		    try {
-		        conn = DataBaseConnection.getConnection();
-		        conn.setAutoCommit(false); // Inizia transazione
+	    Connection conn = null;
+    	 try {
+             // 1. Genera nuovo IV (delegato al Model)
+             byte[] iv = ivDAO.getArrayRandom();
+             String ivString = Base64.getEncoder().encodeToString(iv);
 
-		        // 1. GENERA UN NUOVO IV:
-		        byte[] iv = ivDAO.getArrayRandom();
-		        String ivString = Base64.getEncoder().encodeToString(iv);
+             // 2. Aggiorna IV e telefono (delegato al Model)
+             // Il Model gestirà la transazione e le SQLException internamente
+             boolean ivAggiornato = ivDAO.aggiornaIVTelefono(idPaz, ivString);
+             if (!ivAggiornato) {
+                 throw new PersonalException("Fallito aggiornamento IV");
+             }
 
-		        // 2. Aggiorna IV (usa la connessione transazionale)
-		        if (!ivDAO.aggiornaIV(idPaz, ivString, conn)) {
-		            throw new PersonalException("Fallito aggiornamento IV");
-		        }
+             String telefonoCrittografato = CryptoUtilsDAO.encrypt(newNum, iv);
+             boolean telefonoAggiornato = pazienteDAO.aggiornaTelefono(idPaz, telefonoCrittografato);
+             if (!telefonoAggiornato) {
+                 throw new PersonalException("Fallito aggiornamento telefono");
+             }
 
-		        // 3. Critta e aggiorna telefono (usa la connessione transazionale)
-		        String telefonoCrittografato = CryptoUtilsDAO.encrypt(newNum, iv);
-		        if (!pazienteDAO.aggiornaTelefono(idPaz, telefonoCrittografato, conn)) {
-		            throw new PersonalException("Fallito aggiornamento telefono");
-		        }
-
-		        conn.commit(); // Conferma transazione
-		        return true;
-		    } catch (Exception e) {
-		        if (conn != null) {
-		            try { conn.rollback(); } catch (SQLException ex) { /* Log */ }
-		        }
-		        JOptionPane.showMessageDialog(null, "Errore: " + e.getMessage());
-		        return false;
-		    } finally {
-		        if (conn != null) {
-		            try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { /* Log */ }
-		        }
-		    }
-		}
+             return true;
+         } catch (PersonalException e) {
+             JOptionPane.showMessageDialog(null, "Errore: " + e.getMessage());
+             return false;
+         }
+	}
 	 
 	 //SERVE PER MODIFICARE L'EMAIL:
-	 
-	 
-	 
-	 
+	 public boolean modificaEmail(int idPaz, String email) {
+		 
+		 return false;
+	 }
 	 
 	 //SERVE PER ANDARE DALLA FINESTRA PER LA MODIFICA DEI DATI NON SENSIBILI A QUELLA PER I DATI SENSIBILI:
 	 public void fromFinestraModificaDatiNonSensibiliToModificaDatiSensibili() {
