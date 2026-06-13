@@ -1,11 +1,20 @@
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
 public class IvSqlDAO implements IvDAO{
+	
+	//ARRAY DI BYTE RANDOM:
+	public byte[] getArrayRandom() {
+		byte[] iv = new byte[12];
+		new SecureRandom().nextBytes(iv);
+		return iv;
+	}
 
 	//MI SERVE PER LA DECRIPTAZIONE:
 	public String decrypPrendiIVCodiceFiscale(int idPaz) throws PersonalException {
@@ -108,6 +117,22 @@ public class IvSqlDAO implements IvDAO{
     		throw new PersonalException("Impossibile restituire l'email del paziente a causa di un errore tecnico.");
     	} 				
 		return null;
+	}
+
+	//SERVE A PRENDERE L'IV DEL TELEFONO CHE POI VERRA UTILIZZATO PER MODIFICA IL NUMERO:
+	@Override
+	public boolean aggiornaIV(int idPaz, String ivString, Connection conn) throws PersonalException {
+	    String sql = "UPDATE prgzia.Iv SET iv_telefono = ? WHERE id_paziente = ?";
+	    
+	    try (PreparedStatement psmt = conn.prepareStatement(sql)) {
+	    	
+	        psmt.setString(1, ivString);
+	        psmt.setInt(2, idPaz);
+	        
+	        return psmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        throw new PersonalException("Errore aggiornamento IV: " + e.getMessage());
+	    }
 	}
 	
 	

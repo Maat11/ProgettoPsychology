@@ -1,4 +1,6 @@
 import java.security.SecureRandom;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Base64;
 
 import javax.swing.JOptionPane;
@@ -11,6 +13,7 @@ public class Controller {
 	private PazienteDAO pazienteDAO = new PazienteSqlDAO();
 	private AppuntamentoDAO appuntamentoDAO = new AppuntamentoSqlDAO();
 	private NotaDAO notaDAO = new NotaSqlDAO();
+	private IvDAO ivDAO = new IvSqlDAO();
 		
 //PAGINE
 	public PaginaPrincipale paginaPrincipale;
@@ -26,6 +29,7 @@ public class Controller {
 	public FinestraEliminaPaziente finestraEliminaPaziente;
 	public FinestraNotaRapida finestraNotaRapida;
 	public FinestraModificaDatiPaziente finestraModificaDatiPaziente;
+	public FinestraModificaDatiSensibili finestraModificaDatiSensibili;
 	public FinestraNota finestraNota;
 	public FinestraDettagliNota finestraDettagliNota;
 	
@@ -43,26 +47,34 @@ public class Controller {
 //METHODS:
 	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
 	public boolean inserisciPaziente(Paziente p) {
-		IvSqlDAO ivSqlDAO = new IvSqlDAO();
-		
-		byte[] iv = getArrayRandom();
-		byte[] ivTel = getArrayRandom();
-		
+				
+		byte[] ivCodiceFiscale = null;
+		byte[] ivTel = null; 
 		try {
-			p.setCodiceFiscale(CryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase().trim(), iv));
-			p.setTelefono(CryptoUtilsDAO.encrypt(p.getTelefono().trim(), ivTel));
-
-			if(pazienteDAO.inserisci(p)) {
-				p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFiscale()));
-
-				if(p.getId() != 0) {
-					return ivSqlDAO.inserisciInTabellaIV(p.getId(), Base64.getEncoder().encodeToString(iv));
-				}else {
-					return false;
-				}
-			}
+			ivCodiceFiscale = ivDAO.getArrayRandom();
+			ivTel = ivDAO.getArrayRandom();
 		} catch (PersonalException e) {
 			JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		if(ivCodiceFiscale != null && ivTel != null) {
+			try {
+				p.setCodiceFiscale(CryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase().trim(), ivCodiceFiscale));
+				p.setTelefono(CryptoUtilsDAO.encrypt(p.getTelefono().trim(), ivTel));
+
+				if(pazienteDAO.inserisci(p)) {
+					p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFiscale()));
+
+					if(p.getId() != 0) {
+						Iv iv = new Iv(p.getId(), Base64.getEncoder().encodeToString(ivCodiceFiscale), Base64.getEncoder().encodeToString(ivTel));
+						return ivDAO.inserisciInTabellaIV(iv);
+					}else {
+						return false;
+					}
+				}
+			} catch (PersonalException e) {
+				JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		return false;
 	}
@@ -205,13 +217,65 @@ public class Controller {
 	 }
 	 
 	 //SERVE PER LA MODIFICA DEL PAZIENTE:
-	 public boolean modificaPaziente(Paziente p) {
+	 public boolean modificaPazienteDatiNonSensibili(Paziente p) {
 		 try {
-			 return pazienteDAO.modifica(p);
+			 return pazienteDAO.modificaDatiNonSensibili(p);
 		 } catch (PersonalException e) {
 			 JOptionPane.showMessageDialog(null, "Attenzione: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			 return false;
 		 }
+	 }
+
+//SERVE PER LA MODIFICA DEI DATI SENSIBILI:	 
+	 //SERVE PER LA MODIFICA DEL NUMERO DI TELEFONO:
+	 public boolean modificaTelefono(int idPaz, String newNum) {
+		    Connection conn = null;
+		    try {
+		        conn = DataBaseConnection.getConnection();
+		        conn.setAutoCommit(false); // Inizia transazione
+
+		        // 1. GENERA UN NUOVO IV:
+		        byte[] iv = ivDAO.getArrayRandom();
+		        String ivString = Base64.getEncoder().encodeToString(iv);
+
+		        // 2. Aggiorna IV (usa la connessione transazionale)
+		        if (!ivDAO.aggiornaIV(idPaz, ivString, conn)) {
+		            throw new PersonalException("Fallito aggiornamento IV");
+		        }
+
+		        // 3. Critta e aggiorna telefono (usa la connessione transazionale)
+		        String telefonoCrittografato = CryptoUtilsDAO.encrypt(newNum, iv);
+		        if (!pazienteDAO.aggiornaTelefono(idPaz, telefonoCrittografato, conn)) {
+		            throw new PersonalException("Fallito aggiornamento telefono");
+		        }
+
+		        conn.commit(); // Conferma transazione
+		        return true;
+		    } catch (Exception e) {
+		        if (conn != null) {
+		            try { conn.rollback(); } catch (SQLException ex) { /* Log */ }
+		        }
+		        JOptionPane.showMessageDialog(null, "Errore: " + e.getMessage());
+		        return false;
+		    } finally {
+		        if (conn != null) {
+		            try { conn.setAutoCommit(true); conn.close(); } catch (SQLException e) { /* Log */ }
+		        }
+		    }
+		}
+	 
+	 //SERVE PER MODIFICARE L'EMAIL:
+	 
+	 
+	 
+	 
+	 
+	 //SERVE PER ANDARE DALLA FINESTRA PER LA MODIFICA DEI DATI NON SENSIBILI A QUELLA PER I DATI SENSIBILI:
+	 public void fromFinestraModificaDatiNonSensibiliToModificaDatiSensibili() {
+		 finestraModificaDatiPaziente.setVisible(false);
+		 
+		 finestraModificaDatiSensibili = new FinestraModificaDatiSensibili(this);
+		 finestraModificaDatiSensibili.setVisible(true);
 	 }
 	
 	//SERVE PER INSERIRE LA NOTA RAPIDA:
@@ -300,6 +364,7 @@ public class Controller {
 		 return false;
 	 }
 	 
+	 //SERVE PER ANDARE DALLA PAGINA NOTE ALLA FINESTRA PER LE NOTE:
 	 public void fromPaginaNoteToFinestraNota() {
 		 paginaNote.setEnabled(false);
 		 
@@ -317,10 +382,5 @@ public class Controller {
 		 return false;
 	 }
 	 
-	//ARRAY DI BYTE RANDOM:
-	private  byte[] getArrayRandom() {
-		byte[] iv = new byte[12];
-		new SecureRandom().nextBytes(iv);
-		return iv;
-	}
+	
 }

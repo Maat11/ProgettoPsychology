@@ -30,6 +30,7 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class FinestraModificaDatiPaziente extends JDialog {
 	private Controller theController;
@@ -42,13 +43,12 @@ public class FinestraModificaDatiPaziente extends JDialog {
 	private JLabel lblNome;
 	private JTextField txtCognome;
 	private DefaultTableModel model;
-	private JTextField txtTelefono;
-	private JTextField txtEmail;
 	private JTextField txtPrezzo;
 	private JTable table;
 	private JTextField txtCerca;
 	private JDateChooser dateChooser;
 	private Paziente pazienteSel;
+	private JButton btnDatiSensibili;
 	
 	public FinestraModificaDatiPaziente(Controller c) {
 		addWindowListener(new WindowAdapter() {
@@ -110,12 +110,6 @@ public class FinestraModificaDatiPaziente extends JDialog {
 				JLabel lblDataNascita = new JLabel("Nascita");
 				lblDataNascita.setHorizontalAlignment(SwingConstants.CENTER);
 				lblDataNascita.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				JLabel lblTelefono = new JLabel("Telefono");
-				lblTelefono.setHorizontalAlignment(SwingConstants.CENTER);
-				lblTelefono.setFont(new Font("Tahoma", Font.PLAIN, 14));
-				JLabel lblEmail = new JLabel("Email");
-				lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-				lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				JLabel lblPrezzo = new JLabel("Prezzo");
 				lblPrezzo.setHorizontalAlignment(SwingConstants.CENTER);
 				lblPrezzo.setToolTipText("il credito non sarà aggiornato col nuovo credito");
@@ -124,19 +118,12 @@ public class FinestraModificaDatiPaziente extends JDialog {
 				dateChooser = new JDateChooser();
 				dateChooser.setEnabled(false);
 				
-				txtTelefono = new JTextField();
-				txtTelefono.setEnabled(false);
-				txtTelefono.setColumns(10);
-				
-				txtEmail = new JTextField();
-				txtEmail.setEnabled(false);
-				txtEmail.setColumns(10);
-				
 				txtPrezzo = new JTextField();
 				txtPrezzo.setEnabled(false);
 				txtPrezzo.setColumns(10);
 				
 				JLabel lblNewLabel = new JLabel("Campi di testo");
+				lblNewLabel.setForeground(SystemColor.textHighlight);
 				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 				GroupLayout gl_panelCentralLeft = new GroupLayout(panelCentralLeft);
@@ -148,34 +135,29 @@ public class FinestraModificaDatiPaziente extends JDialog {
 								.addGroup(gl_panelCentralLeft.createSequentialGroup()
 									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
 									.addContainerGap())
-								.addGroup(gl_panelCentralLeft.createSequentialGroup()
-									.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblPrezzo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblTelefono, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblCognome, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(lblDataNascita, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addGap(34)
+								.addGroup(Alignment.TRAILING, gl_panelCentralLeft.createSequentialGroup()
 									.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.LEADING)
 										.addGroup(gl_panelCentralLeft.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.TRAILING)
-												.addComponent(dateChooser, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-												.addComponent(txtTelefono, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-												.addGroup(gl_panelCentralLeft.createSequentialGroup()
-													.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-													.addPreferredGap(ComponentPlacement.RELATED))
-												.addComponent(txtPrezzo, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)))
-										.addComponent(txtCognome, 102, 102, 102)
-										.addComponent(txtNome, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+											.addComponent(lblDataNascita, GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+											.addGap(41))
+										.addGroup(gl_panelCentralLeft.createSequentialGroup()
+											.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.TRAILING, false)
+												.addComponent(lblPrezzo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(lblNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(lblCognome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+											.addGap(34)))
+									.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.TRAILING)
+										.addComponent(txtPrezzo, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+										.addComponent(dateChooser, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+										.addComponent(txtCognome, Alignment.LEADING, 102, 102, 102)
+										.addComponent(txtNome, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
 									.addGap(60))))
 				);
 				gl_panelCentralLeft.setVerticalGroup(
-					gl_panelCentralLeft.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_panelCentralLeft.createSequentialGroup()
+					gl_panelCentralLeft.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_panelCentralLeft.createSequentialGroup()
 							.addGap(38)
-							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
 							.addGap(57)
 							.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblNome)
@@ -184,23 +166,16 @@ public class FinestraModificaDatiPaziente extends JDialog {
 							.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblCognome)
 								.addComponent(txtCognome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGap(18)
 							.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblDataNascita)
+								.addGroup(gl_panelCentralLeft.createSequentialGroup()
+									.addComponent(lblDataNascita)
+									.addGap(18)
+									.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblPrezzo)
+										.addComponent(txtPrezzo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 								.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(15)
-							.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblTelefono)
-								.addComponent(txtTelefono, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblEmail)
-								.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(18)
-							.addGroup(gl_panelCentralLeft.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblPrezzo)
-								.addComponent(txtPrezzo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(148))
+							.addGap(249))
 				);
 				panelCentralLeft.setLayout(gl_panelCentralLeft);
 			}
@@ -299,15 +274,13 @@ public class FinestraModificaDatiPaziente extends JDialog {
 						//MODIFICA IL PAZIENTE:
 						int confirm = JOptionPane.showConfirmDialog(null, "Confermare l'operazione di modifica?", "Avviso di conferma", JOptionPane.YES_NO_CANCEL_OPTION);
 						if(confirm == JOptionPane.YES_OPTION) {
-							//SETTA TUTTI I NUOVI DATI DAI CAMPI DI TESTO:
+							//CONTROLLO CAMPI DI TESTO:
 							if(ctrlTxtFields()) {
+								//MODIFICA DEL PAZIENTE:
 								setPazienteWithNewFields(pazienteSel);
-								if(theController.modificaPaziente(pazienteSel)) {
-									JOptionPane.showMessageDialog(null, "L'operazione è andata a buo fine");
-									setEnabledFalseIntoFields();
-									clearTxtFIelds();
-								}else {
-									JOptionPane.showMessageDialog(null, "Errore");
+								if(theController.modificaPazienteDatiNonSensibili(pazienteSel)) {
+									theController.popolaTabellaConPazienti(model, "");
+									JOptionPane.showMessageDialog(null, "La modifica è avvenuta correttamente");
 								}
 							}
 						}else {
@@ -330,6 +303,20 @@ public class FinestraModificaDatiPaziente extends JDialog {
 				});
 				panelBottom.add(btnBack, BorderLayout.WEST);
 			}
+			
+			JPanel panelBottomCentral = new JPanel();
+			panelBottom.add(panelBottomCentral, BorderLayout.CENTER);
+			
+			btnDatiSensibili = new JButton("Dati sensibili");
+			btnDatiSensibili.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//VAI ALLA SEZIONE DATI SENSIBILI PER LA MODIFICA:
+					theController.fromFinestraModificaDatiNonSensibiliToModificaDatiSensibili();
+				}
+			});
+			btnDatiSensibili.setForeground(Color.RED);
+			btnDatiSensibili.setToolTipText("Vai alla sezione dati sensibili");
+			panelBottomCentral.add(btnDatiSensibili);
 		}
 	}
 	
@@ -339,18 +326,14 @@ public class FinestraModificaDatiPaziente extends JDialog {
 		p.setNome(txtNome.getText().trim());
 		p.setCognome(txtCognome.getText().trim());
 		p.setDataNascita(getDateAndConvert(dateChooser));
-		p.setEmail(txtEmail.getText().trim());
-		p.setTelefono(txtTelefono.getText().trim());
 		p.setPrezzo(Double.valueOf(txtPrezzo.getText().trim()));
 	}
 	//SERVE PER SETTARE I CAMPI CON I VALORI GIA' ESISTENTI:
 	private void setFields(Paziente p) {
-		txtNome.setText(p.getNome());
-		txtCognome.setText(p.getCognome());
+		txtNome.setText(p.getNome().trim());
+		txtCognome.setText(p.getCognome().trim());
 		dateChooser.setDate(p.getDataNascita());
-		txtEmail.setText(p.getEmail());
-		txtTelefono.setText(p.getTelefono());
-		txtPrezzo.setText(String.valueOf(p.getPrezzo()));
+		txtPrezzo.setText(String.valueOf(p.getPrezzo()).trim());
 	}
 	
 	//SERVE PER PULIRE I CAMPI:
@@ -358,9 +341,7 @@ public class FinestraModificaDatiPaziente extends JDialog {
 		txtNome.setText(null);
 		txtCognome.setText(null);
 		dateChooser.setDate(null);
-		txtTelefono.setText(null);
 		txtPrezzo.setText(null);
-		txtEmail.setText(null);
 	}
 	
 	//SERVE PER SETTARE I CAMPI DI TESTO ENABLED = TRUE:
@@ -368,9 +349,7 @@ public class FinestraModificaDatiPaziente extends JDialog {
 		txtNome.setEnabled(true);
 		txtCognome.setEnabled(true);
 		dateChooser.setEnabled(true);
-		txtTelefono.setEnabled(true);
 		txtPrezzo.setEnabled(true);
-		txtEmail.setEnabled(true);
 	}
 	
 	//SERVE PER SETTARE I CAMPI DI TESTO ENABLE = FALSE:
@@ -378,9 +357,7 @@ public class FinestraModificaDatiPaziente extends JDialog {
 		txtNome.setEnabled(false);
 		txtCognome.setEnabled(false);
 		dateChooser.setEnabled(false);
-		txtTelefono.setEnabled(false);
 		txtPrezzo.setEnabled(false);
-		txtEmail.setEnabled(false);
 	}
 	
 	//CONVERTI LA DATA:
@@ -399,25 +376,23 @@ public class FinestraModificaDatiPaziente extends JDialog {
 				return false;
 			}
 		}
-		if(! txtTelefono.getText().trim().isBlank()){
-			if(txtTelefono.getText().trim().length() != 10 && txtTelefono.getText().trim().length() != 11){
-				JOptionPane.showMessageDialog(null,"Errore, il numero di telefono/cellulare non è valido!");
-				return false;
-			}else{
-				if(! txtTelefono.getText().trim().matches("^[0-9]+$")) {
-					JOptionPane.showMessageDialog(null, "Errore, il numero di telefono/cellulare deve contenere solo cifre!");
-					return false;
-				}
-			}	
-		}
-		if(! txtEmail.getText().trim().isBlank()) {
-			if(! txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-				JOptionPane.showMessageDialog(null, "Errore, l'email inserita non è valida!");
-				return false;
-			}
-		}
+//		if(! txtTelefono.getText().trim().isBlank()){
+//			if(txtTelefono.getText().trim().length() != 10 && txtTelefono.getText().trim().length() != 11){
+//				JOptionPane.showMessageDialog(null,"Errore, il numero di telefono/cellulare non è valido!");
+//				return false;
+//			}else{
+//				if(! txtTelefono.getText().trim().matches("^[0-9]+$")) {
+//					JOptionPane.showMessageDialog(null, "Errore, il numero di telefono/cellulare deve contenere solo cifre!");
+//					return false;
+//				}
+//			}	
+//		}
+//		if(! txtEmail.getText().trim().isBlank()) {
+//			if(! txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+//				JOptionPane.showMessageDialog(null, "Errore, l'email inserita non è valida!");
+//				return false;
+//			}
+//		}
 		return true;
 	}
-	
-	
 }

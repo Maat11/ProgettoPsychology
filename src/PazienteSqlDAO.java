@@ -4,12 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class PazienteSqlDAO implements PazienteDAO{
-	
+	private IvDAO ivDAO = new IvSqlDAO();
 //METHODS:
 	//SERVE PER L'INSRIMENTO DEL PAZIENTE NEL DB:
 	@Override
@@ -57,12 +58,18 @@ public class PazienteSqlDAO implements PazienteDAO{
 			
                 ResultSet rs = psmt.executeQuery();
                 
-                IvSqlDAO IvSqlDAO = new IvSqlDAO();
-                
             while(rs.next()) {
             	String dataNacitaFormattata =  sdf.format(rs.getDate("data_nascita"));
-            	String codiceFiscaleDecriptato = IvSqlDAO.decrypPrendiIV(rs.getInt("id_paziente"));
-            	model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecriptato, dataNacitaFormattata, rs.getString("telefono"), rs.getString("email"),  rs.getDouble("prezzo"), rs.getDouble("credito")});
+            	String telefonoDecrypt = ivDAO.decryptPrendiIvTelefono(rs.getInt("id_paziente"));
+            	String codiceFiscaleDecriptato = ivDAO.decrypPrendiIVCodiceFiscale(rs.getInt("id_paziente"));
+            	
+            	String emailDecrypt = "";
+	            
+	            if(rs.getString("email") != null) {
+	            	emailDecrypt = ivDAO.decryptPrendiIvEmail(rs.getInt("id_paziente"));
+	            }
+            	
+            	model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecriptato, dataNacitaFormattata, telefonoDecrypt, emailDecrypt,  rs.getDouble("prezzo"), rs.getDouble("credito")});
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile popolare la tabella con i pazienti a causa di un errore tecnico.");
@@ -77,7 +84,6 @@ public class PazienteSqlDAO implements PazienteDAO{
 	         PreparedStatement psmt = conn.prepareStatement(sql)) {
 
 	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	        IvSqlDAO IvSqlDAO = new IvSqlDAO();
 
 	        //AGGIUNGI IL WILDCARD % PER CERCARE COGNOMI CHE INZIANO CON LA STRINGA INSERITA:
 	        psmt.setString(1, cognome + "%");
@@ -85,9 +91,19 @@ public class PazienteSqlDAO implements PazienteDAO{
 	        ResultSet rs = psmt.executeQuery();
 
 	        while (rs.next()) {
+	        	//FORMATTER:
 	            String dataNascitaFormattata = sdf.format(rs.getDate("data_nascita"));
-	            String codiceFiscaleDecryptato = IvSqlDAO.decrypPrendiIV(rs.getInt("id_paziente"));
-	            model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecryptato, dataNascitaFormattata, rs.getString("telefono"), rs.getString("email"), rs.getDouble("prezzo"), rs.getDouble("credito")});
+	            
+	            //DECRYPT:
+	            String codiceFiscaleDecryptato = ivDAO.decrypPrendiIVCodiceFiscale(rs.getInt("id_paziente"));
+	            String telefonoDecrypt = ivDAO.decryptPrendiIvTelefono(rs.getInt("id_paziente"));
+	            String emailDecrypt = "";
+	            
+	            if(rs.getString("email") != null) {
+	            	emailDecrypt = ivDAO.decryptPrendiIvEmail(rs.getInt("id_paziente"));
+	            }
+	            
+	            model.addRow(new Object[]{rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), codiceFiscaleDecryptato, dataNascitaFormattata, telefonoDecrypt, emailDecrypt, rs.getDouble("prezzo"), rs.getDouble("credito")});
 	        }
 	    } catch (SQLException e) {
 	        throw new PersonalException("Impossibile popolare la tabella con i pazienti a causa di un errore tecnico.");
@@ -162,9 +178,13 @@ public class PazienteSqlDAO implements PazienteDAO{
                 ResultSet rs = psmt.executeQuery();
                 
             if(rs.next()) {
-            	Paziente paziente = new Paziente(rs.getString("nome"), rs.getString("cognome"), rs.getString("codice_fiscale"), rs.getDate("data_nascita"), rs.getString("telefono"), rs.getDouble("prezzo"));
+            	Paziente paziente = new Paziente(rs.getString("nome"), rs.getString("cognome"), rs.getString("codice_fiscale"), rs.getDate("data_nascita"), ivDAO.decryptPrendiIvTelefono(rs.getInt("id_paziente")), rs.getDouble("prezzo"));
             	paziente.setId(Integer.valueOf(rs.getInt("id_paziente")));
-            	paziente.setEmail(rs.getString("email"));
+            	if(rs.getString("email") != null) {
+            		paziente.setEmail(ivDAO.decryptPrendiIvEmail(rs.getInt("id_paziente")));
+            	}else {
+            		paziente.setEmail(rs.getString("email"));
+            	}
             	return paziente;
             }
     	}catch(SQLException e) {
@@ -175,13 +195,11 @@ public class PazienteSqlDAO implements PazienteDAO{
 
 	//SERVE PER LA MODIFICA DI UN PAZIENTE:
 	@Override
-	public boolean modifica(Paziente p) throws PersonalException {
+	public boolean modificaDatiNonSensibili(Paziente p) throws PersonalException {
 		String sql = "UPDATE prgzia.Paziente "
 				+ "SET Nome = ?, "
 				+ "Cognome = ?, "
 				+ "data_nascita = ?, "
-				+ "telefono = ?, "
-				+ "email = ?, "
 				+ "prezzo = ? "
 				+ "WHERE id_paziente = ? ";
 		
@@ -191,18 +209,31 @@ public class PazienteSqlDAO implements PazienteDAO{
                 psmt.setString(1,p.getNome());
                 psmt.setString(2, p.getCognome());
                 psmt.setDate(3, p.getDataNascita());
-                psmt.setString(4, p.getTelefono());
-                psmt.setString(5, p.getEmail().toLowerCase());
-                psmt.setDouble(6, p.getPrezzo());
-                psmt.setInt(7, p.getId());
+                psmt.setDouble(4, p.getPrezzo());
+                psmt.setInt(5, p.getId());
                 
             int fine = psmt.executeUpdate();
             
             return fine > 0;
     	}catch(SQLException e) {
-    		throw new PersonalException("Impossibile modificare il paziente a causa di un errore tecnico.");
+    		throw new PersonalException("Impossibile modificare i dati del paziente a causa di un errore tecnico.");
     	}   
 	}
-	
+
+	@Override
+	public boolean aggiornaTelefono(int idPaz, String telefonoCrittografato, Connection conn) throws PersonalException {
+	    String sql = "UPDATE prgzia.Paziente SET telefono = ? WHERE id_paziente = ?";
+	    
+	    try (PreparedStatement psmt = conn.prepareStatement(sql)) {
+	    	
+	        psmt.setString(1, telefonoCrittografato);
+	        psmt.setInt(2, idPaz);
+	        
+	        return psmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        throw new PersonalException("Errore aggiornamento telefono: " + e.getMessage());
+	    }
+	}
+
 	
 }

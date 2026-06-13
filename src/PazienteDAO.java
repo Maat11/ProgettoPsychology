@@ -1,3 +1,5 @@
+import java.sql.Connection;
+
 import javax.swing.table.DefaultTableModel;
 
 public interface PazienteDAO {
@@ -12,6 +14,7 @@ public interface PazienteDAO {
 	
 	Paziente trova(int idPaziente) throws PersonalException;
 	
-	boolean modifica(Paziente paziente) throws PersonalException;
+	boolean modificaDatiNonSensibili(Paziente paziente) throws PersonalException;
 	
+	boolean aggiornaTelefono(int idPaz, String telefonoCrittografato, Connection conn) throws PersonalException;
 }

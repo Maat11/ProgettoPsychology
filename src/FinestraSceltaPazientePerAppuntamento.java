@@ -172,6 +172,8 @@ public class FinestraSceltaPazientePerAppuntamento extends JDialog {
 						//TORNA INDIETRO:
 						txtCodiceFiscale.setText(null);
 						setVisible(false);
+						
+						theController.paginaPrincipale.setVisible(true);
 						theController.finestraInserisciAppuntamento.setVisible(true);
 						theController.finestraInserisciAppuntamento.setEnabled(true);
 					}
