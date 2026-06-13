@@ -42,25 +42,25 @@ public class CryptoUtilsDAO {
 	
 	//MI SERVE PER LA DECRIPTAZIONE:
 	public static String decrypt(String str, String ivString) {
-	    try {
+		try {
 	        // 1. Decodifica l'IV, la chiave e il codice fiscale crittografato da Base64
 	        byte[] iv = Base64.getDecoder().decode(ivString);
 	        byte[] chiaveByt = Base64.getDecoder().decode(getKey()); // Usa questi byte per la chiave
-	        byte[] codFiscCriptBytes = Base64.getDecoder().decode(str);
-
+	        byte[] strCriptBytes = Base64.getDecoder().decode(str);
+	        
 	        // 2. Crea la SecretKeySpec usando i byte decodificati della chiave
 	        SecretKeySpec keySpec = new SecretKeySpec(chiaveByt, "AES"); // Usa chiaveByt
 
 	        // 3. Configura i parametri GCM
 	        GCMParameterSpec parametri = new GCMParameterSpec(128, iv);
-
+	        
 	        // 4. Inizializza il Cipher per la decrittografia
 	        Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
 	        cipher.init(Cipher.DECRYPT_MODE, keySpec, parametri);
 
 	        // 5. Esegui la decrittografia
-	        byte[] datoDecrittografato = cipher.doFinal(codFiscCriptBytes);
-
+	        byte[] datoDecrittografato = cipher.doFinal(strCriptBytes);
+	        
 	        // 6. Restituisci il risultato come stringa
 	        return new String(datoDecrittografato, StandardCharsets.UTF_8);
 
