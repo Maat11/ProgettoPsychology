@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 public class IvSqlDAO implements IvDAO{
 
 	//MI SERVE PER LA DECRIPTAZIONE:
-	public String decrypPrendiIV(int idPaz) throws PersonalException {
+	public String decrypPrendiIVCodiceFiscale(int idPaz) throws PersonalException {
 		String sql = "SELECT * "
 				+ "FROM prgzia.Iv AS I "
 				+ "JOIN prgzia.Paziente AS P ON I.id_paziente = P.id_paziente "
@@ -23,7 +23,7 @@ public class IvSqlDAO implements IvDAO{
             
             if(rs.next()) {
             	//PRENDI L'IV:
-            	String ivString = rs.getString("Iv");
+            	String ivString = rs.getString("Iv_codice_fiscale");
             	
             	//DECRIPTA E RESTITUISCI IL CODICE FISCALE DEECRIPTATO:
             	return CryptoUtilsDAO.decrypt(rs.getString("codice_fiscale"), ivString);
@@ -35,22 +35,80 @@ public class IvSqlDAO implements IvDAO{
 	}
 		
 	//MI SERVE PER INSERIRLO NELLA TABELLA IV:
-	public boolean inserisciInTabellaIV(int idPaz, String iv) throws PersonalException {
-		String sql = "INSERT INTO prgzia.Iv(id_paziente, Iv) "
-				+ "VALUES(?, ?)";
+	public boolean inserisciInTabellaIV(Iv iv) throws PersonalException {
+		String sql = "INSERT INTO prgzia.Iv(id_paziente, iv_codice_fiscale, iv_telefono) "
+				+ "VALUES(?, ?, ?)";
 		
 		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
     		
-                psmt.setInt(1, idPaz);
-                psmt.setString(2, iv);
+                psmt.setInt(1, iv.getIdPaz());
+                psmt.setString(2, iv.getIv_codice_fiscale());
+                psmt.setString(3, iv.getIv_telefono());
                 
             int fine = psmt.executeUpdate();
             
             return fine > 0;
     	}catch(Exception e) {
-    		throw new PersonalException("Impossibile inserire l'iv paziente a causa di un errore tecnico.");
+    		throw new PersonalException("Impossibile inserire l'iv a causa di un errore tecnico.");
     	}
 	}
+
+	//SERVE PER DECRYPTARE IL NUMERO DI TELEFONO:
+	@Override
+	public String decryptPrendiIvTelefono(int idPaz) throws PersonalException {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Iv AS I "
+				+ "JOIN prgzia.Paziente AS P ON I.id_paziente = P.id_paziente "
+				+ "WHERE I.id_paziente = ? ";
+		
+		try (Connection conn = DataBaseConnection.getConnection(); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+						
+                psmt.setInt(1, idPaz);
+                
+            ResultSet rs = psmt.executeQuery();
+            
+            if(rs.next()) {
+            	//PRENDI L'IV:
+            	String ivStringTel = rs.getString("iv_telefono");
+            	
+            	//DECRIPTA E RESTITUISCI IL TELEFONO DEECRIPTATO:
+            	return CryptoUtilsDAO.decrypt(rs.getString("telefono"), ivStringTel);
+            }
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile restituire il numero di telefono del paziente a causa di un errore tecnico.");
+    	} 		
+		return "";
+	}
+
+	//SERVE PER DECRIPTARE L'EMAIL:
+	@Override
+	public String decryptPrendiIvEmail(int idPaz) throws PersonalException {
+		String sql = "SELECT * "
+				+ "FROM prgzia.Iv AS I "
+				+ "JOIN prgzia.Paziente AS P ON I.id_paziente = P.id_paziente "
+				+ "WHERE I.id_paziente = ? ";
+		
+		try (Connection conn = DataBaseConnection.getConnection(); 
+    			PreparedStatement psmt = conn.prepareStatement(sql)) {
+						
+                psmt.setInt(1, idPaz);
+                
+            ResultSet rs = psmt.executeQuery();
+            
+            if(rs.next()) {
+            	//PRENDI L'IV:
+            	String ivStringEmail = rs.getString("iv_email");
+            	
+            	//DECRIPTA E RESTITUISCI L'EMAIL DEECRIPTATA:
+            	return CryptoUtilsDAO.decrypt(rs.getString("email"), ivStringEmail);
+            }
+    	}catch(SQLException e) {
+    		throw new PersonalException("Impossibile restituire l'email del paziente a causa di un errore tecnico.");
+    	} 				
+		return null;
+	}
+	
 	
 }
