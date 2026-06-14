@@ -1,4 +1,4 @@
-package dao;
+package util;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 import com.sun.tools.javac.Main;
 
-public class CryptoUtilsDAO {
+public class CryptoUtils {
 	
 	public static String encrypt(String str, byte[] iv) {
 	    try {

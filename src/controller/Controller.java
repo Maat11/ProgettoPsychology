@@ -32,6 +32,7 @@ import gui.FinestraVisualizzaAppuntamenti;
 import gui.PaginaNote;
 import gui.PaginaPaziente;
 import gui.PaginaPrincipale;
+import util.CryptoUtils;
 
 public class Controller {
 
@@ -85,8 +86,8 @@ public class Controller {
 		
 		if(ivCodiceFiscale != null && ivTel != null) {
 			try {
-				p.setCodiceFiscale(CryptoUtilsDAO.encrypt(p.getCodiceFiscale().toUpperCase().trim(), ivCodiceFiscale));
-				p.setTelefono(CryptoUtilsDAO.encrypt(p.getTelefono().trim(), ivTel));
+				p.setCodiceFiscale(CryptoUtils.encrypt(p.getCodiceFiscale().toUpperCase().trim(), ivCodiceFiscale));
+				p.setTelefono(CryptoUtils.encrypt(p.getTelefono().trim(), ivTel));
 
 				if(pazienteDAO.inserisci(p)) {
 					p.setId(pazienteDAO.prendiIdPaziente(p.getCodiceFiscale()));
@@ -266,7 +267,7 @@ public class Controller {
                  throw new PersonalException("Fallito aggiornamento IV");
              }
 
-             if (! pazienteDAO.aggiornaTelefono(idPaz, CryptoUtilsDAO.encrypt(newNum, iv))) {
+             if (! pazienteDAO.aggiornaTelefono(idPaz, CryptoUtils.encrypt(newNum, iv))) {
                  throw new PersonalException("Fallito aggiornamento telefono");
              }
 
@@ -290,7 +291,7 @@ public class Controller {
                  throw new PersonalException("Fallito aggiornamento IV");
              }
 
-             if (! pazienteDAO.aggiornaEmail(idPaz, CryptoUtilsDAO.encrypt(email.toLowerCase().trim(), iv))) {
+             if (! pazienteDAO.aggiornaEmail(idPaz, CryptoUtils.encrypt(email.toLowerCase().trim(), iv))) {
                  throw new PersonalException("Fallito aggiornamento email");
              }
 

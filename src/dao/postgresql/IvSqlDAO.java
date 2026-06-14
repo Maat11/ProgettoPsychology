@@ -1,6 +1,7 @@
 package dao.postgresql;
 
 import exception.PersonalException;
+import util.CryptoUtils;
 
 import java.security.SecureRandom;
 import java.sql.Connection;
@@ -11,7 +12,6 @@ import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
-import dao.CryptoUtilsDAO;
 import dao.IvDAO;
 import dto.Iv;
 
@@ -43,7 +43,7 @@ public class IvSqlDAO implements IvDAO{
             	String ivString = rs.getString("Iv_codice_fiscale");
             	
             	//DECRIPTA E RESTITUISCI IL CODICE FISCALE DEECRIPTATO:
-            	return CryptoUtilsDAO.decrypt(rs.getString("codice_fiscale"), ivString);
+            	return CryptoUtils.decrypt(rs.getString("codice_fiscale"), ivString);
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile restituire il codice fiscale del paziente a causa di un errore tecnico.");
@@ -91,7 +91,7 @@ public class IvSqlDAO implements IvDAO{
             	String ivStringTel = rs.getString("iv_telefono");
             	
             	//DECRIPTA E RESTITUISCI IL TELEFONO DEECRIPTATO:
-            	return CryptoUtilsDAO.decrypt(rs.getString("telefono"), ivStringTel);
+            	return CryptoUtils.decrypt(rs.getString("telefono"), ivStringTel);
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile restituire il numero di telefono del paziente a causa di un errore tecnico.");
@@ -119,7 +119,7 @@ public class IvSqlDAO implements IvDAO{
             	String ivStringEmail = rs.getString("iv_email");
             	
             	//DECRIPTA E RESTITUISCI L'EMAIL DEECRIPTATA:
-            	return CryptoUtilsDAO.decrypt(rs.getString("email"), ivStringEmail);
+            	return CryptoUtils.decrypt(rs.getString("email"), ivStringEmail);
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile restituire l'email del paziente a causa di un errore tecnico.");
