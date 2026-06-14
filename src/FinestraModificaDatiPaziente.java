@@ -286,6 +286,8 @@ public class FinestraModificaDatiPaziente extends JDialog {
 						}else {
 							JOptionPane.showMessageDialog(null, "L'operazione è stata annullata");
 						}
+						clearTxtFIelds();
+						setEnabledFalseIntoFields();
 					}
 				});
 				btnModifica.setEnabled(false);
@@ -376,23 +378,6 @@ public class FinestraModificaDatiPaziente extends JDialog {
 				return false;
 			}
 		}
-//		if(! txtTelefono.getText().trim().isBlank()){
-//			if(txtTelefono.getText().trim().length() != 10 && txtTelefono.getText().trim().length() != 11){
-//				JOptionPane.showMessageDialog(null,"Errore, il numero di telefono/cellulare non è valido!");
-//				return false;
-//			}else{
-//				if(! txtTelefono.getText().trim().matches("^[0-9]+$")) {
-//					JOptionPane.showMessageDialog(null, "Errore, il numero di telefono/cellulare deve contenere solo cifre!");
-//					return false;
-//				}
-//			}	
-//		}
-//		if(! txtEmail.getText().trim().isBlank()) {
-//			if(! txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-//				JOptionPane.showMessageDialog(null, "Errore, l'email inserita non è valida!");
-//				return false;
-//			}
-//		}
 		return true;
 	}
 }

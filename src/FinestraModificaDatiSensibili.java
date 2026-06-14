@@ -150,6 +150,7 @@ public class FinestraModificaDatiSensibili extends JDialog {
 					
 					idPaz = Integer.valueOf(String.valueOf(table.getValueAt(rowSel, 0)));
 					
+					setEnabTrueFields();
 				}
 			}
 		});
@@ -196,21 +197,39 @@ public class FinestraModificaDatiSensibili extends JDialog {
 							JOptionPane.showMessageDialog(null, "La modifica del numero di telefono è avvenunta correttamente!");
 						}
 					}
-					if(ctrlEmail()) {
-						//MODIFICA DELL'EMAIL:
-						
+					//SE IL CAMPO EMAIL NON E' VUOTO ALLORA PROCEDIAMO CON LA MODIFICA, ALTRIMENTI NON FARE NULLA
+					if(! txtEmail.getText().isBlank()) {
+						if(ctrlEmail()) {
+							//MODIFICA DELL'EMAIL:
+							if(theController.modificaEmail(idPaz, txtEmail.getText().trim())) {
+								JOptionPane.showMessageDialog(null, "L'email è stata aggiornata correttamente");
+							}
+						}
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "L'operazione è stata annullata!");
 				}
 				//PULISCI I CAMPI DI TESTO:
 				clearField();
+				
+				setEnabFalsFields();
 			}
 		});
 		panelBottom.add(btnModifica, BorderLayout.EAST);
 	}
 	
 //METHODS:
+	
+	//SERVE PER SETTARE I VARI CAMPI IN MODO TALE CHE NON POSSONO ESSERE MODIFICATI:
+	private void setEnabFalsFields() {
+		txtTelefono.setEnabled(false);
+		txtEmail.setEnabled(false);
+	}
+	
+	private void setEnabTrueFields() {
+		txtTelefono.setEnabled(true);
+		txtEmail.setEnabled(true);
+	}
 	//SERVE PER CONTROLLARE SE IL CAMPO TELEFONO E' COMPILATO CORRETTAMENTE:
 	private boolean ctrlTelefono() {
 		if(txtTelefono.getText().trim().isBlank()) {
@@ -232,11 +251,9 @@ public class FinestraModificaDatiSensibili extends JDialog {
 	
 	//SERVE PER CONTROLLARE SE IL CAMPO EMAIL E' COMPILATO CORRETTAMENTE:
 	private boolean ctrlEmail() {
-		if(! txtEmail.getText().trim().isBlank()) {
-			if(! txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-				JOptionPane.showMessageDialog(null, "Errore, l'email inserita non è valida!");
-				return false;
-			}
+		if(! txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+			JOptionPane.showMessageDialog(null, "Errore, l'email inserita non è valida!");
+			return false;
 		}
 		return true;
 	}

@@ -16,7 +16,15 @@ public interface PazienteDAO {
 	
 	boolean modificaDatiNonSensibili(Paziente paziente) throws PersonalException;
 	
-	boolean aggiornaTelefono(int idPaz, String telefonoCrittografatoù) throws PersonalException;
+	boolean aggiornaTelefono(int idPaz, String telefonoCrittografato) throws PersonalException;
 	
-	boolean insertOrAggiornaEmail(int idPaz, String emailCrittografata, Connection conn) throws PersonalException;
+// 	inserisciEmail(int idPaz, String emailCrittografata) throws PersonalException;
+//	
+	boolean aggiornaEmail(int idPaz, String emailCrittografata) throws PersonalException;
+//	
+//	ctrlEmailEsiste(int idPaz) throws PersonalException;
+	
+//	boolean inserisciOModificaEmail(int idPaz, String emailCrittografata) throws PersonalException;
+
+	
 }

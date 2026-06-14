@@ -47,9 +47,9 @@ public class Controller {
 //METHODS:
 	//SERVE AD INSERIRE IL PAZIENTE: INCOMPLETE!!!!!
 	public boolean inserisciPaziente(Paziente p) {
-				
 		byte[] ivCodiceFiscale = null;
 		byte[] ivTel = null; 
+		
 		try {
 			ivCodiceFiscale = ivDAO.getArrayRandom();
 			ivTel = ivDAO.getArrayRandom();
@@ -229,22 +229,18 @@ public class Controller {
 //SERVE PER LA MODIFICA DEI DATI SENSIBILI:	 
 	 //SERVE PER LA MODIFICA DEL NUMERO DI TELEFONO:
 	 public boolean modificaTelefono(int idPaz, String newNum) {
-	    Connection conn = null;
     	 try {
-             // 1. Genera nuovo IV (delegato al Model)
+             // GENERA UN NUOVO IV:
              byte[] iv = ivDAO.getArrayRandom();
              String ivString = Base64.getEncoder().encodeToString(iv);
 
              // 2. Aggiorna IV e telefono (delegato al Model)
              // Il Model gestirà la transazione e le SQLException internamente
-             boolean ivAggiornato = ivDAO.aggiornaIVTelefono(idPaz, ivString);
-             if (!ivAggiornato) {
+             if (! ivDAO.aggiornaIVTelefono(idPaz, ivString)) {
                  throw new PersonalException("Fallito aggiornamento IV");
              }
 
-             String telefonoCrittografato = CryptoUtilsDAO.encrypt(newNum, iv);
-             boolean telefonoAggiornato = pazienteDAO.aggiornaTelefono(idPaz, telefonoCrittografato);
-             if (!telefonoAggiornato) {
+             if (! pazienteDAO.aggiornaTelefono(idPaz, CryptoUtilsDAO.encrypt(newNum, iv))) {
                  throw new PersonalException("Fallito aggiornamento telefono");
              }
 
@@ -257,8 +253,26 @@ public class Controller {
 	 
 	 //SERVE PER MODIFICARE L'EMAIL:
 	 public boolean modificaEmail(int idPaz, String email) {
-		 
-		 return false;
+		 try {
+             // GENERA UN NUOVO IV:
+             byte[] iv = ivDAO.getArrayRandom();
+             String ivString = Base64.getEncoder().encodeToString(iv);
+
+             // 2. Aggiorna IV e telefono (delegato al Model)
+             // Il Model gestirà la transazione e le SQLException internamente
+             if (! ivDAO.aggiornaIVEmail(idPaz, ivString)) {
+                 throw new PersonalException("Fallito aggiornamento IV");
+             }
+
+             if (! pazienteDAO.aggiornaEmail(idPaz, CryptoUtilsDAO.encrypt(email.toLowerCase().trim(), iv))) {
+                 throw new PersonalException("Fallito aggiornamento email");
+             }
+
+             return true;
+         } catch (PersonalException e) {
+             JOptionPane.showMessageDialog(null, "Errore: " + e.getMessage());
+             return false;
+         }
 	 }
 	 
 	 //SERVE PER ANDARE DALLA FINESTRA PER LA MODIFICA DEI DATI NON SENSIBILI A QUELLA PER I DATI SENSIBILI:
@@ -372,6 +386,6 @@ public class Controller {
 		 }
 		 return false;
 	 }
+
 	 
-	
 }

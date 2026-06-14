@@ -111,7 +111,7 @@ public class FinestraNota extends JDialog {
 							
 							idPazSel = Integer.valueOf(String.valueOf(table.getValueAt(selRow, 0)));
 							
-							lblPazienteSel.setText("Il paziente selezionato è: "+String.valueOf(table.getValueAt(selRow, 1)) +" "+ String.valueOf(table.getValueAt(selRow, 2)));
+							lblPazienteSel.setText("Il paziente selezionato è "+String.valueOf(table.getValueAt(selRow, 1)) +" "+ String.valueOf(table.getValueAt(selRow, 2)));
 							
 						}
 					});

@@ -206,8 +206,8 @@ public class PazienteSqlDAO implements PazienteDAO{
 		try (Connection conn = DataBaseConnection.getConnection(); 
     			PreparedStatement psmt = conn.prepareStatement(sql)) {
     		
-                psmt.setString(1,p.getNome());
-                psmt.setString(2, p.getCognome());
+                psmt.setString(1, upperCaseFirstChar(p.getNome()).trim());
+                psmt.setString(2, upperCaseFirstChar(p.getCognome().trim()));
                 psmt.setDate(3, p.getDataNascita());
                 psmt.setDouble(4, p.getPrezzo());
                 psmt.setInt(5, p.getId());
@@ -237,10 +237,23 @@ public class PazienteSqlDAO implements PazienteDAO{
 	    }
 	}
 	
-	public boolean insertOrAggiornaEmail(int idPaz, String emailCrittografata, Connection conn) throws PersonalException{
-	
-		return false;
-	}
+	//SERVE PER AGGIORNARE L'EMAIL:
+	@Override
+	public boolean aggiornaEmail(int idPaz, String emailCrittografata) throws PersonalException{
+		String sql = "UPDATE prgzia.Paziente "
+				+ "SET email = ? "
+				+ "WHERE id_paziente = ? ";
+		
+		try (Connection conn = DataBaseConnection.getConnection();
+		         PreparedStatement psmt = conn.prepareStatement(sql)) {
 
+	        psmt.setString(1, emailCrittografata);
+	        psmt.setInt(2, idPaz);
+	        
+	        return psmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        throw new PersonalException("Errore aggiornamento dell'email: " + e.getMessage());
+	    }
+	}
 	
 }
