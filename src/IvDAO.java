@@ -14,6 +14,6 @@ public interface IvDAO {
 	
 	public boolean aggiornaIVTelefono(int idPaz, String strIv) throws PersonalException;
 	
-	public boolean aggiornaIVEmail(int idPaz, String ivEmail, Connection conn) throws PersonalException;
+	public boolean aggiornaIVEmail(int idPaz, String ivEmail) throws PersonalException;
 	
 }

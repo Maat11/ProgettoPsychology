@@ -138,12 +138,13 @@ public class IvSqlDAO implements IvDAO{
 
 	//SERVE AD AGGIORNARE L'IV DELL'EMAIL QUANDO SI MODIFICA IL NUMERO:
 	@Override
-	public boolean aggiornaIVEmail(int idPaz, String ivEmail, Connection conn) throws PersonalException {
+	public boolean aggiornaIVEmail(int idPaz, String ivEmail) throws PersonalException {
 		String sql = "UPDATE prgzia.Iv "
 				+ "SET iv_email = ? "
 				+ "WHERE id_paziente = ? ";
 	    
-	    try (PreparedStatement psmt = conn.prepareStatement(sql)) {
+		try (Connection conn = DataBaseConnection.getConnection();
+		         PreparedStatement psmt = conn.prepareStatement(sql)) {
 	    	
 	        psmt.setString(1, ivEmail);
 	        psmt.setInt(2, idPaz);
