@@ -232,8 +232,13 @@ public class FinestraModificaDatiSensibili extends JDialog {
 	
 	//SERVE PER CONTROLLARE SE IL CAMPO EMAIL E' COMPILATO CORRETTAMENTE:
 	private boolean ctrlEmail() {
-		
-		return false;
+		if(! txtEmail.getText().trim().isBlank()) {
+			if(! txtEmail.getText().trim().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+				JOptionPane.showMessageDialog(null, "Errore, l'email inserita non è valida!");
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	//SERVE PER PULIRE I CAMPI:
