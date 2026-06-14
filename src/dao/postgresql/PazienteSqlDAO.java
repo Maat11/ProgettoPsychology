@@ -1,4 +1,4 @@
-package dao;
+package dao.postgresql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,6 +10,8 @@ import java.util.Base64;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import dao.IvDAO;
+import dao.PazienteDAO;
 import dto.Paziente;
 import exception.PersonalException;
 

@@ -1,4 +1,4 @@
-package dao;
+package dao.postgresql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.table.DefaultTableModel;
 
+import dao.NotaDAO;
 import dto.Nota;
 import exception.PersonalException;
 

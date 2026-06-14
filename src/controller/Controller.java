@@ -3,6 +3,10 @@ package controller;
 import gui.*;
 import dto.*;
 import dao.*;
+import dao.postgresql.AppuntamentoSqlDAO;
+import dao.postgresql.IvSqlDAO;
+import dao.postgresql.NotaSqlDAO;
+import dao.postgresql.PazienteSqlDAO;
 
 import java.security.SecureRandom;
 import java.sql.Connection;

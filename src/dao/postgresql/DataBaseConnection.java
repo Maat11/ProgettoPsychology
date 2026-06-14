@@ -1,4 +1,4 @@
-package dao;
+package dao.postgresql;
 import java.sql.Connection; // <-- QUESTO È L'IMPORT CORRETTO PER I DATABASE!
 import java.sql.DriverManager;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package dao;
+package dao.postgresql;
 
 import exception.PersonalException;
 
@@ -11,6 +11,8 @@ import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
+import dao.CryptoUtilsDAO;
+import dao.IvDAO;
 import dto.Iv;
 
 public class IvSqlDAO implements IvDAO{
