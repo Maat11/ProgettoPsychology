@@ -115,11 +115,8 @@ public class IvSqlDAO implements IvDAO{
             ResultSet rs = psmt.executeQuery();
             
             if(rs.next()) {
-            	//PRENDI L'IV:
-            	String ivStringEmail = rs.getString("iv_email");
-            	
-            	//DECRIPTA E RESTITUISCI L'EMAIL DEECRIPTATA:
-            	return CryptoUtils.decrypt(rs.getString("email"), ivStringEmail);
+            	//PRENDI L'IV, DECRIPTA E RESTITUISCI L'EMAIL DEECRIPTATA:
+            	return CryptoUtils.decrypt(rs.getString("email"), rs.getString("iv_email"));
             }
     	}catch(SQLException e) {
     		throw new PersonalException("Impossibile restituire l'email del paziente a causa di un errore tecnico.");
