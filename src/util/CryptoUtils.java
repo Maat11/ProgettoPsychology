@@ -32,7 +32,7 @@ public class CryptoUtils {
 	        GCMParameterSpec parametri = new GCMParameterSpec(128, iv);
 	        
 	        scatola.init(Cipher.ENCRYPT_MODE, keySpec, parametri);
-	        byte[] testoCriptatoInByte = scatola.doFinal(str.toUpperCase().getBytes(StandardCharsets.UTF_8));
+	        byte[] testoCriptatoInByte = scatola.doFinal(str.getBytes(StandardCharsets.UTF_8));
 	        return Base64.getEncoder().encodeToString(testoCriptatoInByte);
 	      
 	    } catch(Exception xxx) {

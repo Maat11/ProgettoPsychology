@@ -57,7 +57,7 @@ public class FinestraModificaDatiSensibili extends JDialog {
 		theController = c;
 		
 		setTitle("Mdifica dati sensibili");
-		setSize(950, 550);
+		setSize(1100, 550);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -88,6 +88,7 @@ public class FinestraModificaDatiSensibili extends JDialog {
 		lblTelefono.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		txtTelefono = new JTextField();
+		txtTelefono.setEnabled(false);
 		txtTelefono.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("Email");
@@ -95,6 +96,7 @@ public class FinestraModificaDatiSensibili extends JDialog {
 		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		txtEmail = new JTextField();
+		txtEmail.setEnabled(false);
 		txtEmail.setColumns(10);
 		GroupLayout gl_panelCentralSx = new GroupLayout(panelCentralSx);
 		gl_panelCentralSx.setHorizontalGroup(
@@ -190,6 +192,7 @@ public class FinestraModificaDatiSensibili extends JDialog {
 		panelBottom.add(btnBack, BorderLayout.WEST);
 		
 		btnModifica = new JButton("Modifica");
+		btnModifica.setEnabled(false);
 		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//CONTROLLO I VARI CAMPI SE SONO COMPILATI CORRETTAMENTE:
@@ -228,11 +231,13 @@ public class FinestraModificaDatiSensibili extends JDialog {
 	private void setEnabFalsFields() {
 		txtTelefono.setEnabled(false);
 		txtEmail.setEnabled(false);
+		btnModifica.setEnabled(false);
 	}
 	
 	private void setEnabTrueFields() {
 		txtTelefono.setEnabled(true);
 		txtEmail.setEnabled(true);
+		btnModifica.setEnabled(true);
 	}
 	//SERVE PER CONTROLLARE SE IL CAMPO TELEFONO E' COMPILATO CORRETTAMENTE:
 	private boolean ctrlTelefono() {
