@@ -205,7 +205,7 @@ public class FinestraModificaDatiSensibili extends JDialog {
 					if(! txtEmail.getText().isBlank()) {
 						if(ctrlEmail()) {
 							//MODIFICA DELL'EMAIL:
-							if(theController.modificaEmail(idPaz, txtEmail.getText().trim())) {
+							if(theController.modificaEmail(idPaz, txtEmail.getText().trim().toLowerCase())) {
 								JOptionPane.showMessageDialog(null, "L'email è stata aggiornata correttamente");
 							}
 						}
