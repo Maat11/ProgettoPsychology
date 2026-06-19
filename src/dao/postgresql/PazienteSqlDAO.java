@@ -14,6 +14,7 @@ import dao.IvDAO;
 import dao.PazienteDAO;
 import dto.Paziente;
 import exception.PersonalException;
+import properties.DataBaseConnection;
 
 public class PazienteSqlDAO implements PazienteDAO{
 	private IvDAO ivDAO = new IvSqlDAO();
@@ -35,7 +36,6 @@ public class PazienteSqlDAO implements PazienteDAO{
                 psmt.setDouble(6, p.getPrezzo());
                 
             int fine = psmt.executeUpdate();
-            
             return fine > 0;
     	} catch (SQLException e) {
     		throw new PersonalException("Impossibile salvare il paziente a causa di un errore tecnico.");

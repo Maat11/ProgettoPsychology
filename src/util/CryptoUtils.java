@@ -1,4 +1,7 @@
 package util;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -73,42 +76,56 @@ public class CryptoUtils {
 	
 	//MI SERVE PER LA CHIAVE SEGRETA PER LA CRIPTAZIONE E DECRIPTAZIONE DEI DATI SENSIBILI:
 	private static String getKey() {
-		// 1. Definiamo l'oggetto Properties e la stringa per la chiave
 	    Properties prop = new Properties();
 	    String masterKey = "";
+	    InputStream input = null;
 
-	    // 2. Cerchiamo di caricare il file direttamente
-	    try (InputStream input = Main.class.getClassLoader().getResourceAsStream("config.properties")) {
+	    try {
+	        // 1. Cerca prima il file esterno (nella stessa cartella del JAR)
+	        File fileEsterno = new File("config.properties");
 	        
-	        if (input == null) {
-	            System.out.println("Spiacente, non trovo 'config.properties' nella cartella src.");
-	            return ""; // Esce dal programma se il file manca
+	        if (fileEsterno.exists()) {
+	            input = new FileInputStream(fileEsterno);
+	            System.out.println("Chiave di crittografia caricata dal file esterno.");
+	        } else {
+	            // 2. Se non c'è all'esterno, lo cerca nel package 'properties' dentro il JAR
+	            input = Main.class.getClassLoader().getResourceAsStream("properties/config.properties");
+	            System.out.println("Chiave di crittografia caricata dall'interno del JAR.");
 	        }
 
-	        // Carica i dati dal file
-	        prop.load(input);
+	        // Se non viene trovato da nessuna parte
+	        if (input == null) {
+	            JOptionPane.showMessageDialog(null, "Spiacente, non trovo 'config.properties' da nessuna parte.");
+	            return ""; 
+	        }
 
-	        // Estrae la chiave e pulisce eventuali spazi extra
+	        // 3. Carica i dati dal file
+	        prop.load(input);
+	        input.close(); // Buona norma chiudere lo stream dopo il load
+
+	        // Estrae la chiave usando il nome esatto presente nel file (nel tuo codice cerchi "chiave")
 	        masterKey = prop.getProperty("chiave");
 
 	        if (masterKey != null) {
 	            masterKey = masterKey.trim();
 	            
-	            // Verifica rapida della compatibilità AES
+	            // Verifica rapida della compatibilità AES (44 caratteri per Base64)
 	            if (masterKey.length() == 44) {
 	                return masterKey;
 	            } else {
-	                JOptionPane.showMessageDialog(null, "Attenzione: Lunghezza non standard per AES!");
+	                JOptionPane.showMessageDialog(null, "Attenzione: Lunghezza non standard per AES (attesi 44 caratteri)!");
 	                return "";
 	            }
 	        } else {
-	        	JOptionPane.showMessageDialog(null, "Il file esiste ma la riga 'secret.key=' è vuota o scritta male.");
+	            // Nota: nel tuo messaggio parlavi di 'secret.key=', ma nel getProperty cerchi 'chiave'. 
+	            // Ho corretto il messaggio per evitare confusione.
+	            JOptionPane.showMessageDialog(null, "Il file esiste ma la riga 'chiave=' è vuota o scritta male.");
 	            return "";
 	        }
 
 	    } catch (Exception ex) {
-	    	JOptionPane.showMessageDialog(null, "Si è verificato un errore durante la lettura:"+ex);
-	    	return "";
+	        JOptionPane.showMessageDialog(null, "Si è verificato un errore durante la lettura: " + ex.getMessage());
+	        return "";
 	    }
 	}
 	

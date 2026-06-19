@@ -16,6 +16,7 @@ import dao.AppuntamentoDAO;
 import dao.IvDAO;
 import dto.Appuntamento;
 import exception.PersonalException;
+import properties.DataBaseConnection;
 
 public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	private IvDAO ivDAO = new IvSqlDAO();
@@ -96,6 +97,7 @@ public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 				model.addRow(new Object[]{rs.getInt("id_appuntamento"), sdf.format(rs.getDate("data_giorno")), sdfOra.format(rs.getTime("ora_inizio")), sdfOra.format(rs.getTime("ora_fine")), rs.getInt("id_paziente"), rs.getString("Nome"), rs.getString("Cognome"), telefonoDecrypt, rs.getString("modalità"), rs.getString("pagato")});
             }
     	}catch(SQLException e) {
+    		System.err.println("Errore: " + e.getMessage());
     		throw new PersonalException("Impossibile popolare la tabella a causa di un errore tecnico.");
     	} 
 	}

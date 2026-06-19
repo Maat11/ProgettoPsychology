@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import dao.NotaDAO;
 import dto.Nota;
 import exception.PersonalException;
+import properties.DataBaseConnection;
 
 public  class NotaSqlDAO implements NotaDAO{
 

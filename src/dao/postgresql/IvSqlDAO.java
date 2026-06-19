@@ -1,6 +1,7 @@
 package dao.postgresql;
 
 import exception.PersonalException;
+import properties.DataBaseConnection;
 import util.CryptoUtils;
 
 import java.security.SecureRandom;
