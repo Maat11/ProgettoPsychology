@@ -23,8 +23,7 @@ public class CryptoUtils {
 	public static String encrypt(String str, byte[] iv) {
 	    try {
 	        if (getKey() == null || getKey().length() != 44) {
-	            System.err.println("ERRORE: La chiave deve essere di 32 caratteri!");
-	            return "";
+	           throw new Exception ("la chiave deve essere di 32 caratteri!");
 	        }
 	        
 	        byte[] chiaveBytes = Base64.getDecoder().decode(getKey());
@@ -86,11 +85,11 @@ public class CryptoUtils {
 	        
 	        if (fileEsterno.exists()) {
 	            input = new FileInputStream(fileEsterno);
-	            System.out.println("Chiave di crittografia caricata dal file esterno.");
+//	            System.out.println("Chiave di crittografia caricata dal file esterno.");
 	        } else {
 	            // 2. Se non c'è all'esterno, lo cerca nel package 'properties' dentro il JAR
 	            input = Main.class.getClassLoader().getResourceAsStream("properties/config.properties");
-	            System.out.println("Chiave di crittografia caricata dall'interno del JAR.");
+//	            System.out.println("Chiave di crittografia caricata dall'interno del JAR.");
 	        }
 
 	        // Se non viene trovato da nessuna parte
