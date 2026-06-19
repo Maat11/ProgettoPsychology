@@ -19,6 +19,7 @@ import exception.PersonalException;
 
 public class AppuntamentoSqlDAO implements AppuntamentoDAO{
 	private IvDAO ivDAO = new IvSqlDAO();
+	
 	//MI SERVE PER INSERIRE UN APPUNTAMENTO:
 	@Override
 	public boolean inserisci(Appuntamento app) throws PersonalException{
