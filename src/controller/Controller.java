@@ -117,6 +117,7 @@ public class Controller {
 		}
 	}
 	
+	
 	//SERVE PER ANDARE DALLA PAGINA PRINCIPALE ALLA FINESTRA PER LA CREAZIONE DI UN CLIENTE:
 	public void fromPaginaPToFienstraInserisciPaziente(int typChiam) {
 		if(typChiam == 1) {
