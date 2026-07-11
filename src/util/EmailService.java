@@ -14,7 +14,6 @@ import jakarta.mail.internet.MimeMessage;
 
 public class EmailService {
 	
-	
 	private static final Properties config = new Properties();
 
     // Questo blocco si esegue una sola volta all'avvio e carica i dati dal file
