@@ -1,5 +1,6 @@
 /bin/
 
 
+src/properties/config.properties
 src/properties/email.properties
 src/properties/db.properties
